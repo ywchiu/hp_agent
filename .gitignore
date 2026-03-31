@@ -1,0 +1,25 @@
+# Slides build artifacts
+slides/
+*.pptx
+*.html
+
+# Node modules
+node_modules/
+
+# Python
+__pycache__/
+*.pyc
+.env
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Old materials
+old/
+
+# PDF
+*.pdf
+
+# Temp
+tmp/
