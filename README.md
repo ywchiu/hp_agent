@@ -66,7 +66,7 @@ https://colab.research.google.com/github/ywchiu/hp_agent/blob/main/code/<NOTEBOO
 | 04 Agentic RAG | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ywchiu/hp_agent/blob/main/code/04_Agentic_RAG.ipynb) |
 | 05 Deep Research | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ywchiu/hp_agent/blob/main/code/05_Deep_Research_Agent.ipynb) |
 | Lab 1 | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ywchiu/hp_agent/blob/main/code/labs/Lab1_LangGraph_First_Agent.ipynb) |
-| Lab 2 | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ywchiu/hp_agent/blob/main/code/labs/Lab1_LangGraph_First_Agent.ipynb) |
+| Lab 2 | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ywchiu/hp_agent/blob/main/code/labs/Lab2_Voice_Pipeline.ipynb) |
 | Lab 3 | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ywchiu/hp_agent/blob/main/code/labs/Lab3_RAG_Grader.ipynb) |
 | Lab 4 | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ywchiu/hp_agent/blob/main/code/labs/Lab4_Deep_Research.ipynb) |
 
