@@ -1,22 +1,6 @@
 # LLM Application - AI Agent 實戰課程
 
-針對 HP 筆電 / PC 產業設計的 AI Agent 開發實戰訓練，從基礎概念到企業級部署的完整兩天課程。
-
-## 課程大綱
-
-### 第一天：AI Agent 導入與語音整合
-
-| 時段 | 主題 | 內容 |
-|------|------|------|
-| 上午 | LangGraph 核心設計思維 | Agent 概念、LangGraph 核心元件、ReAct / Plan-and-Execute / Supervisor 三種模式 |
-| 下午 | 打造語音助理系統 | ASR 語音識別、TTS 語音合成、Pipeline / Orchestrator / Memory / HITL / Tool 五大模式 |
-
-### 第二天：RAG 進階與深度研究
-
-| 時段 | 主題 | 內容 |
-|------|------|------|
-| 上午 | 從 Naive RAG 到 Agentic RAG | RAG 三代演進、Corrective RAG / Self-RAG 論文解析、Router / Grader / Hallucination Checker 實作 |
-| 下午 | Deep Research Agent | 研究型 Agent 流程、Planner / Searcher / Reader / Synthesizer + Critic、迭代研究與自適應終止 |
+AI Agent 開發實戰訓練，從基礎概念到企業級部署課程。
 
 ## 教材 Notebooks
 
@@ -44,7 +28,6 @@
 
 - **執行環境：** Google Colab（免費版即可）
 - **API Key：** OpenAI API Key（課程提供測試用 Key）
-- **Python 版本：** 3.10+
 - **主要套件：** langchain, langgraph, openai, chromadb
 
 ## 如何使用
@@ -70,7 +53,3 @@ https://colab.research.google.com/github/ywchiu/hp_agent/blob/main/code/<NOTEBOO
 | Lab 3 | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ywchiu/hp_agent/blob/main/code/labs/Lab3_RAG_Grader.ipynb) |
 | Lab 4 | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ywchiu/hp_agent/blob/main/code/labs/Lab4_Deep_Research.ipynb) |
 
-## 講師資訊
-
-**大數軟體有限公司**
-- 網站：[largitdata.com](http://www.largitdata.com/)
