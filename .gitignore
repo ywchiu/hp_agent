@@ -2,6 +2,7 @@
 slides/
 *.pptx
 *.html
+sample/*
 
 # Node modules
 node_modules/
