@@ -30,6 +30,55 @@ AI Agent 開發實戰訓練，從基礎概念到企業級部署課程。
 | [Lab 3](code/labs/Lab3_RAG_Grader.ipynb) | 給 RAG 加一個品質關卡 — Grader 節點實作 | Day 2 上午 |
 | [Lab 4](code/labs/Lab4_Deep_Research.ipynb) | 讓 Agent 研究一個真實問題 — HP vs Lenovo 分析 | Day 2 下午 |
 
+## 本機啟動 MCP Server
+
+MCP Server 讓 LangGraph Agent 或 Claude Desktop 透過標準協定呼叫 HP 工具。
+
+### 步驟一：安裝相依套件
+
+```bash
+pip install fastmcp langchain-mcp-adapters
+```
+
+### 步驟二：啟動 Server
+
+```bash
+bash scripts/start_mcp_server.sh
+```
+
+或直接用 Python 啟動：
+
+```bash
+python scripts/hp_mcp_server.py
+```
+
+啟動後終端機會顯示：
+
+```
+✅ 啟動 HP MCP Server ...
+   傳輸模式：stdio
+   （等待 MCP Client 連線，按 Ctrl+C 停止）
+```
+
+### 步驟三：串接 Claude Desktop（選用）
+
+將以下設定寫入 `~/Library/Application Support/Claude/claude_desktop_config.json`，重啟 Claude Desktop 即可在對話中直接使用 HP 工具：
+
+```json
+{
+  "mcpServers": {
+    "hp-tools": {
+      "command": "python",
+      "args": ["scripts/hp_mcp_server.py"]
+    }
+  }
+}
+```
+
+> **提供的工具**：`check_inventory`（庫存查詢）、`check_warranty`（保固確認）、`get_repair_sop`（維修 SOP）
+
+---
+
 ## 環境需求
 
 - **執行環境：** Google Colab（免費版即可）
