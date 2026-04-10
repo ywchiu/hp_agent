@@ -6,6 +6,9 @@ AI Agent 開發實戰訓練，從基礎概念到企業級部署課程。
 ## Demo20260409
 - https://colab.research.google.com/drive/1ROpSynJCc3JDcFTiKz1x1oAEm-tvl_bt?usp=sharing
 
+## Demo20260410
+- https://colab.research.google.com/drive/1dOXM3K_nXB5K5NL6r1CuveQVSTJNffGt?usp=sharing
+
 ## 教材 Notebooks
 
 | # | Notebook | 說明 |
