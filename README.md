@@ -14,8 +14,10 @@ AI Agent 開發實戰訓練，從基礎概念到企業級部署課程。
 | 01 | [LangGraph 核心設計](code/01_LangGraph_Core_Design.ipynb) | StateGraph / Node / Edge / Conditional Edge，實作 ReAct、Plan-Execute、Supervisor |
 | 02 | [語音助理系統](code/02_Voice_Assistant.ipynb) | Whisper ASR + OpenAI TTS + LangGraph Pipeline，含 IT 術語修正 |
 | 03 | [進階語音助理](code/03_Advanced_Voice_Agent.ipynb) | 五大模式整合：Pipeline / Orchestrator / Memory / HITL / Tool-Augmented |
-| 04 | [Agentic RAG](code/04_Agentic_RAG.ipynb) | 完整的自我修正 RAG 系統，含 Router / Grader / Hallucination Checker / Fallback |
-| 05 | [Deep Research Agent](code/05_Deep_Research_Agent.ipynb) | 迭代式研究 Agent，含 Planner / Searcher / Reader / Synthesizer + Critic |
+| 04 | [Agentic RAG](code/04_Agentic_RAG.ipynb) | 完整的自我修正 RAG 系統，含 Router / Grader / Hallucination Checker / Fallback；附 MCP 整合實作 |
+| 05 | [Deep Research Agent](code/05_Deep_Research_Agent.ipynb) | 迭代式研究 Agent，含 Planner / Searcher / Reader / Synthesizer + Critic；附 MCP 串接搜尋工具 |
+| 06 | [MCP 實作](code/06_MCP.ipynb) | FastMCP 建立 HP 工具 Server，LangGraph Agent 透過 MCP Client 自動發現並呼叫工具 |
+| 07 | [Skill 實作](code/07_Skill.ipynb) | 用 SKILL.md 封裝 Agent 行為規範，打造可複用的 HP 客服技能包 |
 
 ## 實作練習 Labs
 
@@ -52,6 +54,8 @@ https://colab.research.google.com/github/ywchiu/hp_agent/blob/main/code/<NOTEBOO
 | 03 進階語音助理 | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ywchiu/hp_agent/blob/main/code/03_Advanced_Voice_Agent.ipynb) |
 | 04 Agentic RAG | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ywchiu/hp_agent/blob/main/code/04_Agentic_RAG.ipynb) |
 | 05 Deep Research | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ywchiu/hp_agent/blob/main/code/05_Deep_Research_Agent.ipynb) |
+| 06 MCP 實作 | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ywchiu/hp_agent/blob/main/code/06_MCP.ipynb) |
+| 07 Skill 實作 | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ywchiu/hp_agent/blob/main/code/07_Skill.ipynb) |
 | Lab 1 | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ywchiu/hp_agent/blob/main/code/labs/Lab1_LangGraph_First_Agent.ipynb) |
 | Lab 2 | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ywchiu/hp_agent/blob/main/code/labs/Lab2_Voice_Pipeline.ipynb) |
 | Lab 3 | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ywchiu/hp_agent/blob/main/code/labs/Lab3_RAG_Grader.ipynb) |
