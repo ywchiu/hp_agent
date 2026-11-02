@@ -1,0 +1,27 @@
+{
+  "status": "pending_review",
+  "percent": -15.0,
+  "event_id": "95623b6201695c7f2b72",
+  "old": {
+    "project": "notebook-watch",
+    "sku": "TW-A32",
+    "market": "TW",
+    "currency": "TWD",
+    "tax": "included",
+    "price": 40000,
+    "source_id": "SIM-W1",
+    "date": "2026-10-26",
+    "simulated": true
+  },
+  "new": {
+    "project": "notebook-watch",
+    "sku": "TW-A32",
+    "market": "TW",
+    "currency": "TWD",
+    "tax": "included",
+    "price": 34000,
+    "source_id": "SIM-W2",
+    "date": "2026-11-02",
+    "simulated": true
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "environment": "local Python 3.11; not Google Colab web",
+  "installation": "dependencies installed once; repeated pip cells skipped",
+  "results": [
+    {
+      "notebook": "00_setup.ipynb",
+      "status": "passed",
+      "code_cells": 5,
+      "seconds": 0.78
+    },
+    {
+      "notebook": "01_first_research.ipynb",
+      "status": "passed",
+      "code_cells": 6,
+      "seconds": 0.76
+    },
+    {
+      "notebook": "02_skill_mcp.ipynb",
+      "status": "passed",
+      "code_cells": 7,
+      "seconds": 1.05
+    },
+    {
+      "notebook": "03_rag.ipynb",
+      "status": "passed",
+      "code_cells": 6,
+      "seconds": 0.78
+    },
+    {
+      "notebook": "04_research_loop.ipynb",
+      "status": "passed",
+      "code_cells": 6,
+      "seconds": 0.79
+    },
+    {
+      "notebook": "05_recovery.ipynb",
+      "status": "passed",
+      "code_cells": 7,
+      "seconds": 1.38
+    },
+    {
+      "notebook": "06_review_monitor.ipynb",
+      "status": "passed",
+      "code_cells": 11,
+      "seconds": 2.11
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "sha256": "88e5b70ddba6c25a035159a83c5f56a7cc6add8b9da369b4c88fa61f17df6c16",
+  "files": {
+    "course.json": "91d37da8d1ba0745526aae6df2061609c2ed0fd8a4a02f84fcecb653f193f035",
+    "data/documents.json": "4b7005ecafd24970c5c5d6e7a5d5b17b07d14393fbbedfa696495c54b76439e3",
+    "data/products.json": "cc649f7acb1c7564d3b8877503846faf40708ed143b9bf4572f0c2a4fe1d4d5e",
+    "data/recovery.json": "ed4197874765ac10f3f564d20859fa41f826be5f91f7701118b0c5bc925abc4c",
+    "requirements.txt": "2da51fdce56a1fdf59f5fd0ac4a4f5cc69c032776881e38e9447f304b325919e",
+    "skills/product-research/SKILL.md": "827fdcb047c02d4b565c152ea574aa6012837d2efe2e117cb97550f4354f7780",
+    "src/workshop/__init__.py": "03999a00c0a3bc8586d46ad6d0527e2bac029845bae2a7cf24c537f3cccd15a3",
+    "src/workshop/catalog.py": "bdbecfd361c7e7801968a9f182165a1e657511ba2674769b5f25a62f334f1dd7",
+    "src/workshop/cli.py": "a066b0c77d19614baae3aa09f4cfad2f3d5ef67e9c6b2c2207af786eaa957740",
+    "src/workshop/flows.py": "7d92d1f6c27cee2617d064660ec7c57d68af1ab307d55c79c338e2bf9097cd62",
+    "src/workshop/mcp_client.py": "716cf00295a97edaf7233f315fe7c36bd18b5911583a4a447685324ed57d677c",
+    "src/workshop/mcp_server.py": "6ac538721ad7ed71ff31c9950db6a81859f1491bb2490c4e1a8190ce54c735b3",
+    "tests/test_workshop.py": "bfedb2f0e8b9a279342b1177407d865902dee1d01b1b07bd583748699066619c"
+  }
+}

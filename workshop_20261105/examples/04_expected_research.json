@@ -1,0 +1,131 @@
+{
+  "round": 3,
+  "evidence": [
+    {
+      "id": "SERIES#1",
+      "market": "TW",
+      "version": "v2",
+      "current": true,
+      "text": "DemoBook A 系列最高支援 32 GB。系列上限不是任何指定 SKU 的實際配置。"
+    },
+    {
+      "id": "SKU#1",
+      "market": "TW",
+      "version": "v2",
+      "current": true,
+      "text": "DEMO-TW-032 配置為 32 GB 記憶體、1 TB 儲存。"
+    },
+    {
+      "id": "SERVICE#3",
+      "market": "TW",
+      "version": "v2",
+      "current": true,
+      "text": "DEMO-TW-032：三年到府服務需另購方案，未取得該採購案的加購憑證。不能判定已符合服務需求。"
+    },
+    {
+      "id": "SKU#1",
+      "market": "TW",
+      "version": "v2",
+      "current": true,
+      "text": "DEMO-TW-032 配置為 32 GB 記憶體、1 TB 儲存。"
+    },
+    {
+      "id": "SERVICE#3",
+      "market": "TW",
+      "version": "v2",
+      "current": true,
+      "text": "DEMO-TW-032：三年到府服務需另購方案，未取得該採購案的加購憑證。不能判定已符合服務需求。"
+    }
+  ],
+  "gaps": [
+    "三年到府"
+  ],
+  "trace": [
+    {
+      "role": "Planner",
+      "round": 0,
+      "need": [
+        "指定 SKU、服務證據"
+      ]
+    },
+    {
+      "role": "Researcher",
+      "added": [
+        "SERIES#1"
+      ]
+    },
+    {
+      "role": "Writer",
+      "round": 0
+    },
+    {
+      "role": "Reviewer",
+      "gaps": [
+        "32 GB",
+        "三年到府"
+      ]
+    },
+    {
+      "role": "Planner",
+      "round": 1,
+      "need": [
+        "32 GB",
+        "三年到府"
+      ]
+    },
+    {
+      "role": "Researcher",
+      "added": [
+        "SKU#1",
+        "SERVICE#3"
+      ]
+    },
+    {
+      "role": "Writer",
+      "round": 1
+    },
+    {
+      "role": "Reviewer",
+      "gaps": [
+        "三年到府"
+      ]
+    },
+    {
+      "role": "Planner",
+      "round": 2,
+      "need": [
+        "三年到府"
+      ]
+    },
+    {
+      "role": "Researcher",
+      "added": [
+        "SKU#1",
+        "SERVICE#3"
+      ]
+    },
+    {
+      "role": "Writer",
+      "round": 2
+    },
+    {
+      "role": "Reviewer",
+      "gaps": [
+        "三年到府"
+      ]
+    }
+  ],
+  "matrix": [
+    {
+      "requirement": "32 GB",
+      "status": "符合",
+      "source": "SKU#1"
+    },
+    {
+      "requirement": "三年到府",
+      "status": "待確認",
+      "source": "SERVICE#3"
+    }
+  ],
+  "stop_reason": "仍有缺口，已達補查上限"
+}

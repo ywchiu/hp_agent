@@ -1,0 +1,8 @@
+P06｜執行中斷與恢復 Demo
+請讀 labs/05_recovery.md 與 src/workshop/flows.py，依教材操作，不重寫成假的文字模擬。
+選全新 runs/l05_<本輪名稱>，固定 thread=research-demo-01。
+使用本環境 Python 執行 recover-start，確認預定例外，檢查 state.json、execution.jsonl 與 operations.sqlite。
+在另一個 Python 程序執行 recover-resume，沿用同資料夾、資料庫與 thread。
+以實際檔案證明：Dell/Lenovo 未重進、ASUS 進兩次、ASUS 唯一紀錄一筆、三家報告完成。
+保存 runs/antigravity/06_verification.md，列命令、exit code、前後筆數、輸出路徑。
+不要刪除 checkpoint、改 Thread 或覆蓋資料來讓 Demo 看似成功；遇到其他錯誤請先回報。

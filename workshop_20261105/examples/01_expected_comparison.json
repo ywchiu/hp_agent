@@ -1,0 +1,49 @@
+{
+  "rows": [
+    {
+      "id": "DEMO-TW-016",
+      "model": "DemoBook A",
+      "market": "TW",
+      "memory_gb": 16,
+      "storage_gb": 512,
+      "warranty_years": 1,
+      "price": 36000,
+      "currency": "TWD",
+      "tax": "included",
+      "updated": "2026-10-26",
+      "simulated": true
+    },
+    {
+      "id": "DEMO-TW-032",
+      "model": "DemoBook A",
+      "market": "TW",
+      "memory_gb": 32,
+      "storage_gb": 1024,
+      "warranty_years": null,
+      "price": 40000,
+      "currency": "TWD",
+      "tax": "included",
+      "updated": "2026-10-26",
+      "simulated": true
+    }
+  ],
+  "comparison": [
+    {
+      "id": "DEMO-TW-016",
+      "memory_gb": 16,
+      "storage_gb": 512,
+      "warranty": 1,
+      "source_date": "2026-10-26"
+    },
+    {
+      "id": "DEMO-TW-032",
+      "memory_gb": 32,
+      "storage_gb": 1024,
+      "warranty": "待確認",
+      "source_date": "2026-10-26"
+    }
+  ],
+  "missing": [
+    "DEMO-TW-032"
+  ]
+}

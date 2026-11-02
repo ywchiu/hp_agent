@@ -1,0 +1,7 @@
+P03｜模型直接使用 MCP
+先確認 company-database MCP 服務可用，列出實際發現的工具。如果不可用，回報缺少的連接條件，不用閱讀 JSON 假裝完成工具呼叫。
+請真正呼叫 find_products_by_model，參數 model=DemoBook A、market=TW。
+接著真正呼叫 read_product_by_id，分別讀 DEMO-TW-016、DEMO-TW-032。
+依 skills/product-research/SKILL.md 比較，保存 runs/antigravity/03_mcp_report.md。
+請保留工具名稱、輸入、輸出、資料 ID、更新日期，明示 032 保固缺漏。
+再查不存在 ID，區分 not_found 與工具連線失敗。不要修改 SQLite，不產生寫入產品資料的工具。

@@ -1,0 +1,8 @@
+[
+  {"id":"P-OLD#2","market":"TW","version":"v1","current":false,"text":"專案 P 出差採購需求：16 GB 記憶體、一年保固。此版本已被 v2 取代。"},
+  {"id":"P-TW#2","market":"TW","version":"v2","current":true,"text":"專案 P 出差採購需求：32 GB 記憶體、三年到府服務。保固年數不能直接證明包含到府服務。"},
+  {"id":"P-US#2","market":"US","version":"v2","current":true,"text":"專案 P 出差採購需求：32 GB 記憶體、三年保固；僅適用美國。"},
+  {"id":"SERIES#1","market":"TW","version":"v2","current":true,"text":"DemoBook A 系列最高支援 32 GB。系列上限不是任何指定 SKU 的實際配置。"},
+  {"id":"SKU#1","market":"TW","version":"v2","current":true,"text":"DEMO-TW-032 配置為 32 GB 記憶體、1 TB 儲存。"},
+  {"id":"SERVICE#3","market":"TW","version":"v2","current":true,"text":"DEMO-TW-032：三年到府服務需另購方案，未取得該採購案的加購憑證。不能判定已符合服務需求。"}
+]

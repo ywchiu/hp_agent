@@ -1,0 +1,5 @@
+[
+  {"brand":"Dell","source_id":"DEMO-D-01","memory_gb":32,"warranty_years":3,"simulated":true},
+  {"brand":"Lenovo","source_id":"DEMO-L-01","memory_gb":32,"warranty_years":1,"simulated":true},
+  {"brand":"ASUS","source_id":"DEMO-A-01","memory_gb":32,"warranty_years":null,"simulated":true}
+]

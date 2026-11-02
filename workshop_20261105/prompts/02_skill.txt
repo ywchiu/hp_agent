@@ -1,0 +1,6 @@
+P02｜套用並修改研究 Skill
+先讀 skills/product-research/SKILL.md，逐項說明哪些是方法、哪些事實仍須從 data/products.json 讀取。
+保留 01_report.md。現在新增一條方法：「未取得到府服務證據時，不能只以保固年數判定符合三年到府要求」。
+請將這條規則寫入 Skill，不修改產品事實，以相同 TW 兩種配置再研究。
+保存 runs/antigravity/02_report.md 與 02_changes.md，指出規則新增的位置、前後結論差異、仍缺什麼證據。
+如原稿本來已正確，請如實說明哪些結論沒有改變，不製造假的改善紀錄。

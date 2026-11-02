@@ -1,0 +1,62 @@
+[
+  {
+    "start": 1,
+    "end": 40,
+    "id": "D01",
+    "guide": "docs/02_instructor.md"
+  },
+  {
+    "start": 41,
+    "end": 94,
+    "id": "D02",
+    "guide": "docs/02_instructor.md"
+  },
+  {
+    "start": 95,
+    "end": 124,
+    "id": "L00",
+    "guide": "docs/00_setup.md"
+  },
+  {
+    "start": 125,
+    "end": 142,
+    "id": "L01",
+    "guide": "labs/01_first_research.md"
+  },
+  {
+    "start": 143,
+    "end": 172,
+    "id": "L02",
+    "guide": "labs/02_skill_mcp.md"
+  },
+  {
+    "start": 173,
+    "end": 221,
+    "id": "L03",
+    "guide": "labs/03_rag.md"
+  },
+  {
+    "start": 222,
+    "end": 261,
+    "id": "L04",
+    "guide": "labs/04_research_loop.md"
+  },
+  {
+    "start": 262,
+    "end": 306,
+    "id": "L05",
+    "guide": "labs/05_recovery.md"
+  },
+  {
+    "start": 307,
+    "end": 350,
+    "id": "L06",
+    "guide": "labs/06_review_monitor.md"
+  },
+  {
+    "start": 351,
+    "end": 357,
+    "id": "D06",
+    "guide": "docs/03_submission.md"
+  }
+]

@@ -1,0 +1,273 @@
+{
+  "00_setup.ipynb": {
+    "intro": "# L00｜環境檢查\n\n教材 v{{VERSION}}｜對照老師提供 PDF 119–124 頁。\n\n按順序執行，每格先預測、再觀察。資料是模擬的；本 notebook 執行 LangGraph／MCP 固定規則流程，不呼叫 LLM。真正模型研究請用同章 Antigravity 提示詞。安裝需網路，CPU 即可。\n\n每份自帶程式與資料，未上 GitHub 也能單獨上傳 Colab。",
+    "cells": [
+      {
+        "type": "markdown",
+        "source": "## Step 3：檢查版本與資料\n\n應看到三個套件版本與教材版本；產品為模擬資料。"
+      },
+      {
+        "type": "code",
+        "source": "from importlib.metadata import version\nfrom workshop.catalog import load\nfrom workshop.flows import save\nversions = {name: version(name) for name in ['langgraph','langgraph-checkpoint-sqlite','mcp']}\nprint(versions)\nprint(load('products.json'))\nsave(OUT/'environment.json', {'packages':versions, 'material_version':MATERIAL_VERSION})\n"
+      },
+      {
+        "type": "markdown",
+        "source": "## Step 4：跑通第一個流程\n\n只有 TW 兩筆配置；032 的保固待確認。"
+      },
+      {
+        "type": "code",
+        "source": "from workshop.flows import basic_report\nresult = basic_report()\nprint(json.dumps(result, ensure_ascii=False, indent=2))\nassert len(result['comparison']) == 2\nassert result['comparison'][1]['warranty'] == '待確認'\nsave(OUT/'setup_result.json',result)\n"
+      },
+      {
+        "type": "markdown",
+        "source": "## 驗收\n\n請在這裡寫下：成果存在哪裡？儲存 notebook 是否等於保存 SQLite？答案：不是，請另外下載成果 ZIP。"
+      }
+    ]
+  },
+  "01_first_research.ipynb": {
+    "intro": "# L01｜第一份產品研究\n\n教材 v{{VERSION}}｜對照老師提供 PDF 125–140 頁。\n\n按順序執行，每格先預測、再觀察。資料是模擬的；本 notebook 執行 LangGraph／MCP 固定規則流程，不呼叫 LLM。真正模型研究請用同章 Antigravity 提示詞。安裝需網路，CPU 即可。\n\n每份自帶程式與資料，未上 GitHub 也能單獨上傳 Colab。",
+    "cells": [
+      {
+        "type": "markdown",
+        "source": "## Step 3：先看原始產品\n\n哪兩筆屬台灣？哪一欄缺資料？不要用 US 補 TW。"
+      },
+      {
+        "type": "code",
+        "source": "from workshop.catalog import load\nproducts = load('products.json')\nfor row in products:\n    print(row)\n"
+      },
+      {
+        "type": "markdown",
+        "source": "## Step 4：執行起始流程\n\nfetch 讀資料，compare 整理；觀察 rows、comparison、missing。"
+      },
+      {
+        "type": "code",
+        "source": "from workshop.flows import basic_report, save\nresult = basic_report()\nprint(json.dumps(result,ensure_ascii=False,indent=2))\nsave(OUT/'01_report.json',result)\n"
+      },
+      {
+        "type": "markdown",
+        "source": "## Step 5：人工核對與保存\n\n請先用自己的話解釋為何不能說 32 GB 版保固較佳，再執行檢查。"
+      },
+      {
+        "type": "code",
+        "source": "assert [r['id'] for r in result['comparison']] == ['DEMO-TW-016','DEMO-TW-032']\nassert result['comparison'][1]['warranty'] == '待確認'\nreflection = '32 GB 版保固缺漏；不能引用 US 版補上，也不能由規格推論保固。'  # 請改成自己的觀察\n(OUT/'01_reflection.md').write_text(reflection,encoding='utf-8')\nprint(reflection)\n"
+      },
+      {
+        "type": "markdown",
+        "source": "## 修改練習\n\n若問題改成「哪台適合我們業務出差」，還缺哪兩項條件？請在上格反思欄記錄。此程式不理解任意自然語言；Antigravity 模型路徑應主動詢問。"
+      }
+    ]
+  },
+  "02_skill_mcp.ipynb": {
+    "intro": "# L02｜Skill 與 SQLite MCP\n\n教材 v{{VERSION}}｜對照老師提供 PDF 143–170 頁。\n\n按順序執行，每格先預測、再觀察。資料是模擬的；本 notebook 執行 LangGraph／MCP 固定規則流程，不呼叫 LLM。真正模型研究請用同章 Antigravity 提示詞。安裝需網路，CPU 即可。\n\n每份自帶程式與資料，未上 GitHub 也能單獨上傳 Colab。",
+    "cells": [
+      {
+        "type": "markdown",
+        "source": "## Step 3：用少一條規則的起始 Skill 跑一次\n\n原始產品不改。初稿只留「未填」，我們補成明確「待確認」。"
+      },
+      {
+        "type": "code",
+        "source": "from workshop.flows import basic_report, save\nfrom workshop.catalog import seed\nskill_text = (ROOT/'skills/product-research/SKILL.md').read_text(encoding='utf-8')\nstarter = '\\n'.join(line for line in skill_text.splitlines() if '[unknown_warranty]' not in line)\nskill_path = OUT/'my_SKILL.md'\nskill_path.write_text(starter,encoding='utf-8')\nbefore = basic_report(skill_path=skill_path)\nprint(before['comparison'])\nsave(OUT/'02_before.json',before)\n"
+      },
+      {
+        "type": "markdown",
+        "source": "## Step 4：加一條規則再跑\n\n你可修改規則文字，但保留教學開關標記。一般 SKILL.md 不是自動程式，完整文字由模型讀取執行。"
+      },
+      {
+        "type": "code",
+        "source": "my_rule = '[unknown_warranty] 保固缺漏時標示待確認，不推論較佳。'\nskill_path.write_text(starter+'\\n'+my_rule+'\\n',encoding='utf-8')\nafter = basic_report(skill_path=skill_path)\nprint(after['comparison'])\nassert before['comparison'][1]['warranty'] == '未填'\nassert after['comparison'][1]['warranty'] == '待確認'\nsave(OUT/'02_after.json',after)\n"
+      },
+      {
+        "type": "markdown",
+        "source": "## Step 5：真正的 MCP 握手、工具探索與呼叫\n\n這裡使用 await；Jupyter 已有 event loop，不能再用 asyncio.run。"
+      },
+      {
+        "type": "code",
+        "source": "from workshop.mcp_client import inspect_database\ndb = seed(OUT/'catalog.sqlite')\nmcp_result = await inspect_database(db)\nprint(json.dumps(mcp_result,ensure_ascii=False,indent=2))\nassert len(mcp_result['results'][0]['products']) == 2\nassert mcp_result['results'][1]['product']['warranty_years'] is None\nsave(OUT/'02_mcp.json',mcp_result)\n"
+      },
+      {
+        "type": "markdown",
+        "source": "## Step 6：查不到與查詢錯誤\n\n不存在 ID 應是 not_found；資料庫不存在應是操作錯誤。兩者不同。"
+      },
+      {
+        "type": "code",
+        "source": "from workshop.catalog import read_product\nprint(read_product(db,'UNKNOWN'))\ntry:\n    read_product(OUT/'missing.sqlite','DEMO-TW-032')\nexcept Exception as exc:\n    print('查詢失敗，非產品不存在：',type(exc).__name__)\nelse:\n    raise AssertionError('預期資料庫不存在')\n"
+      }
+    ]
+  },
+  "03_rag.ipynb": {
+    "intro": "# L03｜先找適用片段再下結論\n\n教材 v{{VERSION}}｜對照老師提供 PDF 173–220 頁。\n\n按順序執行，每格先預測、再觀察。資料是模擬的；本 notebook 執行 LangGraph／MCP 固定規則流程，不呼叫 LLM。真正模型研究請用同章 Antigravity 提示詞。安裝需網路，CPU 即可。\n\n每份自帶程式與資料，未上 GitHub 也能單獨上傳 Colab。",
+    "cells": [
+      {
+        "type": "markdown",
+        "source": "## Step 3：不篩選市場與版本\n\n先預測候選可能混入什麼。這是關鍵字示範，不是 embedding 或向量搜尋。"
+      },
+      {
+        "type": "code",
+        "source": "from workshop.flows import retrieve, save\nbefore = retrieve(current_only=False,k=3)\nprint(json.dumps(before,ensure_ascii=False,indent=2))\nsave(OUT/'03_candidates.json',before)\n"
+      },
+      {
+        "type": "markdown",
+        "source": "## Step 4：加入 metadata 篩選\n\n只保留現行 TW，核對 P-TW#2。"
+      },
+      {
+        "type": "code",
+        "source": "after = retrieve(market='TW',current_only=True,k=3)\nprint(json.dumps(after,ensure_ascii=False,indent=2))\nassert all(d['market']=='TW' and d['current'] for d in after)\nassert 'P-TW#2' in [d['id'] for d in after]\nsave(OUT/'03_filtered.json',after)\n"
+      },
+      {
+        "type": "markdown",
+        "source": "## Step 5：改 k，觀察候選而非只看答案\n\n將下面 k 改成 1 或 3，說明增加的片段是否有用。"
+      },
+      {
+        "type": "code",
+        "source": "k = 1\nprint(retrieve(k=k))\nanswer = {'requirement':'32 GB 與三年到府服務','source':'P-TW#2',\n          'market':'TW','version':'v2','product_memory':'符合，DEMO-TW-032',\n          'product_service':'待確認；未取得到府服務證據'}\nsave(OUT/'03_answer.json',answer)\nprint(answer)\n"
+      },
+      {
+        "type": "markdown",
+        "source": "## 驗收\n\n需求文件能否證明產品已符合？系列最高 32 GB 能否證明指定 SKU？把理由寫到自己筆記中；下一章補查 SKU 與服務證據。"
+      }
+    ]
+  },
+  "04_research_loop.ipynb": {
+    "intro": "# L04｜有界補查、角色交接與停止\n\n教材 v{{VERSION}}｜對照老師提供 PDF 240–259 頁。\n\n按順序執行，每格先預測、再觀察。資料是模擬的；本 notebook 執行 LangGraph／MCP 固定規則流程，不呼叫 LLM。真正模型研究請用同章 Antigravity 提示詞。安裝需網路，CPU 即可。\n\n每份自帶程式與資料，未上 GitHub 也能單獨上傳 Colab。",
+    "cells": [
+      {
+        "type": "markdown",
+        "source": "## Step 3：初查一次、最多補查兩輪\n\n角色為規則節點；真正模型角色工作由 Antigravity 操作。"
+      },
+      {
+        "type": "code",
+        "source": "from workshop.flows import research, save\nresult = research(max_rounds=2)\nfor item in result['trace']:\n    print(item)\nprint('矩陣：',result['matrix'])\nprint('停止：',result['stop_reason'])\nsave(OUT/'04_research.json',result)\n"
+      },
+      {
+        "type": "markdown",
+        "source": "## Step 4：只初查，不補查\n\n預測哪些結論會退回待確認。"
+      },
+      {
+        "type": "code",
+        "source": "initial = research(max_rounds=0)\nprint(initial['matrix'])\nprint(initial['stop_reason'])\nsave(OUT/'04_initial.json',initial)\nassert initial['matrix'][0]['status'] == '待確認'\nassert result['matrix'][0]['status'] == '符合'\nassert result['matrix'][1]['status'] == '待確認'\nassert result['round'] == 3\n"
+      },
+      {
+        "type": "markdown",
+        "source": "## Step 5：寫出一個修訂理由\n\n請修改下方內容；指出具體來源，而不是說 Reviewer 覺得沒問題。"
+      },
+      {
+        "type": "code",
+        "source": "reflection = 'SKU#1 證實指定配置 32 GB；SERVICE#3 顯示需加購，到府服務仍缺憑證。'\n(OUT/'04_revision.md').write_text(reflection,encoding='utf-8')\nprint(reflection)\n"
+      }
+    ]
+  },
+  "05_recovery.ipynb": {
+    "intro": "# L05｜跨程序中斷恢復與冪等性\n\n教材 v{{VERSION}}｜對照老師提供 PDF 283–299 頁。\n\n按順序執行，每格先預測、再觀察。資料是模擬的；本 notebook 執行 LangGraph／MCP 固定規則流程，不呼叫 LLM。真正模型研究請用同章 Antigravity 提示詞。安裝需網路，CPU 即可。\n\n每份自帶程式與資料，未上 GitHub 也能單獨上傳 Colab。",
+    "cells": [
+      {
+        "type": "markdown",
+        "source": "## Step 3：啟動第一個程序，故意在 ASUS 寫入後中斷\n\n應是非零 exit code；先不要重跑此格。"
+      },
+      {
+        "type": "code",
+        "source": "import subprocess, sys, sqlite3\nfrom workshop.flows import save\ncase = OUT/'recovery'\ncmd = [sys.executable,'-m','workshop.cli']\nfirst = subprocess.run(cmd+['recover-start','--out',str(case),'--thread','research-demo-01'],capture_output=True,text=True)\nprint('exit code:',first.returncode)\nprint(first.stderr[-700:])\nassert first.returncode != 0 and 'DEMO_CRASH_AFTER_ASUS_WRITE' in first.stderr\n"
+      },
+      {
+        "type": "markdown",
+        "source": "## Step 4：核對 checkpoint 與工具效果\n\n應是完成品牌 2 家，但取證紀錄已 3 筆。"
+      },
+      {
+        "type": "code",
+        "source": "state_before = json.loads((case/'state.json').read_text())\nprint(state_before)\nprint((case/'execution.jsonl').read_text())\nwith sqlite3.connect(case/'operations.sqlite') as db:\n    before_count = db.execute('SELECT COUNT(*) FROM operations').fetchone()[0]\nprint('唯一取證筆數：',before_count)\nassert set(state_before['values']['results']) == {'Dell','Lenovo'}\nassert state_before['next'] == ['ASUS'] and before_count == 3\nsave(OUT/'05_before.json',state_before)\n"
+      },
+      {
+        "type": "markdown",
+        "source": "## Step 5：第二個程序連回原存檔\n\n這裡不是在同一 Python 物件按繼續，是重新啟動程序。"
+      },
+      {
+        "type": "code",
+        "source": "second = subprocess.run(cmd+['recover-resume','--out',str(case),'--thread','research-demo-01'],capture_output=True,text=True)\nprint('exit code:',second.returncode)\nassert second.returncode == 0, second.stderr\nprint((case/'report.md').read_text())\n"
+      },
+      {
+        "type": "markdown",
+        "source": "## Step 6：用紀錄驗收恢復\n\nASUS 進兩次、唯一效果一筆；Dell／Lenovo 沒重進。"
+      },
+      {
+        "type": "code",
+        "source": "nodes = [json.loads(line)['node'] for line in (case/'execution.jsonl').read_text().splitlines()]\nprint(nodes)\nwith sqlite3.connect(case/'operations.sqlite') as db:\n    after_count = db.execute('SELECT COUNT(*) FROM operations').fetchone()[0]\nassert nodes == ['Dell','Lenovo','ASUS','ASUS']\nassert after_count == 3\nstate_after = json.loads((case/'state.json').read_text())\nassert state_after['next'] == []\nassert state_after['values']['results']['ASUS']['reused']\nsave(OUT/'05_acceptance.json',{'nodes':nodes,'unique_effects':after_count,'thread':'research-demo-01'})\nprint('驗收通過，下載成果保留 SQLite。')\n"
+      },
+      {
+        "type": "markdown",
+        "source": "## 儲存提醒\n\n整個 Colab runtime 回收後，ROOT 的暫存檔會消失。請下載下面的成果 ZIP，跨 runtime 時先還原完整 recovery 資料夾。沒有原 SQLite 就不能稱為恢復。"
+      }
+    ]
+  },
+  "06_review_monitor.ipynb": {
+    "intro": "# L06｜兩週追蹤、修改、核准與冪等通知\n\n教材 v{{VERSION}}｜對照老師提供 PDF 307–348 頁。\n\n按順序執行，每格先預測、再觀察。資料是模擬的；本 notebook 執行 LangGraph／MCP 固定規則流程，不呼叫 LLM。真正模型研究請用同章 Antigravity 提示詞。安裝需網路，CPU 即可。\n\n每份自帶程式與資料，未上 GitHub 也能單獨上傳 Colab。",
+    "cells": [
+      {
+        "type": "markdown",
+        "source": "## Step 3：保存第一週基準與第二週資料\n\n先對齊同 SKU、市場、幣別、稅別。"
+      },
+      {
+        "type": "code",
+        "source": "import sqlite3\nfrom workshop.flows import snapshot, detect, approval, digest, save, new_product\nold = snapshot(40000,source_id='SIM-W1',date='2026-10-26')\nnew = snapshot()\nsave(OUT/'week1.json',old)\nsave(OUT/'week2.json',new)\nevent = detect(old,new)\nprint(event)\nassert event['status']=='pending_review' and event['percent']==-15\nsave(OUT/'event.json',event)\ndef count(path):\n    if not pathlib.Path(path).exists():\n        return 0\n    with sqlite3.connect(path) as db:\n        return db.execute('SELECT COUNT(*) FROM operations').fetchone()[0]\n"
+      },
+      {
+        "type": "markdown",
+        "source": "## Step 4：產生 v1 待審單，通知仍為零\n\n人工讀取草稿、來源、收件人、附件 hash；下一格先選修改。"
+      },
+      {
+        "type": "code",
+        "source": "case = OUT/'revise_approve'\ns = approval(case,event)\nv1_hash = digest(s['draft'])\nprint(json.dumps(s,ensure_ascii=False,indent=2))\nassert count(case/'outbox.sqlite') == 0\n"
+      },
+      {
+        "type": "markdown",
+        "source": "## Step 5：修改為 v2，回到待審\n\n下面是你作為審核者的明確決定，可以改文案；不是模型自行核准。"
+      },
+      {
+        "type": "code",
+        "source": "s = approval(case,event,{'action':'revise','hash':v1_hash,\n    'text':'v2：同 SKU 降價 15%，附兩週來源；服務方案仍待確認。',\n    'reason':'需補上服務未知的限制'})\nprint(s['draft'])\nassert s['draft']['version']==2 and count(case/'outbox.sqlite')==0\ntry:\n    approval(case,event,{'action':'approve','hash':v1_hash})\nexcept ValueError as exc:\n    print('預期拒絕舊版核准：',exc)\nelse:\n    raise AssertionError('舊核准不應放行 v2')\n"
+      },
+      {
+        "type": "markdown",
+        "source": "## Step 6：核准目前 v2，只執行測試通知一次\n\n執行此格代表你對上格 v2 作課堂模擬核准。"
+      },
+      {
+        "type": "code",
+        "source": "decision = {'action':'approve','hash':digest(s['draft']),'reason':'已人工核對模擬來源與對象'}\ns = approval(case,event,decision)\nprint(s['delivery'])\nassert count(case/'outbox.sqlite') == 1\ntry:\n    approval(case,event,decision)\nexcept ValueError as exc:\n    print('重複核准：',exc)\nassert count(case/'outbox.sqlite') == 1\n# 同一事件重新觸發，沿用同 Thread 的完成結果，不多寄。\ns = approval(case,event)\nassert count(case/'outbox.sqlite') == 1\n"
+      },
+      {
+        "type": "markdown",
+        "source": "## Step 7：另兩條人工分支\n\n各自使用獨立資料夾；觀察核准一筆、駁回零筆。"
+      },
+      {
+        "type": "code",
+        "source": "for action in ['approve','reject']:\n    branch = OUT/action\n    state = approval(branch,event)\n    state = approval(branch,event,{'action':action,'hash':digest(state['draft']),'reason':'課堂分支測試'})\n    print(action,count(branch/'outbox.sqlite'))\n    assert count(branch/'outbox.sqlite') == (1 if action=='approve' else 0)\n"
+      },
+      {
+        "type": "markdown",
+        "source": "## Step 8：資料沒變、沒查到、條件不同、新品\n\n兩種零通知的狀態不同；新品需要發布依據。"
+      },
+      {
+        "type": "code",
+        "source": "scenarios = {\n    'unchanged':detect(old,dict(old)),\n    'missing':detect(old,snapshot(None)),\n    'different_sku':detect(old,snapshot(sku='OTHER')),\n    'new_product':new_product({'sku':'NEW-01','market':'TW','source_id':'SIM-RELEASE','release_date':'2026-11-02'})\n}\nprint(json.dumps(scenarios,ensure_ascii=False,indent=2))\nassert scenarios['unchanged']['status']=='no_major_change'\nassert scenarios['missing']['status']=='data_error'\nassert scenarios['different_sku']['status']=='not_comparable'\nsave(OUT/'scenarios.json',scenarios)\nnew_case = OUT/'new_product'\nnew_event = scenarios['new_product']\nnew_state = approval(new_case,new_event)\nassert count(new_case/'outbox.sqlite') == 0\nnew_state = approval(new_case,new_event,{'action':'approve','hash':digest(new_state['draft']),'reason':'已核對模擬發布依據'})\nassert count(new_case/'outbox.sqlite') == 1\n"
+      },
+      {
+        "type": "markdown",
+        "source": "## Step 9：發送前／後中斷，核對回執\n\n測試寄件器能查唯一操作識別。真實服務若結果查不明，應保留未知、交人工確認。"
+      },
+      {
+        "type": "code",
+        "source": "for position in ['before','after']:\n    branch = OUT/('crash_'+position)\n    state = approval(branch,event)\n    try:\n        approval(branch,event,{'action':'approve','hash':digest(state['draft'])},crash=position)\n    except RuntimeError as exc:\n        print('預期中斷：',exc)\n    print('恢復前筆數：',count(branch/'outbox.sqlite'))\n    state = approval(branch,event)\n    print('恢復後：',state['delivery'])\n    assert count(branch/'outbox.sqlite') == 1\n    assert state['delivery']['reused'] == (position=='after')\n"
+      },
+      {
+        "type": "markdown",
+        "source": "## Step 10：課堂驗收\n\n此格執行所有章節的 17 項驗收，包括真實 MCP 與跨程序恢復。測試用自己的暫存資料，不修改你的交付。"
+      },
+      {
+        "type": "code",
+        "source": "import subprocess\nresult = subprocess.run([sys.executable,'-m','unittest','discover','-s',str(ROOT/'tests'),'-v'],capture_output=True,text=True)\nprint(result.stdout)\nprint(result.stderr)\nassert result.returncode == 0\n(OUT/'acceptance.txt').write_text(result.stdout+result.stderr,encoding='utf-8')\n"
+      },
+      {
+        "type": "markdown",
+        "source": "## 最後的討論\n\n本課手動模擬每週觸發；沒有部署真實排程。請說明排程器、LangGraph、有效基準與人工 Inbox 分別負責什麼。"
+      }
+    ]
+  }
+}

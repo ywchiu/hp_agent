@@ -1,7 +1,41 @@
 # LLM Application - AI Agent 實戰課程
 
-AI Agent 開發實戰訓練，從基礎概念到企業級部署課程。
+## 2026/11/05 課程教材｜v0.1.0
 
+以本次 357 頁投影片 PDF 為基準，沿著同一個產品研究任務，逐步加入 Skill、MCP、RAG、研究分工、中斷恢復與人工審核。
+
+**同學請先開啟 [逐步教材首頁](workshop_20261105/README.md)，完成 [課前準備](workshop_20261105/docs/00_setup.md)，再依老師進度操作。**
+
+- **Antigravity 路線**：使用平台模型讀取資料、呼叫工具、研究及修訂；依 [操作指引](workshop_20261105/docs/01_antigravity.md) 一次貼一份 [提示詞](workshop_20261105/prompts/)。
+- **Colab 路線**：直接點下表開啟 notebook，依序執行、觀察及修改。使用模擬資料與固定規則流程，實際執行 LangGraph、MCP、SQLite；不呼叫付費模型 API。
+- 每份 notebook 都內嵌本版程式與資料，也可下載後單獨上傳 Colab。請另外下載成果 ZIP，保存報告與 SQLite。
+
+### 逐步實作
+
+| 章節 | 主題 | 學生操作步驟 | Colab |
+|---|---|---|---|
+| L00 | 環境檢查 | [操作步驟](workshop_20261105/docs/00_setup.md) | [開啟 Colab](https://colab.research.google.com/github/ywchiu/hp_agent/blob/main/workshop_20261105/notebooks/00_setup.ipynb) |
+| L01 | 第一份產品研究 | [操作步驟](workshop_20261105/labs/01_first_research.md) | [開啟 Colab](https://colab.research.google.com/github/ywchiu/hp_agent/blob/main/workshop_20261105/notebooks/01_first_research.ipynb) |
+| L02 | Skill 與 SQLite MCP | [操作步驟](workshop_20261105/labs/02_skill_mcp.md) | [開啟 Colab](https://colab.research.google.com/github/ywchiu/hp_agent/blob/main/workshop_20261105/notebooks/02_skill_mcp.ipynb) |
+| L03 | RAG 與引用查證 | [操作步驟](workshop_20261105/labs/03_rag.md) | [開啟 Colab](https://colab.research.google.com/github/ywchiu/hp_agent/blob/main/workshop_20261105/notebooks/03_rag.ipynb) |
+| L04 | 有界研究與角色交接 | [操作步驟](workshop_20261105/labs/04_research_loop.md) | [開啟 Colab](https://colab.research.google.com/github/ywchiu/hp_agent/blob/main/workshop_20261105/notebooks/04_research_loop.ipynb) |
+| L05 | 中斷恢復與冪等性 | [操作步驟](workshop_20261105/labs/05_recovery.md) | [開啟 Colab](https://colab.research.google.com/github/ywchiu/hp_agent/blob/main/workshop_20261105/notebooks/05_recovery.ipynb) |
+| L06 | 人工審核與兩週追蹤 | [操作步驟](workshop_20261105/labs/06_review_monitor.md) | [開啟 Colab](https://colab.research.google.com/github/ywchiu/hp_agent/blob/main/workshop_20261105/notebooks/06_review_monitor.ipynb) |
+
+### 講師與同步維護
+
+- [講師手冊與參考答案](workshop_20261105/docs/02_instructor.md)／[學生成果清單](workshop_20261105/docs/03_submission.md)
+- [投影片頁碼對照與同步方式](workshop_20261105/docs/05_slide_sync.md)／[GitHub 更新步驟](workshop_20261105/docs/06_github.md)
+- [排錯](workshop_20261105/docs/04_troubleshooting.md)／[驗證範圍](workshop_20261105/VERIFICATION.md)
+
+七份 notebooks 已通過本機逐格執行，17 項核心驗收通過。Antigravity App、Colab 網頁端與 Windows 仍需課前演練。產品資料及通知均為教學模擬；未部署正式排程或寄件服務。
+
+---
+
+<details>
+<summary>2026 年 4 月教材與 API Agent 延伸範例</summary>
+
+以下為先前版本的 notebooks、Labs 與環境說明；2026/11/05 課堂請優先使用上方教材。舊版模型 API 範例的金鑰與套件需求另行確認。
 
 ## Demo20260409
 - https://colab.research.google.com/drive/1ROpSynJCc3JDcFTiKz1x1oAEm-tvl_bt?usp=sharing
@@ -113,3 +147,5 @@ https://colab.research.google.com/github/ywchiu/hp_agent/blob/main/code/<NOTEBOO
 | Lab 3 | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ywchiu/hp_agent/blob/main/code/labs/Lab3_RAG_Grader.ipynb) |
 | Lab 4 | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ywchiu/hp_agent/blob/main/code/labs/Lab4_Deep_Research.ipynb) |
 
+
+</details>
