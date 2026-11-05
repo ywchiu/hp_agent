@@ -1,4 +1,4 @@
-"""離線模型驗證：真實 LangGraph／MCP，以模型替身執行；不使用真實 Key。"""
+"""預設使用模型替身驗證第一天；--live-model 讀取 .env，實際呼叫模型。"""
 import argparse
 import json
 import os
@@ -12,8 +12,17 @@ from nbclient import NotebookClient
 p=argparse.ArgumentParser()
 p.add_argument('--out',default=None)
 p.add_argument('--day', choices=['1','2','all'], default='1')
+p.add_argument('--live-model', action='store_true', help='只跑第一天，讀取指定 .env，真的呼叫模型 API')
+p.add_argument('--env-file', type=Path, default=Path(__file__).resolve().parents[2]/'.env')
 args=p.parse_args()
 root=Path(__file__).resolve().parents[1]
+live_key=None
+if args.live_model:
+    from dotenv import dotenv_values
+    values=dotenv_values(args.env_file)
+    live_key=values.get('OPENAI_API_KEY') or values.get('OPENAIAPI_KEY')
+    if not live_key:
+        raise SystemExit('指定 .env 沒有可用的模型 Key。')
 out=Path(args.out or tempfile.mkdtemp(prefix='hp_notebook_qa_')).resolve()
 out.mkdir(parents=True,exist_ok=True)
 # 將測試 kernel 固定到這個 interpreter，避免使用另一個未裝套件的全域 kernel。
@@ -28,24 +37,37 @@ results=[]
 for path in sorted((root/'notebooks').glob('*.ipynb')):
     nb=nbformat.read(path,as_version=4)
     day=nb.metadata.hp_workshop.get('day',2)
+    if args.live_model and day!=1:
+        continue
     if args.day!='all' and int(args.day)!=day:
         continue
     work=out/path.stem
     work.mkdir(parents=True,exist_ok=True)
     if day==1:
         # 注入只存在於測試副本的模型替身；發布 notebook 不含此格。
-        nb.cells.insert(0,nbformat.v4.new_code_cell(
-            f'import sys, openai\nsys.path.insert(0, {str(root/"tests")!r})\n'
-            'from day1_fakes import FakeClient\n'
-            'openai.AsyncOpenAI = FakeClient\n'))
+        if not args.live_model:
+            nb.cells.insert(0,nbformat.v4.new_code_cell(
+                f'import sys, openai\nsys.path.insert(0, {str(root/"tests")!r})\n'
+                'from day1_fakes import FakeClient\n'
+                'openai.AsyncOpenAI = FakeClient\n'))
         for c in nb.cells:
             if c.cell_type=='code' and 'API_KEY = getpass(' in c.source:
                 # nbclient 不支援互動輸入；僅在測試副本取代此提示。
-                c.source='getpass = lambda *a, **k: "qa-only-not-a-key"\n'+c.source
+                source='getpass = lambda *a, **k: os.environ.pop("HP_WORKSHOP_QA_KEY")\n' if args.live_model else 'getpass = lambda *a, **k: "qa-only-not-a-key"\n'
+                c.source=source+c.source
     start=time.monotonic()
-    NotebookClient(nb,timeout=180,kernel_name='python3',resources={'metadata':{'path':str(work)}}).execute()
+    kernel_env=dict(os.environ)
+    if live_key:
+        kernel_env['HP_WORKSHOP_QA_KEY']=live_key
+    try:
+        NotebookClient(nb,timeout=180,kernel_name='python3',resources={'metadata':{'path':str(work)}}).execute(env=kernel_env)
+    except Exception as error:
+        message=str(error)
+        if live_key:
+            message=message.replace(live_key,'[REDACTED]')
+        raise SystemExit(message) from None
     nbformat.write(nb,out/path.name)
-    results.append({'notebook':path.name,'status':'passed','model':'test double' if day==1 else 'no model',
+    results.append({'notebook':path.name,'status':'passed','model':'gpt-6-luna' if args.live_model else 'test double' if day==1 else 'no model',
                     'code_cells':sum(c.cell_type=='code' for c in nb.cells),
                     'seconds':round(time.monotonic()-start,2)})
     print(path.name,'PASS',flush=True)

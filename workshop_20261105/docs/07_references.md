@@ -4,7 +4,7 @@
 
 - [OpenAI Function calling](https://developers.openai.com/api/docs/guides/function-calling)：第一天使用 Responses API 的工具要求與 function_call_output。
 - [OpenAI Quickstart](https://developers.openai.com/api/docs/quickstart)：模型 API 的基本使用。
-- [GPT-4.1 mini](https://developers.openai.com/api/docs/models/gpt-4.1-mini)：本範例預設模型；老師可依課堂帳號可用模型調整。
+- [GPT-6 Luna](https://developers.openai.com/api/docs/models/gpt-6-luna)：本範例預設模型；老師可依課堂帳號可用模型調整。
 
 - [LangGraph Persistence](https://docs.langchain.com/oss/python/langgraph/persistence)：區分 thread 內的 checkpoint 與跨任務資料。本教材用磁碟 SQLite 保存 graph state。
 - [LangGraph Interrupts](https://docs.langchain.com/oss/python/langgraph/interrupts)：`interrupt` 暫停，使用原 thread 與 `Command(resume=...)` 恢復。恢復會從節點開頭重進，副作用需另行處理。

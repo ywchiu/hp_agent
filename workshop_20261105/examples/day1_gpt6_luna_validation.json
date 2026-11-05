@@ -1,0 +1,37 @@
+{
+  "model": "gpt-6-luna",
+  "scope": "day1 afternoon only",
+  "model_api_live_tested": true,
+  "colab_web_tested": false,
+  "research_runs": 6,
+  "model_calls": 17,
+  "results": [
+    {
+      "notebook": "01_first_research.ipynb",
+      "status": "passed",
+      "model": "gpt-6-luna",
+      "code_cells": 8,
+      "seconds": 13.97
+    },
+    {
+      "notebook": "02_skill_mcp.ipynb",
+      "status": "passed",
+      "model": "gpt-6-luna",
+      "code_cells": 8,
+      "seconds": 14.3
+    },
+    {
+      "notebook": "02b_company_database.ipynb",
+      "status": "passed",
+      "model": "gpt-6-luna",
+      "code_cells": 10,
+      "seconds": 10.74
+    }
+  ],
+  "acceptance": {
+    "TW_configuration_and_unknown_warranty": true,
+    "skill_rules_applied": true,
+    "true_mcp_sqlite": true,
+    "mcp_not_found": true
+  }
+}

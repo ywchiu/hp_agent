@@ -7,10 +7,11 @@
 - 第一天下午新增 8 項測試通過，涵蓋實際 OpenAI SDK 的模擬 HTTP 工具往返、Skill 原文傳入、MCP 探索與查詢、市場與空值、not_found、錯誤及六次上限。
 - 三張狀態圖已以 draw.io 匯出並目視核對；第一天 notebook 的圖放在第一個執行格上方。
 - 相對連結、357 頁對照、原始碼同步與 notebook 語法檢查通過；三份成果 ZIP 完整且未含測試 Key。
-- 未使用老師的真實 Key 扣款，未在 Colab 網頁端、Antigravity App 或 Windows 演練。模型回答品質及互動輸入仍需老師使用課堂帳號演練。
+- 已使用使用者指定 `.env` 的既有 Key，以 `gpt-6-luna` 真實執行第一天三份 notebook、六次研究，共 17 次模型呼叫。核對 TW 兩筆資料、保固缺漏、Skill 規則、MCP 查詢與 not_found 均符合預期。
+- 尚未在 Colab 網頁端、Antigravity App 或 Windows 演練；Colab 隱藏輸入框仍需在網頁端確認。
 - 第二天 notebooks、原始流程與課堂內容保持原樣。
 
-逐格紀錄：[第一天下午驗證](examples/day1_validation.json)。維護者執行 `python scripts/run_notebooks.py`，預設只驗證第一天下午。
+實際模型紀錄：[GPT-6 Luna 驗證](examples/day1_gpt6_luna_validation.json)；離線紀錄：[第一天下午驗證](examples/day1_validation.json)。維護者執行 `python scripts/run_notebooks.py`，預設只驗證第一天下午。加上 `--live-model` 可讀取專案根目錄 `.env`，實際呼叫 `gpt-6-luna`。
 
 ## v0.1.0 歷史紀錄
 

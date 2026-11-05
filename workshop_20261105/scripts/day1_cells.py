@@ -32,7 +32,7 @@ display(Markdown("|資料 ID|市場|記憶體 GB|儲存 GB|保固年數|更新�
 API_KEY = getpass("貼上老師提供的 API Key，然後按 Enter：").strip()
 if not API_KEY:
     raise ValueError("還沒有輸入 Key；請重跑這一格。")
-MODEL = "gpt-4.1-mini" # @param {type:"string"}
+MODEL = "gpt-6-luna" # @param {type:"string"}
 print("Key 已暫存於本次執行階段；不顯示、不存入報告。模型：", MODEL)
 '''
     prepare = '''## 第 1 步｜開啟範例，按播放鍵
@@ -49,7 +49,7 @@ print("Key 已暫存於本次執行階段；不顯示、不存入報告。模型
 
 **為什麼做：** 接下來會真的呼叫模型 API，讓模型判斷要用哪個工具。產品資料是模擬的，模型回答會依需求產生。
 
-**怎麼做：** 按下格 ▶，在執行時跳出的輸入框貼上老師當堂提供的 Key，按 Enter。輸入不會顯示。每份 notebook 都要輸入一次；模型名稱依老師指定調整，預設為 `gpt-4.1-mini`。不用自己申請 Key。
+**怎麼做：** 按下格 ▶，在執行時跳出的輸入框貼上老師當堂提供的 Key，按 Enter。輸入不會顯示。每份 notebook 都要輸入一次；模型名稱依老師指定調整，預設為 `gpt-6-luna`。不用自己申請 Key。
 
 **應該看到：**「Key 已暫存於本次執行階段」。執行階段重啟後需重新輸入。不要把 Key 寫進程式碼、AI 對話或分享的 notebook。
 
@@ -69,7 +69,7 @@ print("Key 已暫存於本次執行階段；不顯示、不存入報告。模型
     def m(text): return ('markdown', text, False)
     def c(text, folded=True): return ('code', text, folded)
     def opening(title, diagram, explanation):
-        return m(f'# {title}\n\n第一天下午｜教材 v0.2.0｜每次只改指定欄位。\n\n'
+        return m(f'# {title}\n\n第一天下午｜每次只改指定欄位。\n\n'
                  f'![LangGraph 狀態圖]({raw}{diagram}.png)\n\n{explanation}\n\n'
                  '**看圖方式：** 箭頭是工作順序；State 是助理隨身帶著的工作紀錄。'
                  '模型讀問題與已有證據，要求工具就走下方，再帶資料回模型；沒有工具要求就交付回答。'

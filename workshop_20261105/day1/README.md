@@ -10,7 +10,7 @@
 
 每份 notebook 上方先放狀態圖，再逐步說明「為什麼做、按哪裡／改什麼、應該看到什麼、卡住如何請 AI 修正」。不必先讀程式；底層程式預設收起，保留可展開的明文原始碼。
 
-老師當堂提供模型 API Key，同學在執行時輸入框貼上，不用自行申請。每章獨立執行、輸入一次，重啟執行階段要重新輸入。模型預設 `gpt-4.1-mini`，由老師依課堂可用模型調整。每章研究前後各跑一次，每次最多六次模型呼叫。
+老師當堂提供模型 API Key，同學在執行時輸入框貼上，不用自行申請。每章獨立執行、輸入一次，重啟執行階段要重新輸入。模型預設 `gpt-6-luna`，由老師依課堂可用模型調整。每章研究前後各跑一次，每次最多六次模型呼叫。
 
 DemoBook 與產品規格為教學模擬資料；模型 API、LangGraph、MCP 協定與 SQLite 查詢會真的執行。沒有即時官網研究，也沒有連到正式企業資料庫。
 
@@ -39,7 +39,7 @@ State 就是助理帶著走的工作紀錄：你的問題、工具結果、呼�
 
 開啟這個 GitHub 專案的本機工作區後，直接貼 [第一份任務](../prompts/01_first_research.txt)。讓 AI 安裝套件、指出執行方式及準備修改；同學專注在需求和結果。接著依序貼 [Skill 任務](../prompts/02_skill.txt) 與 [MCP 任務](../prompts/03_mcp.txt)，一次一個。
 
-Antigravity 對話使用平台帳號的模型；若示範本教材的 LangGraph 程式，使用相同的課堂 Key，由同學在自己操作的互動式終端輸入，程式不把 Key 寫進檔案。不要把 Key 貼到 AI 對話裡。AI 可以協助改程式與執行步驟，但「完成」仍要以報告與工具紀錄驗收。
+Antigravity 對話使用平台帳號的模型；若示範本教材的 LangGraph 程式，使用相同的課堂 Key，本機會優先讀本專案 `.env`；沒有設定才由同學在互動式終端輸入。程式不把 Key 寫進報告。不要把 Key 貼到 AI 對話裡。AI 可以協助改程式與執行步驟，但「完成」仍要以報告與工具紀錄驗收。
 
 老師若要直接示範 Antigravity 透過 MCP 呼叫工具，讓 AI 使用 [company_database.py](company_database.py) 配置 `company-database` stdio 服務，再核對模型的實際工具紀錄。Colab 已把同一套服務串好，同學不用手動設定。
 
@@ -56,4 +56,4 @@ python3 -m venv .venv
 .venv/bin/python day1/research_agent.py --skill --mcp --out runs/day1/03
 ```
 
-執行時才會出現 Key 輸入提示。修改規則使用 [SKILL.md](SKILL.md)；修改問題讓 AI 在命令加上 `--task "你的中文問題"`，並換一個 `--out` 留下前後版本。每次程式啟動都需重新輸入 Key。
+本機程式優先讀取專案根目錄 `.env` 的 `OPENAI_API_KEY` 或 `OPENAIAPI_KEY`；沒有時才顯示 Key 輸入提示。修改規則使用 [SKILL.md](SKILL.md)；修改問題讓 AI 在命令加上 `--task "你的中文問題"`，並換一個 `--out` 留下前後版本。Colab 仍使用老師當堂提供的隱藏輸入框，不需上傳 `.env`。

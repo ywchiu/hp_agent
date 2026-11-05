@@ -2,7 +2,7 @@ P01｜第一份研究
 我已開啟 hp_agent 工作區。請以 workshop_20261105/day1/README.md 為主，協助我完成第一份產品研究。
 1. 先用白話說明 day1/assets/01_research_state.png，告訴我模型、工具和狀態各做什麼。
 2. 使用 day1/research_agent.py 現成範例，替我建立專用虛擬環境，安裝 day1/requirements.txt。不改舊課程與產品資料。
-3. 準備一行能在我自己操作的互動式終端執行的命令，輸出放 workshop_20261105/runs/day1/01_before。程式啟動後我會貼老師給的 Key；不要在對話詢問 Key、讀私人 .env，或把 Key 寫到檔案。
+3. 準備一行能在我自己操作的互動式終端執行的命令，輸出放 workshop_20261105/runs/day1/01_before。程式優先讀取本專案 .env 的既有 Key，沒有設定時我會在終端輸入老師給的 Key。不要在對話詢問或顯示 Key，也不要將 Key 寫到報告或其他檔案。
 4. 預設問題比較 DemoBook A 台灣版 16 GB 與 32 GB；資料是教學模擬，模型 API 與工具真的執行。若我尚未執行，不可宣稱研究已完成。
 5. 執行後協助核對 report.md 與 research_log.json：只有兩筆 TW、16 GB 保固 1 年、32 GB 保固待確認，保留來源 ID 與日期。
 6. 接著請幫我只修改中文研究問題，補「採購前要問的三個問題」，提供重跑命令，另存 01_after。用前後報告驗收，不改產品事實。

@@ -72,7 +72,7 @@ async def connect_tools(data_path, mcp_server=None, output_dir='results'):
                 yield schemas, call
 
 
-async def run_research(task=DEFAULT_TASK, *, api_key=None, model='gpt-4.1-mini', skill='',
+async def run_research(task=DEFAULT_TASK, *, api_key=None, model='gpt-6-luna', skill='',
                        data_path='products.json', mcp_server=None, output_dir='results', client=None):
     """真正呼叫模型；測試時可傳入測試 client。Key 不寫進檔案或輸出。"""
     folder = Path(output_dir)
@@ -85,7 +85,8 @@ async def run_research(task=DEFAULT_TASK, *, api_key=None, model='gpt-4.1-mini',
         async with connect_tools(data_path, mcp_server, folder) as (schemas, call):
             async def ask_model(state):
                 response = await client.responses.create(model=model, instructions=BASE_RULES+'\n'+skill,
-                    input=state['messages'], tools=schemas, store=False, max_output_tokens=1800)
+                    input=state['messages'], tools=schemas, store=False, max_output_tokens=1800,
+                    **({'reasoning': {'effort': 'none'}} if model.startswith('gpt-6') else {}))
                 calls = [item.model_dump(exclude_none=True) for item in response.output if item.type == 'function_call']
                 return {'messages': state['messages']+[item.model_dump(exclude_none=True) for item in response.output],
                         'calls': calls, 'turns': state['turns']+1, 'report': response.output_text}
@@ -130,15 +131,19 @@ async def run_research(task=DEFAULT_TASK, *, api_key=None, model='gpt-4.1-mini',
 
 
 if __name__ == '__main__':
+    from dotenv import dotenv_values
+    root = Path(__file__).resolve().parents[1]
     parser = argparse.ArgumentParser()
     parser.add_argument('--task', default=DEFAULT_TASK)
-    parser.add_argument('--model', default='gpt-4.1-mini')
+    parser.add_argument('--model', default='gpt-6-luna')
+    parser.add_argument('--env-file', type=Path, default=root.parent/'.env')
     parser.add_argument('--skill', action='store_true')
     parser.add_argument('--mcp', action='store_true')
     parser.add_argument('--out', default='runs/day1')
     args = parser.parse_args()
-    root = Path(__file__).resolve().parents[1]
+    values = dotenv_values(args.env_file) if args.env_file.is_file() else {}
+    key = values.get('OPENAI_API_KEY') or values.get('OPENAIAPI_KEY')
     skill = (root/'day1/SKILL.md').read_text(encoding='utf-8') if args.skill else ''
-    result = asyncio.run(run_research(args.task, model=args.model, skill=skill, data_path=root/'data/products.json',
+    result = asyncio.run(run_research(args.task, api_key=key, model=args.model, skill=skill, data_path=root/'data/products.json',
         mcp_server=root/'day1/company_database.py' if args.mcp else None, output_dir=args.out))
     print(result['report'])
