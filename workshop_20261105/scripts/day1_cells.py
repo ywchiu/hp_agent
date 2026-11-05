@@ -97,7 +97,7 @@ print("Key 已暫存於本次執行階段；不顯示、不存入報告。模型
 按下格 ▶。它把可閱讀的 MCP 服務原始碼放進這次執行階段；研究開始時自動啟動服務、探索工具並建立教學 SQLite，不需要寫 SQL 或設定伺服器。完成會顯示 `Writing company_database.py` 或 `Overwriting company_database.py`。
 
 本章只提供兩個查詢工具。若啟動失敗，貼最後一段錯誤給 AI：「請修復 MCP 連線，保留工具名稱與唯讀查詢，不可改成直接讀 JSON 冒充 MCP。」'''),
-                      c('%%writefile company_database.py\n'+(root/'day1/company_database.py').read_text())]
+                      c('%%writefile company_database.py\n# @title 寫入 MCP 服務（按播放，不用修改）\n'+(root/'day1/company_database.py').read_text())]
         cells += [m(key_help), c(credentials)]
         cells += [m('''## 第 3 步｜先交辦一次，留下比較基準
 

@@ -279,6 +279,8 @@ old_hash = review_state["hash"]
 new_text = review_state["draft"]["body"]+"\\n\\n補充要求："+ADD_REQUIREMENT
 review_state = case.approval(REVIEW_DIR,decision={"action":"revise","hash":old_hash,"text":new_text})
 show(review_state)
+display(Markdown("### 修改後的待審草稿"))
+display(Markdown(review_state["draft"]["body"]))
 assert review_state["pending"] and review_state["hash"]!=old_hash
 assert review_state["outbox_count"]==0
 ''',False),m('''## 第 5 步｜決定是否核准，並讀取真實來源快照
