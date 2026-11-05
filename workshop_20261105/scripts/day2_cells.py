@@ -74,7 +74,7 @@ print("Key 已暫存，不顯示也不存檔。模型：", MODEL)
 **應該看到：** Key 已暫存與模型名稱，不會顯示 Key。本章真的呼叫模型，重跑會產生用量。401 請老師確認 Key；429 請老師確認課堂額度；模型不存在時使用老師指定名稱。只回報錯誤碼，不貼 Key，不要將 Key 放進 AI 對話或 GitHub。
 ''')
     def start(title,diagram,flow,state):
-        return [opening(title,diagram,flow,state),prepare,c(install),c('%%writefile day2_case.py\n'+(root/'day2/procurement.py').read_text()),c(dataset),key,c(creds)]
+        return [opening(title,diagram,flow,state),prepare,c(install),c('%%writefile day2_case.py\n# @title 寫入本章流程（按播放，不用修改）\n'+(root/'day2/procurement.py').read_text()),c(dataset),key,c(creds)]
     def restore(folder):
         return [m('### 選做：在全新 Colab 還原上次的成果 ZIP\n\n第一次上課跳過。若要接續上次進度，先用左側「檔案 → 上傳」放入ZIP，再只填下格檔名並播放。接下來照原步驟操作；程式會沿用已還原的任務，不重新建立。請用全新執行階段，不能覆蓋已有成果的資料夾。'),
                 c(f'''# @title 選做：還原上次下載的ZIP（第一次執行留空）

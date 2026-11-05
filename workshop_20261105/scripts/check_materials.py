@@ -46,6 +46,8 @@ for name, generated in expected.items():
         if c['cell_type']!='code':
             continue
         source=''.join(c['source'])
+        if doc['metadata']['hp_workshop']['day']==2 and c['metadata'].get('cellView')=='form' and not re.search(r'^#\s*@title\s',source,re.M):
+            errors.append(name+': folded Colab cell needs a visible title')
         if source.startswith('%%writefile '):
             source=source.split('\n',1)[1]
         ast.parse(source)

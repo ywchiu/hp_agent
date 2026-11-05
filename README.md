@@ -29,6 +29,8 @@
 - [投影片頁碼對照與同步方式](workshop_20261105/docs/05_slide_sync.md)／[GitHub 更新步驟](workshop_20261105/docs/06_github.md)
 - [排錯](workshop_20261105/docs/04_troubleshooting.md)／[驗證範圍](workshop_20261105/VERIFICATION.md)
 
+Colab 網頁已實測 L03：Key 輸入、修改問題、模型回答與 ZIP 下載通過；L04–L06 的網頁流程尚未驗證。
+
 完整入口見 [逐步教材首頁](workshop_20261105/README.md)，實測與尚未實測範圍見 [驗證紀錄](workshop_20261105/VERIFICATION.md)。第一天產品為模擬；第二天使用官方產品資料，企業採購數字為教學情境，詢價草稿只存本機。
 
 ---

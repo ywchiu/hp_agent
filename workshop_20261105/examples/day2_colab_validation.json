@@ -1,0 +1,51 @@
+{
+  "date": "2026-11-05",
+  "platform": "Google Colab 網頁 / 已登入帳號 / Python 3 CPU 雲端執行階段",
+  "notebook": "03_rag.ipynb",
+  "loaded_revision": "fc4eb0f",
+  "notebook_url": "https://colab.research.google.com/github/ywchiu/hp_agent/blob/main/workshop_20261105/notebooks/03_rag.ipynb",
+  "model": "gpt-6-luna",
+  "actual_model_calls": 3,
+  "main_flow_code_cells": 8,
+  "checks": {
+    "diagram_rendered": true,
+    "install_on_cloud_runtime": true,
+    "official_source_table": true,
+    "getpass_masked_input": true,
+    "before_report": true,
+    "after_report": true,
+    "citations_unknown_ids": [],
+    "question_edited_in_form_and_rerun": true,
+    "copy_to_drive_saved": true,
+    "zip_automatic_download": true,
+    "zip_files_panel_download": true,
+    "zip_crc_valid": true,
+    "zip_contains_actual_key": false,
+    "source_cell_folded_and_executed_after_title_fix": true
+  },
+  "download": {
+    "name": "03_rag_成果.zip",
+    "sha256": "d969c4af90677be772d75bdce60f60f4888fa8eeea3f973f113d09de235a3748",
+    "file_count": 8,
+    "files": [
+      "before/report.md",
+      "before/trace.json",
+      "after/report.md",
+      "after/trace.json",
+      "questions.json",
+      "inputs/case.json",
+      "inputs/sources.json",
+      "inputs/evidence.json"
+    ],
+    "scope": "原始問題與預設改問後的兩份報告；額外表單改問重跑由網頁輸出核對。"
+  },
+  "observed_fix": "%%writefile下方補上Colab @title；網頁已確認原始碼收起且可執行，四份Day 2 notebook共用此修正。",
+  "automation_note": "Colab輸出iframe發起的下載未被page download事件捕捉；另從瀏覽器下載記錄確認3次檔案下載完成，取得實際ZIP核對內容。",
+  "not_verified": [
+    "L04–L06的Colab網頁執行",
+    "重新登入或其他Google帳號",
+    "Antigravity App",
+    "Windows",
+    "正式寄件與持續排程"
+  ]
+}

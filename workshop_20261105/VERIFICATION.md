@@ -10,7 +10,9 @@
 - 33項測試通過（第二天新增7項），涵蓋來源適用性、27格矩陣、角色上限、操作／checkpoint差異、資料身分、ZIP恢復、快取失效及審核／監測錯誤分支。單元測試使用模型替身；實跑notebook使用真實API。
 - 四張draw.io狀態圖已匯出並目視核對。七份notebook皆為明文程式，圖放上方、六步白話說明，發布版清空執行輸出。來源manifest、357頁對照、語法及相對連結通過；第一天檔案SHA-256完全相同。
 - 實測修正：角色輸出截斷、修訂稿誤回審查摘要，以及API讀取逾時。現在限制篇幅、要求完整報告；L04相同輸入重用已完成角色回覆，任務／證據變動會重新呼叫。
-- 尚未在Colab網頁端、Antigravity App或Windows演練；沒有驗證登入、互動Key及下載UI，未部署持續排程或正式寄件。Colab相容性依本機Jupyter、既有事件迴圈與真實檔案串流測試，不等同雲端帳號已測。
+- 已在實際Colab網頁、已登入帳號與Python 3 CPU雲端執行階段跑通L03：安裝、來源表、隱藏Key輸入、前後兩份RAG報告、引用檢查、ZIP下載及複製到雲端硬碟。另透過表單修改中文問題並重跑，這次網頁測試共3次真實gpt-6-luna呼叫。ZIP解壓CRC通過，8個檔案含需求／來源／片段、前後報告與trace，逐檔確認不含Key。詳見[Colab網頁驗證](examples/day2_colab_validation.json)。
+- 網頁實測發現流程原始碼格缺少Colab表單標題，導致整段程式攤開；已補上標題，並在Colab確認收合後仍可執行，同步套用第二天四份notebook。
+- L04–L06仍只有本機Jupyter實跑；本次未驗證重新登入、其他Google帳號、Antigravity App或Windows，未部署持續排程或正式寄件。
 
 實際產物：[驗證摘要](examples/day2_validation.json)、[講師示例](examples/day2/README.md)。重跑：`python scripts/run_notebooks.py --day 2 --live-model`；只跑一章可加`--notebook 04_research_loop.ipynb`。Key不寫入程式、報告、ZIP或發布notebook。
 
@@ -39,7 +41,7 @@ Colab MCP 相容性修正：重現預設 stderr 不支援 `fileno()` 時的同�
 - 七份 notebook 已在各自獨立 Jupyter kernel 逐格執行通過，包含內嵌教材展開、MCP、跨程序中斷恢復、三種審核分支與成果 ZIP 產生。
 - Markdown 相對連結、357 頁涵蓋、Python 語法及七份 notebook 內嵌雜湊同步檢查通過。
 
-本次未在 Google Colab 網頁端、Windows 或 Antigravity App 中實際演練；未執行平台模型研究、真實官網選做、正式寄件或真實排程。Antigravity 操作指引提供可執行步驟，平台 UI 與模型行為須課前確認。
+此早期版本當時未在 Google Colab 網頁端、Windows 或 Antigravity App 中實際演練；未執行平台模型研究、真實官網選做、正式寄件或真實排程。Antigravity 操作指引提供可執行步驟，平台 UI 與模型行為須課前確認。
 
 套件安裝在獨立環境完成；notebook 自動驗證使用同一已安裝環境略過重複安裝，仍逐格執行 bootstrap、流程、MCP 與驗收。本機 notebook 成功不代表 Colab 帳號、網路或方案均已驗證。
 
