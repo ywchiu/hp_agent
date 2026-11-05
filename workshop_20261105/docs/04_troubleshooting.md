@@ -15,7 +15,7 @@
 | MCP 啟動後沒有文字 | stdio 服務在等待協定訊息 | 用教材 client 或 Antigravity 呼叫；不是開網頁連 localhost |
 | MCP 服務找不到 workshop | 設定中的 Python 路徑、PYTHONPATH | 用本機 venv 執行 `scripts/make_mcp_config.py` 重新產生；不要手填別人的路徑 |
 | 第一個恢復命令回傳非零 | 是否包含 LESSON_PAUSE_AFTER_LENOVO_EFFECT 且結束碼23 | 只有該訊息及結束碼組合才是預定中斷；先讀 state.json，以相同目錄與Thread跑 resume |
-| 恢復時找不到 Thread | 同一資料夾、同一 Thread、SQLite 是否還在 | 還原完整成果 ZIP；不可換 Thread 後稱為恢復 |
+| 恢復時找不到 Thread | 同一資料夾、同一 Thread、SQLite 是否還在 | 還原完整備份 ZIP；不可換 Thread 後稱為恢復 |
 | Thread 已存在 | 是否重跑 recover-start | 同輪用 resume；新一輪換全新目錄，不刪除舊證據 |
 | SQLite database is locked | 是否同時操作同一資料庫 | 一次一個程序；本教材不演示多 worker 併發 |
 | stale approval | hash 是否對應目前草稿與收件人 | 重新讀取待審版本，重新核准；不要刪掉檢查 |

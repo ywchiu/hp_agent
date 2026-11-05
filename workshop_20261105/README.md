@@ -12,7 +12,7 @@
 |L02A Skill|[操作步驟](labs/02_skill_mcp.md)|[修改研究規則](https://colab.research.google.com/github/ywchiu/hp_agent/blob/main/workshop_20261105/notebooks/02_skill_mcp.ipynb)|白話 Skill、前後報告|
 |L02B MCP|[操作步驟](labs/02_skill_mcp.md)|[查詢 SQLite](https://colab.research.google.com/github/ywchiu/hp_agent/blob/main/workshop_20261105/notebooks/02b_company_database.ipynb)|MCP 紀錄、正常／查不到的回答|
 
-資料是模擬產品；模型 API、LangGraph、MCP 與 SQLite 會實際執行。Key 在執行時輸入框貼上，不寫入教材。這三份 notebook 自帶明文程式與資料，可以下載後單獨上傳 Colab；依序播放收起的準備格即可。每章只修改指定中文問題或規則，最後下載成果 ZIP。
+資料是模擬產品；模型 API、LangGraph、MCP 與 SQLite 會實際執行。Key 在執行時輸入框貼上，不寫入教材。這三份 notebook 自帶明文程式與資料，可以下載後單獨上傳 Colab；依序播放收起的準備格即可。每章只修改指定中文問題或規則，最後直接在畫面核對前後結果。
 
 ## 第二天：企業120台商務筆電採購研究
 
@@ -28,7 +28,7 @@
 ## 講師與維護
 
 - [Antigravity 操作](docs/01_antigravity.md)／[可複製任務指令](prompts/)
-- [講師手冊](docs/02_instructor.md)／[學生成果](docs/03_submission.md)／[排錯](docs/04_troubleshooting.md)
+- [講師手冊](docs/02_instructor.md)／[課堂觀察清單（選用）](docs/03_submission.md)／[排錯](docs/04_troubleshooting.md)
 - [投影片同步](docs/05_slide_sync.md)／[GitHub 更新](docs/06_github.md)／[技術參考](docs/07_references.md)
 - [版本紀錄](CHANGELOG.md)／[驗證範圍](VERIFICATION.md)
 

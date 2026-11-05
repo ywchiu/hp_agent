@@ -45,7 +45,7 @@ print("Key 已暫存，不顯示也不存檔。模型：", MODEL)
     def opening(title,diagram,flow,state):
         return m(f'''# {title}
 
-第二天｜台灣企業 120 台商務筆電採購案｜先看狀態圖，再依六步操作。
+第二天｜台灣企業 120 台商務筆電採購案｜先看狀態圖，再依五步操作。
 
 ![LangGraph 狀態圖]({raw}{diagram}.png)
 
@@ -76,7 +76,7 @@ print("Key 已暫存，不顯示也不存檔。模型：", MODEL)
     def start(title,diagram,flow,state):
         return [opening(title,diagram,flow,state),prepare,c(install),c('%%writefile day2_case.py\n# @title 寫入本章流程（按播放，不用修改）\n'+(root/'day2/procurement.py').read_text()),c(dataset),key,c(creds)]
     def restore(folder):
-        return [m('### 選做：在全新 Colab 還原上次的成果 ZIP\n\n第一次上課跳過。若要接續上次進度，先用左側「檔案 → 上傳」放入ZIP，再只填下格檔名並播放。接下來照原步驟操作；程式會沿用已還原的任務，不重新建立。請用全新執行階段，不能覆蓋已有成果的資料夾。'),
+        return [m('### 選做：在全新 Colab 還原既有備份\n\n第一次上課跳過。若已有含輸入資料及SQLite的完整備份ZIP，可用左側「檔案 → 上傳」放入，再只填下格檔名並播放。L05可使用第4步產生的中斷現場備份。接下來照原步驟操作；程式會沿用已還原的任務，不重新建立。請用全新執行階段，不能覆蓋已有成果的資料夾。'),
                 c(f'''# @title 選做：還原上次下載的ZIP（第一次執行留空）
 RESTORE_ZIP = "" # @param {{type:"string"}}
 if RESTORE_ZIP:
@@ -84,25 +84,6 @@ if RESTORE_ZIP:
 else:
     print("第一次執行，使用新任務。")
 ''',False)]
-    def export(folder):
-        return [m('''## 第 6 步｜下載成果並互相驗收
-
-**怎麼做：** 播放下格，下載本章 ZIP。裡面包含需求副本、來源及片段、這次報告和流程紀錄；不含 Key。沒有自動下載時，從 Colab 左側「檔案」下載同名 ZIP。保存 notebook 不會保留暫存資料夾，所以離開前要下載。
-
-**交給同學檢查：** 一項有依據的發現、一項仍待確認的條件，以及你修改需求後輸出改變的證據。將報告、片段與需求交給 AI：「請逐項核對結論、適用市場、配置、引用與未知值，列出仍需人工確認的問題。」不要以文字流暢當成驗收通過。
-
-L05／L06 的 ZIP 另含 checkpoint 與操作 SQLite。要在全新 Colab 接續，先播放第 1、2 步，再用「選做：還原上次下載的ZIP」格還原。L05按原順序往下會沿用既有進度，L06從第3步讀回待審稿；已結束的審核不能再次修改，需開新REVIEW_DIR。原Thread、模型和需求必須保持相同。程式不會自動把 Colab 暫存檔備份到雲端。
-'''),c(f'''# @title 下載本章成果
-EXPORT_DIR = Path("results/{folder}")
-shutil.copytree("data_day2", EXPORT_DIR/"inputs", dirs_exist_ok=True)
-archive = shutil.make_archive("{folder}_成果", "zip", EXPORT_DIR)
-print("成果：", archive)
-try:
-    from google.colab import files
-    files.download(archive)
-except ImportError:
-    print("本機執行：ZIP 已存於目前目錄。")
-''')]
     docs={}
     cells=start('L03｜用真實官網片段做 RAG 查證','03_rag','問題 → 詞彙檢索 → 模型回答 → 引用 ID 檢查。這是檢索後生成；未使用向量資料庫或 embedding。','question 問題、rows 取回片段、report 回答、validation 引用檢查')
     cells += [m('''## 第 3 步｜先跑一次，觀察資料是否足夠
@@ -139,7 +120,7 @@ show(result_after)
 print("未篩選候選：", [r["id"] for r in case.retrieve(NEW_QUESTION,10,filtered=False)])
 print("排除：", [(r["id"],r["scope"]) for r in case.corpus() if not case.eligible(r)])
 case.save("results/03_rag/questions.json", {"before":QUESTION,"after":NEW_QUESTION,"k":TOP_K})
-''')]+export('03_rag')
+''')]
     docs['03_rag.ipynb']=cells
     cells=start('L04｜三品牌研究團隊與 27 格需求矩陣','04_team','Planner 規劃 → 三個品牌 Researcher 分別呼叫模型 → Writer 寫稿 → Reviewer 查核 → 最多修訂一輪。角色各有獨立輸入輸出；共用同一模型，沒有各自長期記憶。','task 任務、plan 計畫、notes 品牌交接、report 草稿、review 意見、revisions 修訂次數')
     cells += [m('''## 第 3 步｜先看研究規模，找最重要的缺口
@@ -182,7 +163,7 @@ if SEARCH_NOW:
     print("官方來源候選：",live_result["citations"])
 else:
     print("本次使用封存的官方片段；未執行即時搜尋。")
-''',False)]+export('04_research')
+''',False)]
     docs['04_research_loop.ipynb']=cells
     cells=start('L05｜120 台研究案中斷後接續','05_recovery','HP → Lenovo → Dell → 彙整；每個完成節點寫 checkpoint。課堂故意在 Lenovo 結果存入操作帳本後中斷，讓你看到帳本與 checkpoint 的差別。','results 已完成品牌；next 下一節點另存在 checkpoint；operations.sqlite 是已提交結果帳本')
     cells += restore('05_recovery')
@@ -248,7 +229,7 @@ assert resumed["effects"]=={"HP":1,"Lenovo":1,"Dell":1}
 assert [e["brand"] for e in resumed["execution"]]==["HP","Lenovo","Lenovo","Dell"]
 assert resumed["execution"][2]["reused"] is True
 display(Markdown(Path(BATCH_DIR,"report.md").read_text()))
-''')]+export('05_recovery')
+''')]
     docs['05_recovery.ipynb']=cells
     cells=start('L06｜來源追蹤、詢價草稿與人工審核','06_review','模型產詢價草稿 → interrupt 等人決定 → 修改再審／駁回結束／核准存本機 outbox。官網追蹤是另外的讀取檢查，不會自動核准任何草稿。','draft 收件對象、內容與需求hash；decision 決定；receipt 本機存檔回執；pending 是否等候')
     cells += restore('06_review')
@@ -291,7 +272,7 @@ assert review_state["outbox_count"]==0
 
 **選做來源追蹤：** 第二格將 CHECK_WEB 改 True，會實際下載 Lenovo 官方 PSREF PDF 並保存本次時間與 SHA-256。首次建立基準；日後再執行同格比較。unchanged 是檔案沒變、content_changed_needs_review 是內容指紋變動待人工讀文件、data_error 是讀取失敗。檔案變化不能直接稱為價格下跌；失敗不能覆蓋有效基準。
 
-**兩週後怎麼做：** 今天下載成果ZIP；兩週後在同目錄還原 `monitor/baseline.json` 再播放追蹤格。教材沒有捏造歷史報價或已發生的降價，也沒有在 Colab 部署持續排程。沒有官方含稅價格和相同SKU，不能算折扣。新證據若影響已核准草稿，請用新 REVIEW_DIR 重新產稿與審核。
+**兩週後怎麼做：** 請老師保留 `results/06_review`，包括 `monitor/baseline.json`，兩週後在同目錄再播放追蹤格。Colab 暫存資料可能被回收，保存 notebook 不會保留這些檔案。教材沒有捏造歷史報價或已發生的降價，也沒有在 Colab 部署持續排程。沒有官方含稅價格和相同SKU，不能算折扣。新證據若影響已核准草稿，請用新 REVIEW_DIR 重新產稿與審核。
 '''),c('''# @title 核准或駁回目前草稿（只存本機，不寄送）
 DECISION = "approve" # @param ["approve","reject"]
 try:
@@ -326,6 +307,6 @@ if CHECK_WEB:
         print("data_error：沒有取得有效資料，未建立基準。")
 else:
     print("本次未即時連官網；人工審核使用封存來源。")
-''',False)]+export('06_review')
+''',False)]
     docs['06_review_monitor.ipynb']=cells
     return docs

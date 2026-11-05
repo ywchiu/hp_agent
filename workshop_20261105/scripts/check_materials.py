@@ -40,8 +40,10 @@ for name, generated in expected.items():
         if '狀態圖' not in ''.join(doc['cells'][0]['source']):
             errors.append(name+': missing opening state diagram')
         text='\n'.join(''.join(c['source']) for c in doc['cells'])
-        if not all(f'第 {i} 步' in text for i in range(1,7)):
+        if not all(f'第 {i} 步' in text for i in range(1,6)):
             errors.append(name+': incomplete learner steps')
+        if re.search(r'第\s*6\s*步',text):
+            errors.append(name+': removed final download step is still present')
     for c in doc['cells']:
         if c['cell_type']!='code':
             continue
@@ -53,6 +55,8 @@ for name, generated in expected.items():
         ast.parse(source)
         if 'b64decode' in source or 'import base64' in source:
             errors.append(name+': encoded loader')
+        if 'files.download(' in source:
+            errors.append(name+': automatic results download must stay removed')
         if c.get('outputs') or c.get('execution_count') is not None:
             errors.append(name+': published output must be cleared')
 if errors:

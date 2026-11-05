@@ -14,7 +14,7 @@
 
 ### 第二天
 
-以「台灣企業120台商務筆電採購」串起四章，使用真實官方來源、模型研究與27格需求矩陣。每份 Colab 有狀態圖、白話六步與成果下載，詳見[第二天入口](workshop_20261105/day2/README.md)。
+以「台灣企業120台商務筆電採購」串起四章，使用真實官方來源、模型研究與27格需求矩陣。每份 Colab 有狀態圖與白話五步操作，詳見[第二天入口](workshop_20261105/day2/README.md)。
 
 | 章節 | 主題 | 學生操作步驟 | Colab |
 |---|---|---|---|
@@ -25,7 +25,7 @@
 
 ### 講師與同步維護
 
-- [講師手冊與參考答案](workshop_20261105/docs/02_instructor.md)／[學生成果清單](workshop_20261105/docs/03_submission.md)
+- [講師手冊與參考答案](workshop_20261105/docs/02_instructor.md)／[課堂觀察清單（選用）](workshop_20261105/docs/03_submission.md)
 - [投影片頁碼對照與同步方式](workshop_20261105/docs/05_slide_sync.md)／[GitHub 更新步驟](workshop_20261105/docs/06_github.md)
 - [排錯](workshop_20261105/docs/04_troubleshooting.md)／[驗證範圍](workshop_20261105/VERIFICATION.md)
 

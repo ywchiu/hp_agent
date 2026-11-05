@@ -55,17 +55,6 @@ print("Key 已暫存於本次執行階段；不顯示、不存入報告。模型
 
 **如果卡住：** 401 先請老師確認 Key；429 請老師確認額度／課堂用量，稍後再試；找不到模型請照老師提供的名稱修改 MODEL。提供錯誤代碼與模型名稱即可，不需貼完整 Key。
 '''
-    export_help = '''## 第 6 步｜保存成果，確認自己真的完成
-
-**為什麼做：** 儲存 notebook 只會保留文字和程式，不會替你保留 Colab 暫存資料夾。
-
-**怎麼做：** 按下格 ▶ 下載本章成果 ZIP。裡面有修改前後的 `report.md`、`research_log.json` 與研究問題；Skill 章另附規則，MCP 章另附 SQLite，沒有 API Key。確認你能說出：我改了什麼、模型查過什麼、哪一項仍不能確定。
-
-**應該看到：** 下載一份 ZIP；解壓後能讀到兩次報告。沒有自動下載時，到左側「檔案」找同名 ZIP，按右側選單下載。
-
-**請 AI 幫忙檢查：**「請比較兩份報告與研究問題，逐項指出符合與不符合處。核對市場、資料 ID、日期和未知值；不要補沒有證據的數字。」只提供報告與問題，不提供 Key。
-'''
-
     def m(text): return ('markdown', text, False)
     def c(text, folded=True): return ('code', text, folded)
     def opening(title, diagram, explanation):
@@ -168,15 +157,6 @@ show_result(result_after)
         if use_skill:
             after += '(LESSON_OUT/"SKILL.md").write_text(research_skill, encoding="utf-8")\n'
         after += 'print("修改後成果已另存；請與上方起始報告比較。")\n'
-        cells += [c(after), m(export_help), c('''# @title 下載本章成果（不含 Key）
-import shutil
-artifact = shutil.make_archive(str(LESSON_OUT), "zip", LESSON_OUT)
-try:
-    from google.colab import files
-except ImportError:
-    print("成果 ZIP：", artifact)
-else:
-    files.download(artifact)
-''')]
+        cells += [c(after)]
         lessons[filename] = cells
     return lessons
