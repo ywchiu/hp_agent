@@ -4,13 +4,7 @@
 
 以投影片 PDF 為基準，沿著同一個產品研究任務，逐步加入 Skill、MCP、RAG、研究分工、中斷恢復與人工審核。
 
-**第一天下午請直接開 [課堂入口](workshop_20261105/day1/README.md)，從第一份產品研究開始。** 每份 Colab 上方先看狀態圖，再照白話說明操作；老師提供 API Key，同學只要修改中文需求或研究規則、請 AI 協助修改、核對結果。
-
-- **Colab**：直接開下表，依序播放；Key 在執行時輸入。第一天下午實際呼叫模型，底層明文程式預設收起，每一步都寫明改哪裡、預期結果及怎麼請 AI 修正。
-- **Antigravity**：依 [操作指引](workshop_20261105/docs/01_antigravity.md) 一次貼一份 [任務指令](workshop_20261105/prompts/)，讓 AI 準備與修改，學員驗收報告和工具紀錄。
-- DemoBook 是教學模擬資料；LangGraph、MCP、SQLite 會真正執行。第一天下午三份範例自帶明文程式與資料，成果需另外下載 ZIP 保存。
-
-### 第一天下午｜本次更新
+### 第一天
 
 | 章節 | 主題 | 學生操作步驟 | Colab |
 |---|---|---|---|
@@ -18,7 +12,7 @@
 | L02A | 修改白話 Skill | [操作步驟](workshop_20261105/labs/02_skill_mcp.md) | [開啟 Colab](https://colab.research.google.com/github/ywchiu/hp_agent/blob/main/workshop_20261105/notebooks/02_skill_mcp.ipynb) |
 | L02B | MCP 查詢 SQLite | [操作步驟](workshop_20261105/labs/02_skill_mcp.md) | [開啟 Colab](https://colab.research.google.com/github/ywchiu/hp_agent/blob/main/workshop_20261105/notebooks/02b_company_database.ipynb) |
 
-### 第二天｜保留 v0.1 課堂內容，待後續同步
+### 第二天
 
 以下仍是固定規則的流程示範，不呼叫模型 API；維持原有 notebooks，本次未修改。
 
