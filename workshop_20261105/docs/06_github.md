@@ -7,7 +7,7 @@
 1. 在原儲存庫根目錄執行 `git status --short`，先辨識既有變更。
 2. 執行 `git add workshop_20261105 README.md`，只加入新教材與入口連結。
 3. 執行 `git diff --cached --stat` 和 `git diff --cached`，確認未包含 `.env`、個資、`runs/`、SQLite、虛擬環境、原始投影片及舊教材暫存檔。
-4. 執行 `git commit -m "Add 20261105 step-by-step workshop v0.1.0"`。
+4. 執行 `git commit -m "Simplify day-one afternoon workshop v0.2.0"`。
 5. 確認要發布的分支後執行 `git push origin <你的分支>`。Colab 連結預設使用 `main`；若使用其他分支，請同步調整連結。
 6. 在 GitHub 打開 `workshop_20261105/README.md`，檢查章節連結及 notebook 顯示。
 7. Colab 網址格式為 `https://colab.research.google.com/github/ywchiu/hp_agent/blob/<分支或commit>/workshop_20261105/notebooks/01_first_research.ipynb`，其餘 notebook 換檔名即可。
@@ -15,7 +15,7 @@
 
 ## 如果另開一個儲存庫
 
-只複製本目錄的教材內容；更新 `course.json` 的 repository，並將 Colab URL 的 owner/repo/path 換成新位置。內嵌 notebook 不依賴原儲存庫，所以不必修改 Python 裡的私人絕對路徑。
+只複製本目錄教材；更新 `course.json` 的 repository、Colab 連結、狀態圖網址，再重新產生 notebooks。第一天程式與資料直接附在 notebook，圖片仍需網路載入。
 
 ## 每次更新
 

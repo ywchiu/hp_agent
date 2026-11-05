@@ -1,0 +1,29 @@
+{
+  "version": "0.2.0",
+  "scope": "day1 afternoon only",
+  "model_api_live_tested": false,
+  "colab_web_tested": false,
+  "results": [
+    {
+      "notebook": "01_first_research.ipynb",
+      "status": "passed",
+      "model": "test double",
+      "code_cells": 9,
+      "seconds": 1.04
+    },
+    {
+      "notebook": "02_skill_mcp.ipynb",
+      "status": "passed",
+      "model": "test double",
+      "code_cells": 9,
+      "seconds": 1.07
+    },
+    {
+      "notebook": "02b_company_database.ipynb",
+      "status": "passed",
+      "model": "test double",
+      "code_cells": 11,
+      "seconds": 1.54
+    }
+  ]
+}

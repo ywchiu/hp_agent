@@ -1,7 +1,13 @@
 # 排錯表
 
+第一天下午依各 Colab 的逐步說明操作；只需改問題或規則。以下前四列適用第一天，其餘多為第二天的程式維護排錯。
+
 | 現象 | 先看什麼 | 處理步驟 |
 |---|---|---|
+| 401／無效 Key | 是否使用老師當堂提供的 Key | 重跑第 2 步重新輸入，仍失敗請老師確認，不把 Key 貼給 AI |
+| 429／額度不足 | 錯誤代碼與模型名稱 | 請老師確認用量／額度；不要用重複重跑製造更多請求 |
+| 改了中文但結果沒變 | 第 4 步是否重跑 | 先重跑第 4 步，再跑第 5 步，對照 before 與 after |
+| MCP 查不到資料 | 工具結果 status | not_found 是正常結果；error／斷線要修服務，不能改讀 JSON 冒充 MCP |
 | ModuleNotFoundError: workshop | Python 是否來自 `.venv`、是否在教材目錄 | 重新執行 `python -m pip install -e .`；Colab 先跑 bootstrap 格 |
 | 套件裝不起來 | 網路、Python 版本、第一個錯誤 | 使用 Python 3.10+；重跑安裝格，不要改成任意最新版 |
 | Colab MCP 的 event loop 錯誤 | 是否在 notebook 直接呼叫同步 `run()` | notebook 使用 `await inspect_database(...)`；CLI 才用 `run()` |

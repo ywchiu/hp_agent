@@ -1,6 +1,6 @@
 {
-  "material_version": "0.1.0",
-  "date": "2026-11-02",
+  "material_version": "0.2.0",
+  "date": "2026-11-05",
   "primary_source": "20261105 LLM Application - AI Agent_compressed.pdf",
   "source_sha256": "4c1fe72ac384eee6ccee46c2cb7dd7ac9969697ae8c5558aab8fb741229ef988",
   "pdf_pages": 357,
@@ -8,5 +8,6 @@
   "pptx_status": "本次未取得同名 PPTX；不以其他舊版替代此 PDF",
   "simulated_data": true,
   "repository": "https://github.com/ywchiu/hp_agent",
-  "distribution_branch": "main"
+  "distribution_branch": "main",
+  "revised_scope": "僅第一天下午 PDF 95–172；第二天 notebooks 與課堂內容未變更"
 }

@@ -1,6 +1,8 @@
 P02｜套用並修改研究 Skill
-先讀 skills/product-research/SKILL.md，逐項說明哪些是方法、哪些事實仍須從 data/products.json 讀取。
-保留 01_report.md。現在新增一條方法：「未取得到府服務證據時，不能只以保固年數判定符合三年到府要求」。
-請將這條規則寫入 Skill，不修改產品事實，以相同 TW 兩種配置再研究。
-保存 runs/antigravity/02_report.md 與 02_changes.md，指出規則新增的位置、前後結論差異、仍缺什麼證據。
-如原稿本來已正確，請如實說明哪些結論沒有改變，不製造假的改善紀錄。
+請讀 workshop_20261105/day1/SKILL.md 與 day1/assets/02_skill_state.png。
+先用白話說明：Skill 是工作方法，data/products.json 是事實；本章程式會把 Skill 原文傳入每次模型呼叫。
+1. 先提供不加 --skill 的基準命令，成果另存 runs/day1/02_before。我在自己的互動式終端輸入老師的 Key，不貼到對話。
+2. 請只改 day1/SKILL.md 的白話規則，加入「最後請用三句話，向沒有技術背景的採購主管說明差異與尚缺的證據」。保留市場、未知值、來源及日期要求，不修改產品資料或工具。
+3. 提供加上 --skill 的同一研究問題命令，另存 runs/day1/02_after。
+4. 執行後比較兩份報告，指出新要求是否採用；如原稿已正確，如實說明結論不變，只比較實際的格式與方法差異。
+5. 將規則修改與驗收結果存成 runs/day1/02_changes.md。若我還未執行，請標示待執行，不編造模型結果。

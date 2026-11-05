@@ -4,19 +4,26 @@
 
 以投影片 PDF 為基準，沿著同一個產品研究任務，逐步加入 Skill、MCP、RAG、研究分工、中斷恢復與人工審核。
 
-**同學請先開啟 [逐步教材首頁](workshop_20261105/README.md)，完成 [課前準備](workshop_20261105/docs/00_setup.md)，再依老師進度操作。**
+**第一天下午請直接開 [課堂入口](workshop_20261105/day1/README.md)，從第一份產品研究開始。** 每份 Colab 上方先看狀態圖，再照白話說明操作；老師提供 API Key，同學只要修改中文需求或研究規則、請 AI 協助修改、核對結果。
 
-- **Antigravity 路線**：使用平台模型讀取資料、呼叫工具、研究及修訂；依 [操作指引](workshop_20261105/docs/01_antigravity.md) 一次貼一份 [提示詞](workshop_20261105/prompts/)。
-- **Colab 路線**：直接點下表開啟 notebook，依序執行、觀察及修改。使用模擬資料與固定規則流程，實際執行 LangGraph、MCP、SQLite；不呼叫付費模型 API。
-- 每份 notebook 都內嵌本版程式與資料，也可下載後單獨上傳 Colab。請另外下載成果 ZIP，保存報告與 SQLite。
+- **Colab**：直接開下表，依序播放；Key 在執行時輸入。第一天下午實際呼叫模型，底層明文程式預設收起，每一步都寫明改哪裡、預期結果及怎麼請 AI 修正。
+- **Antigravity**：依 [操作指引](workshop_20261105/docs/01_antigravity.md) 一次貼一份 [任務指令](workshop_20261105/prompts/)，讓 AI 準備與修改，學員驗收報告和工具紀錄。
+- DemoBook 是教學模擬資料；LangGraph、MCP、SQLite 會真正執行。第一天下午三份範例自帶明文程式與資料，成果需另外下載 ZIP 保存。
 
-### 逐步實作
+### 第一天下午｜本次更新
 
 | 章節 | 主題 | 學生操作步驟 | Colab |
 |---|---|---|---|
-| L00 | 環境檢查 | [操作步驟](workshop_20261105/docs/00_setup.md) | [開啟 Colab](https://colab.research.google.com/github/ywchiu/hp_agent/blob/main/workshop_20261105/notebooks/00_setup.ipynb) |
 | L01 | 第一份產品研究 | [操作步驟](workshop_20261105/labs/01_first_research.md) | [開啟 Colab](https://colab.research.google.com/github/ywchiu/hp_agent/blob/main/workshop_20261105/notebooks/01_first_research.ipynb) |
-| L02 | Skill 與 SQLite MCP | [操作步驟](workshop_20261105/labs/02_skill_mcp.md) | [開啟 Colab](https://colab.research.google.com/github/ywchiu/hp_agent/blob/main/workshop_20261105/notebooks/02_skill_mcp.ipynb) |
+| L02A | 修改白話 Skill | [操作步驟](workshop_20261105/labs/02_skill_mcp.md) | [開啟 Colab](https://colab.research.google.com/github/ywchiu/hp_agent/blob/main/workshop_20261105/notebooks/02_skill_mcp.ipynb) |
+| L02B | MCP 查詢 SQLite | [操作步驟](workshop_20261105/labs/02_skill_mcp.md) | [開啟 Colab](https://colab.research.google.com/github/ywchiu/hp_agent/blob/main/workshop_20261105/notebooks/02b_company_database.ipynb) |
+
+### 第二天｜保留 v0.1 課堂內容，待後續同步
+
+以下仍是固定規則的流程示範，不呼叫模型 API；維持原有 notebooks，本次未修改。
+
+| 章節 | 主題 | 學生操作步驟 | Colab |
+|---|---|---|---|
 | L03 | RAG 與引用查證 | [操作步驟](workshop_20261105/labs/03_rag.md) | [開啟 Colab](https://colab.research.google.com/github/ywchiu/hp_agent/blob/main/workshop_20261105/notebooks/03_rag.ipynb) |
 | L04 | 有界研究與角色交接 | [操作步驟](workshop_20261105/labs/04_research_loop.md) | [開啟 Colab](https://colab.research.google.com/github/ywchiu/hp_agent/blob/main/workshop_20261105/notebooks/04_research_loop.ipynb) |
 | L05 | 中斷恢復與冪等性 | [操作步驟](workshop_20261105/labs/05_recovery.md) | [開啟 Colab](https://colab.research.google.com/github/ywchiu/hp_agent/blob/main/workshop_20261105/notebooks/05_recovery.ipynb) |
@@ -27,6 +34,8 @@
 - [講師手冊與參考答案](workshop_20261105/docs/02_instructor.md)／[學生成果清單](workshop_20261105/docs/03_submission.md)
 - [投影片頁碼對照與同步方式](workshop_20261105/docs/05_slide_sync.md)／[GitHub 更新步驟](workshop_20261105/docs/06_github.md)
 - [排錯](workshop_20261105/docs/04_troubleshooting.md)／[驗證範圍](workshop_20261105/VERIFICATION.md)
+
+完整入口見 [逐步教材首頁](workshop_20261105/README.md)，實測與尚未實測範圍見 [驗證紀錄](workshop_20261105/VERIFICATION.md)。產品資料及通知均為教學模擬。
 
 ---
 

@@ -6,9 +6,9 @@
 |---|---|---|---|
 | 1–40 | Agent 概念、交辦與野心 | 講師手冊 D01 | 討論／五欄任務單 |
 | 41–94 | 企業案例、權限、Prompt Injection | 講師手冊 D02 | 案例討論與授權表 |
-| 95–124 | Prompt、Context、Harness、工具環境 | L00、講師手冊 D03 | 開啟工作區與驗收 |
+| 95–124 | Prompt、Context、Harness、工具環境 | 講師手冊 D03 | 概念講解後直接進第一份研究 |
 | 125–142 | 第一份研究與討論 | L01 | 研究摘要與問題 |
-| 143–172 | Skill、SQLite MCP 與討論 | L02 | 規則、工具呼叫 |
+| 143–172 | Skill、SQLite MCP 與討論 | L02A、L02B | 白話規則、模型工具呼叫 |
 | 173–221 | RAG、引用與檢索 | L03 | 檢索、對照與未知 |
 | 222–261 | Deep Research、分工與停止 | L04 | 研究計畫與補查 |
 | 262–306 | 持續工作、中斷恢復與權限 | L05、D04 | 跨程序恢復 Demo |
@@ -17,13 +17,13 @@
 
 ## 之後改版的固定做法
 
-1. 保留 L00–L06 與 P00–P09 的 ID；即使頁碼移動也不改章節 ID。
+1. 主線保留 L01–L06、P01–P09；L02 拆為 A／B。v0.2 依學員需求取消 L00，不因頁碼移動再重新編號。
 2. 更新 PDF 後，先比對每個實作的目標、例子與驗收，不直接把舊頁碼全部平移。
 3. 更新 `slide_map.json` 的起訖與標題；確認所有 PDF 頁至少被一段涵蓋。
-4. 改資料只改 `data/`；改規則只改 `skills/`；改程式只改 `src/workshop/`；改 notebook 教學格只改 `scripts/lesson_cells.json`。
-5. 執行 `python scripts/build_notebooks.py`。它重新內嵌目前的程式與資料，並更新 `PAYLOAD.json`。不要直接手改七份 notebook 的 bootstrap。
-6. 執行 `python -m unittest discover -s tests -v` 與 `python scripts/check_materials.py`。檢查 notebook 內嵌雜湊、Markdown 連結及頁碼涵蓋。
+4. 第一天程式／規則改 `day1/`，教學文字改 `scripts/day1_cells.py`；第二天程式改 `src/workshop/`、規則改 `skills/`、教學文字改 `scripts/lesson_cells.json`。共用模擬產品在 `data/`。
+5. 執行 `python scripts/build_notebooks.py`，只產生第一天下午三份 notebooks 與 `NOTEBOOK_SOURCES.json`，直接使用明文；第二天不變。
+6. 在已安裝套件的環境執行 `python -m unittest discover -s tests -v` 與 `python scripts/check_materials.py`，檢查程式、教學格同步、連結與頁碼。`python scripts/run_notebooks.py` 用模型替身驗證操作格，不使用真實 Key。
 7. 在自己的乾淨 Colab 執行階段與 Antigravity 工作區各演練一次；在 `VERIFICATION.md` 記下實測與未測項目。
 8. 更新 `CHANGELOG.md` 及 `course.json` 的版本、來源 SHA-256、日期；上 GitHub 時只包含本教材變更。
 
-原則：Markdown、資料與 Python 原始碼是單一維護來源；notebook 是可單獨上傳的產物。第一版先用主分支同步，老師要固定某次課程時再以 Git tag 或 commit 鎖定。
+狀態圖原始來源是 `scripts/build_day1_diagrams.py`，先產生 draw.io 原檔，再以桌面 CLI 匯出 PNG，核對圖與實作一致。第一天 notebook 可單獨上傳。老師要固定版本時，請同時鎖定 Colab 與圖片網址的 commit。

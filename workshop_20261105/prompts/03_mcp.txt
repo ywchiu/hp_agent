@@ -1,7 +1,8 @@
 P03｜模型直接使用 MCP
-先確認 company-database MCP 服務可用，列出實際發現的工具。如果不可用，回報缺少的連接條件，不用閱讀 JSON 假裝完成工具呼叫。
-請真正呼叫 find_products_by_model，參數 model=DemoBook A、market=TW。
-接著真正呼叫 read_product_by_id，分別讀 DEMO-TW-016、DEMO-TW-032。
-依 skills/product-research/SKILL.md 比較，保存 runs/antigravity/03_mcp_report.md。
-請保留工具名稱、輸入、輸出、資料 ID、更新日期，明示 032 保固缺漏。
-再查不存在 ID，區分 not_found 與工具連線失敗。不要修改 SQLite，不產生寫入產品資料的工具。
+請以 workshop_20261105/day1/assets/02b_mcp_state.png 說明模型、MCP Client、Server 與 SQLite 的關係。
+1. 先提供 day1/research_agent.py 加上 --skill --mcp 的命令，輸出 runs/day1/03_before。程式會探索 day1/company_database.py 的兩個工具並真的以 stdio 查詢 SQLite；我在自己操作的終端輸入老師 Key。
+2. 執行後核對 research_log.json 的 transport=mcp、工具名稱、輸入、輸出、ID 與日期；台灣 32 GB 保固仍缺漏。
+3. 只改研究問題，要求讀取 DEMO-TW-999，輸出另存 03_after。核對 not_found 與承認資料不足，區分查不到和連線失敗。不可改成直接讀 JSON 冒充 MCP，不增加資料寫入工具。
+4. 若老師要示範 Antigravity 模型直連 MCP，請使用本機專用虛擬環境 Python 的絕對路徑及 day1/company_database.py，以 stdio 配置 company-database：args 帶 --data 的 data/products.json 絕對路徑、--db 的 runs/day1/antigravity/products.sqlite 絕對路徑。合併保留現有服務，不放 Key。
+5. 服務重新載入後，列出真正發現的 find_products_by_model、read_product_by_id，實際查詢 TW、兩筆有效 ID 與不存在 ID，依 day1/SKILL.md 報告。只有平台實際工具紀錄才算直連成功；不可用 Python 程式成功替代直連證據。
+直連未完成時如實標示。先完成前面已接好的程式範例，再做平台連接。

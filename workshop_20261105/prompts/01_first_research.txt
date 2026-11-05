@@ -1,7 +1,8 @@
 P01｜第一份研究
-目標：比較 DemoBook A 台灣版 16 GB 與 32 GB 兩種配置，供同學核對。
-資料：data/products.json；只看本資料，不搜尋網路。
-請讀取資料，產出一配置一列的比較表，欄位為 ID、市場、記憶體、儲存、保固、更新日期。
-保固 null 標待確認，不引用 US 版補值；不能由記憶體推論保固更好。
-保存 runs/antigravity/01_report.md，包含表格、主要差異、來源 ID 與一項待改善問題。
-完成後回報實際讀取的資料 ID，讓我能回查，不只提供流暢摘要。
+我已開啟 hp_agent 工作區。請以 workshop_20261105/day1/README.md 為主，協助我完成第一份產品研究。
+1. 先用白話說明 day1/assets/01_research_state.png，告訴我模型、工具和狀態各做什麼。
+2. 使用 day1/research_agent.py 現成範例，替我建立專用虛擬環境，安裝 day1/requirements.txt。不改舊課程與產品資料。
+3. 準備一行能在我自己操作的互動式終端執行的命令，輸出放 workshop_20261105/runs/day1/01_before。程式啟動後我會貼老師給的 Key；不要在對話詢問 Key、讀私人 .env，或把 Key 寫到檔案。
+4. 預設問題比較 DemoBook A 台灣版 16 GB 與 32 GB；資料是教學模擬，模型 API 與工具真的執行。若我尚未執行，不可宣稱研究已完成。
+5. 執行後協助核對 report.md 與 research_log.json：只有兩筆 TW、16 GB 保固 1 年、32 GB 保固待確認，保留來源 ID 與日期。
+6. 接著請幫我只修改中文研究問題，補「採購前要問的三個問題」，提供重跑命令，另存 01_after。用前後報告驗收，不改產品事實。

@@ -1,31 +1,31 @@
-# L02｜Skill 與 SQLite MCP
+# L02｜先改 Skill，再接 MCP
 
-對照 PDF 143–170；建議 40 分鐘。先備：L01。交付：規則修改、前後摘要、MCP 工具結果與最終比較表。
+對照 PDF 143–172 頁，拆成兩份獨立 Colab，一次只練一個改變。
 
-## A. 修改一條研究規則
+## L02A：用白話規則改研究方法
 
-1. 讀 `skills/product-research/SKILL.md`，將「方法」與 `products.json` 裡的「產品事實」分開。
-2. Colab 開 `02_skill_mcp.ipynb`；Antigravity 貼 [P02](../prompts/02_skill.txt)。
-3. notebook 會在成果資料夾複製一份拿掉 `[unknown_warranty]` 規則的起始 Skill，先跑出「未填」的初稿。它刻意表現不完整，但不製造錯誤保固值。
-4. 在那份起始 Skill 加回「保固缺漏標示待確認，不能推論較佳」。保留標記 `[unknown_warranty]`，讓規則程式辨識這個練習開關。
-5. 以完全相同資料重跑，保存 before／after。Antigravity 則讓模型讀完整 Skill 套用規則，並指出實際改變的結論。
-6. 檢查產品檔沒有被改動。更新方法不應改寫產品保固資料。
+開 [Skill Colab](https://colab.research.google.com/github/ywchiu/hp_agent/blob/main/workshop_20261105/notebooks/02_skill_mcp.ipynb)，Antigravity 使用 [P02](../prompts/02_skill.txt)。
 
-## B. 查詢真正的 MCP 服務
+![Skill 狀態圖](../day1/assets/02_skill_state.png)
 
-7. 本機執行 `python -m workshop.cli mcp --out runs/l02_mcp`；Colab 跑 MCP 格。client 將啟動 stdio server、initialize、list_tools，再呼叫兩個工具。
-8. 應看到 `find_products_by_model` 與 `read_product_by_id`。第一個傳 `DemoBook A`／`TW` 得到兩筆配置；第二個讀 `DEMO-TW-032`，保固為 null。
-9. Antigravity 要直接呼叫時，依 [模型操作路徑](../docs/01_antigravity.md) 的設定步驟接入，再貼 [P03](../prompts/03_mcp.txt)。確認工具紀錄，而不是只有報告說「已使用 MCP」。
-10. 查 `DEMO-US-032`，觀察三年保固；說明為什麼不能拿來補台灣版。
-11. 讀不存在 ID，應回 `not_found`；用錯的資料庫路徑則應回報工具失敗，不把它說成「產品不存在」。
-12. 依工具回傳結果，重新產出 L01 比較表。保存原始工具輸出及來源 ID。
+1. 看圖：模型與工具流程不變，每次模型呼叫多讀一份研究規則。
+2. 準備範例、輸入老師的 Key，先跑沒有 Skill 的基準報告。
+3. 在 `research_skill` 白話內容中加上「向採購主管提供三句摘要」，或請 AI 只改這一格。
+4. 重跑相同問題，核對摘要、來源、日期、未知值。原稿已正確時如實說明，只比較實際變化。
+5. 下載成果 ZIP，保留 Skill 與前後報告。
 
-## 驗收
+Skill 是方法，產品 JSON 是事實；改規則不能讓原本缺漏的保固變成已知。
 
-- [ ] 同市場一配置一列，US 資料沒有混入 TW。
-- [ ] 修改後缺漏明確標「待確認」。
-- [ ] 有真正 MCP 握手、list_tools 與 call_tool 的證據。
-- [ ] 未找到與查詢失敗能區分。
-- [ ] 查詢服務只提供兩個固定參數工具，不接受任意 SQL、不修改資料庫。
+## L02B：透過 MCP 查 SQLite
 
-選做：用 [P09](../prompts/09_comparison_page.txt) 將結果做成 HTML 比較頁，再人工逐欄核對。
+開 [MCP Colab](https://colab.research.google.com/github/ywchiu/hp_agent/blob/main/workshop_20261105/notebooks/02b_company_database.ipynb)，Antigravity 使用 [P03](../prompts/03_mcp.txt)。
+
+![MCP 狀態圖](../day1/assets/02b_mcp_state.png)
+
+1. 準備範例並播放 MCP 服務格。程式自動啟動 stdio、探索兩個工具、初始化教學 SQLite。
+2. 輸入老師的 Key，跑相同研究問題；核對工具紀錄標示 `mcp`。
+3. 只改 `NEW_TASK`，詢問不存在的 `DEMO-TW-999`。
+4. 重跑，確認 `read_product_by_id` 回傳 `not_found`，模型承認資料不足，沒有改用其他產品編造答案。
+5. 下載包含工具紀錄、報告及 SQLite 的 ZIP。
+
+查不到是資料結果；連線失敗是工具問題。請 AI 修連線時，要求保留 MCP，不可改讀 JSON 冒充成功。每個操作格上方的完整原因、步驟、預期結果與修正指令都在 Colab 裡。
