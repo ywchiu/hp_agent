@@ -4,5 +4,12 @@
   "day1/SKILL.md": "9c2d32506ff560436b94cfd96c9398747fb525958c3ccd5cb68df9d762a989a0",
   "day1/company_database.py": "d9930f1eb5df7bef2f4e1a42078407794c3782e1335931810d5279e236814c7c",
   "day1/requirements.txt": "5edec7c36634b25484b7b1509095f5fbc300d5d80411430d5b11aecd14b58d4b",
-  "day1/research_agent.py": "7e7dfebb5b1ac4a9f81bc9eba7a4c714aca374eb2179f8076a8348c701474584"
+  "day1/research_agent.py": "7e7dfebb5b1ac4a9f81bc9eba7a4c714aca374eb2179f8076a8348c701474584",
+  "day2/README.md": "c4bbe2e3ebc3ce5eab3dd4ff383a34f410fb06854b9f83277f132a3161cce124",
+  "day2/SOURCES.md": "953fa980939d1c015f9b1baf17be6e27a31bde8fa581fb63f425248b1ffd8d68",
+  "day2/case.json": "84ccca97674ac9f06b3d4bd6dca3eb0e01259ff373e2f24c586048a2b648f52f",
+  "day2/evidence.json": "7104ea5373e1c5cebf86e8357bfe47a5506f80500bfaa655f2fd8950c404a0eb",
+  "day2/procurement.py": "185f5bac0a76a80b05fa5539e4f7e784310805e9945d4afad08c8cb593f13a57",
+  "day2/requirements.txt": "0ab64d28c955cb81368f0bc793d6f107367895f99a37fd4e1f33f5e0638e5da1",
+  "day2/sources.json": "ddfd77b393be972aa401867b713d6c1c232a8c204736b3d1416c4d2edd226025"
 }

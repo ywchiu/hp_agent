@@ -1,0 +1,28 @@
+﻿brand,requirement,topic,need,evidence_ids,finding
+HP,R01,memory,至少 32 GB，能否未來升級須單列,HP-03,有公開能力／海外配置線索；台灣指定 SKU 待確認
+HP,R02,storage,至少 1 TB SSD,HP-04,有公開能力／海外配置線索；台灣指定 SKU 待確認
+HP,R03,weight,出差配置不超過 1.5 kg，指定顏色、電池、面板,,待補查：未取得可用證據
+HP,R04,os,Windows 11 Pro 出貨授權,HP-02,有公開能力／海外配置線索；台灣指定 SKU 待確認
+HP,R05,ports,USB4 / Thunderbolt 與既有底座相容,,待補查：未取得可用證據
+HP,R06,display,兩台外接 4K 顯示器的實際連接方案,,待補查：未取得可用證據
+HP,R07,security,TPM、BIOS 與企業映像相容性由 IT 驗收,,待補查：未取得可用證據
+HP,R08,service,台灣三年次工作日到府，寫明遠端診斷與地區限制,,待補查：未取得可用證據
+HP,R09,commercial,台灣含稅 TWD 報價、SKU、交期、報價有效期與三年總成本,,待補查：未取得可用證據
+Lenovo,R01,memory,至少 32 GB，能否未來升級須單列,"LEN-03,LEN-04",有公開能力／海外配置線索；台灣指定 SKU 待確認
+Lenovo,R02,storage,至少 1 TB SSD,"LEN-05,LEN-06",有公開能力／海外配置線索；台灣指定 SKU 待確認
+Lenovo,R03,weight,出差配置不超過 1.5 kg，指定顏色、電池、面板,"LEN-08,LEN-09",有公開能力／海外配置線索；台灣指定 SKU 待確認
+Lenovo,R04,os,Windows 11 Pro 出貨授權,LEN-01,有公開能力／海外配置線索；台灣指定 SKU 待確認
+Lenovo,R05,ports,USB4 / Thunderbolt 與既有底座相容,"LEN-10,LEN-11",有公開能力／海外配置線索；台灣指定 SKU 待確認
+Lenovo,R06,display,兩台外接 4K 顯示器的實際連接方案,LEN-02,有公開能力／海外配置線索；台灣指定 SKU 待確認
+Lenovo,R07,security,TPM、BIOS 與企業映像相容性由 IT 驗收,LEN-12,有公開能力／海外配置線索；台灣指定 SKU 待確認
+Lenovo,R08,service,台灣三年次工作日到府，寫明遠端診斷與地區限制,"LEN-13,LEN-14",有公開能力／海外配置線索；台灣指定 SKU 待確認
+Lenovo,R09,commercial,台灣含稅 TWD 報價、SKU、交期、報價有效期與三年總成本,,待補查：未取得可用證據
+Dell,R01,memory,至少 32 GB，能否未來升級須單列,"DELL-01,DELL-02,DELL-03",有公開能力／海外配置線索；台灣指定 SKU 待確認
+Dell,R02,storage,至少 1 TB SSD,,待補查：未取得可用證據
+Dell,R03,weight,出差配置不超過 1.5 kg，指定顏色、電池、面板,,待補查：未取得可用證據
+Dell,R04,os,Windows 11 Pro 出貨授權,,待補查：未取得可用證據
+Dell,R05,ports,USB4 / Thunderbolt 與既有底座相容,"DELL-04,DELL-05",有公開能力／海外配置線索；台灣指定 SKU 待確認
+Dell,R06,display,兩台外接 4K 顯示器的實際連接方案,DELL-06,有公開能力／海外配置線索；台灣指定 SKU 待確認
+Dell,R07,security,TPM、BIOS 與企業映像相容性由 IT 驗收,,待補查：未取得可用證據
+Dell,R08,service,台灣三年次工作日到府，寫明遠端診斷與地區限制,"DELL-07,DELL-08",有公開能力／海外配置線索；台灣指定 SKU 待確認
+Dell,R09,commercial,台灣含稅 TWD 報價、SKU、交期、報價有效期與三年總成本,,待補查：未取得可用證據

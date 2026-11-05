@@ -14,7 +14,7 @@
 | Colab MCP 的 event loop 錯誤 | 是否在 notebook 直接呼叫同步 `run()` | notebook 使用 `await inspect_database(...)`；CLI 才用 `run()` |
 | MCP 啟動後沒有文字 | stdio 服務在等待協定訊息 | 用教材 client 或 Antigravity 呼叫；不是開網頁連 localhost |
 | MCP 服務找不到 workshop | 設定中的 Python 路徑、PYTHONPATH | 用本機 venv 執行 `scripts/make_mcp_config.py` 重新產生；不要手填別人的路徑 |
-| 第一個恢復命令回傳非零 | 是否包含 DEMO_CRASH_AFTER_ASUS_WRITE | 這是預定中斷；先讀 state.json，再跑 recover-resume |
+| 第一個恢復命令回傳非零 | 是否包含 LESSON_PAUSE_AFTER_LENOVO_EFFECT 且結束碼23 | 只有該訊息及結束碼組合才是預定中斷；先讀 state.json，以相同目錄與Thread跑 resume |
 | 恢復時找不到 Thread | 同一資料夾、同一 Thread、SQLite 是否還在 | 還原完整成果 ZIP；不可換 Thread 後稱為恢復 |
 | Thread 已存在 | 是否重跑 recover-start | 同輪用 resume；新一輪換全新目錄，不刪除舊證據 |
 | SQLite database is locked | 是否同時操作同一資料庫 | 一次一個程序；本教材不演示多 worker 併發 |
@@ -24,3 +24,7 @@
 | Colab 重啟後檔案消失 | 是否下載狀態 ZIP | 重新上傳完整保存資料；僅 notebook 副本不足以恢復 |
 
 模型操作出錯時，請描述「哪個輸入、哪個輸出、哪項驗收不符」，再讓 Antigravity 修正；不要只說「不能跑」。
+
+第二天：模型輸出未完整時請縮小問題，保留現有成果，不把截斷結果當完成；來源HTTP失敗為data_error，不覆蓋有效基準。L05／L06使用獨立Python程序或同步SQLite graph，Colab以await asyncio.to_thread執行，不在已有事件迴圈內呼叫asyncio.run。子程序stdout／stderr寫入真實log檔，不依賴ipykernel的fileno。
+
+L05「目錄已有進度」：不要重跑start，改執行resume；要重演用新的BATCH_DIR。L06「已結束」：查看review_state.json，已核准／駁回就不再次提交；另一分支用新的REVIEW_DIR。

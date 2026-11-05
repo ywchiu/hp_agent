@@ -1,6 +1,6 @@
 # AI Agent 逐步教材
 
-以老師提供的 357 頁 PDF 為基準。這次先完成第一天下午（PDF 95–172），第二天課堂內容保持原樣，後續再同步；原始投影片未變更、未複製進公開教材。
+以老師提供的 357 頁 PDF 為基準。第一天下午（PDF 95–172）與第二天（PDF 173–350）均有逐步教材；原始投影片未變更、未複製進公開教材。
 
 **同學直接從 [第一天下午課堂入口](day1/README.md) 開始，不用另外做第 0 步 setup。** 每份 Colab 都有上方狀態圖及完整白話步驟，老師提供 Key，學員練習改需求、請 AI 修改、檢查結果。
 
@@ -14,9 +14,9 @@
 
 資料是模擬產品；模型 API、LangGraph、MCP 與 SQLite 會實際執行。Key 在執行時輸入框貼上，不寫入教材。這三份 notebook 自帶明文程式與資料，可以下載後單獨上傳 Colab；依序播放收起的準備格即可。每章只修改指定中文問題或規則，最後下載成果 ZIP。
 
-## 第二天：待後續改寫
+## 第二天：企業120台商務筆電採購研究
 
-以下保留 既有固定規則教學內容，**不呼叫模型 API**。本次未修改第二天 notebooks 與課堂內容。
+從[第二天入口](day2/README.md)開始：HP、Lenovo、Dell三品牌，7份官方來源、29筆可回查片段與27格需求矩陣。真實模型、LangGraph與SQLite；每份Colab可獨立跑，來源、缺口與採購數字的界線都有說明。
 
 |ID|PDF 頁碼|學生步驟|Colab|
 |---|---|---|---|
@@ -32,6 +32,6 @@
 - [投影片同步](docs/05_slide_sync.md)／[GitHub 更新](docs/06_github.md)／[技術參考](docs/07_references.md)
 - [版本紀錄](CHANGELOG.md)／[驗證範圍](VERIFICATION.md)
 
-第一天的程式與 Skill 在 `day1/`；Colab 教學文字在 `scripts/day1_cells.py`。更新後執行 `python scripts/build_notebooks.py`，再跑 `python scripts/check_materials.py`，確保原始碼與教學同步。第二天程式仍在 `src/workshop/`，教學文字在 `scripts/lesson_cells.json`。
+第一天的程式與 Skill 在 `day1/`；Colab 教學文字在 `scripts/day1_cells.py`。更新後執行 `python scripts/build_notebooks.py`，再跑 `python scripts/check_materials.py`，確保原始碼與教學同步。第二天程式與來源在 `day2/`，教學文字在 `scripts/day2_cells.py`。`src/workshop/` 與 `scripts/lesson_cells.json` 保留早期固定規則範例，非本次Day 2入口。
 
 基準 SHA-256 與日期見 `course.json`，PDF 對照見 `slide_map.json`。Colab 與狀態圖連結使用本儲存庫 `main`；複製到其他儲存庫時須同步更新連結。

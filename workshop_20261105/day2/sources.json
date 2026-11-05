@@ -1,0 +1,72 @@
+[
+  {
+    "id": "LEN-PSREF",
+    "title": "Lenovo ThinkPad T14 Gen 6 AMD PSREF",
+    "url": "https://psref.lenovo.com/syspool/Sys/PDF/ThinkPad/ThinkPad_T14_Gen_6_AMD/ThinkPad_T14_Gen_6_AMD_Spec.PDF",
+    "market": "GLOBAL",
+    "scope": "family",
+    "source_updated": "2026-08-28",
+    "checked_on": "2026-11-05",
+    "verification": "full_document"
+  },
+  {
+    "id": "LEN-TW",
+    "title": "Lenovo 台灣保固服務說明",
+    "url": "https://www.lenovo.com/tw/zh/support/think/section1/personalcomputing/",
+    "market": "TW",
+    "scope": "service_policy",
+    "source_updated": null,
+    "checked_on": "2026-11-05",
+    "verification": "full_page"
+  },
+  {
+    "id": "HP-IE",
+    "title": "HP Ireland C4JF4ET 產品頁",
+    "url": "https://www.hp.com/ie-en/products/laptops/product-details/2103300234",
+    "market": "IE",
+    "scope": "regional_sku",
+    "source_updated": null,
+    "checked_on": "2026-11-05",
+    "verification": "full_page"
+  },
+  {
+    "id": "HP-SPEC",
+    "title": "HP EliteBook 8 G1a 14 Next Gen AI 系列規格",
+    "url": "https://support.hp.com/us-en/document/ish_12300115-12300036-16",
+    "market": "GLOBAL",
+    "scope": "family",
+    "source_updated": null,
+    "checked_on": "2026-11-05",
+    "verification": "search_index_only_direct_403"
+  },
+  {
+    "id": "DELL-MEM",
+    "title": "Dell PB14250 Core Ultra 200V 記憶體手冊",
+    "url": "https://www.dell.com/support/manuals/en-au/dell-pro-pb14250-2-in-1-laptop/dell_pro_plus14_pb-14250_om/Memory?guid=guid-05867936-5f4f-49a0-aba0-bdb592fd6959&lang=en-us",
+    "market": "GLOBAL",
+    "scope": "variant_200V",
+    "source_updated": null,
+    "checked_on": "2026-11-05",
+    "verification": "full_page"
+  },
+  {
+    "id": "DELL-PORT",
+    "title": "Dell PB14250 Core Ultra 200V 連接埠手冊",
+    "url": "https://www.dell.com/support/manuals/en-au/dell-pro-pb14250-2-in-1-laptop/dell_pro_plus14_pb-14250_om/external-ports-and-slots?guid=guid-1fc91ef3-b5a3-4c62-9229-cbe8084bfd5f&lang=en-us",
+    "market": "GLOBAL",
+    "scope": "variant_200V",
+    "source_updated": null,
+    "checked_on": "2026-11-05",
+    "verification": "full_page"
+  },
+  {
+    "id": "DELL-TW",
+    "title": "Dell Taiwan ProSupport Suite 服務比較",
+    "url": "https://www.dell.com/support/contents/en-tw/article/warranty/prosupport-suite-for-pcs",
+    "market": "TW",
+    "scope": "service_policy",
+    "source_updated": null,
+    "checked_on": "2026-11-05",
+    "verification": "full_page"
+  }
+]

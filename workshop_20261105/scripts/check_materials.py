@@ -22,7 +22,7 @@ for path in root.rglob('*.md'):
     for target in re.findall(r'\]\(([^)]+)\)',path.read_text()):
         if '://' not in target and not target.startswith('#') and not (path.parent/target.split('#')[0]).exists():
             errors.append(f'{path.relative_to(root)}: broken link {target}')
-for folder in ['src','day1','scripts','tests']:
+for folder in ['src','day1','day2','scripts','tests']:
     for path in (root/folder).rglob('*.py'):
         ast.parse(path.read_text())
 for name, checksum in json.loads((root/'NOTEBOOK_SOURCES.json').read_text()).items():
@@ -36,7 +36,7 @@ for name, generated in expected.items():
     doc=json.loads((root/'notebooks'/name).read_text())
     if doc!=generated:
         errors.append(name+': stale notebook; rebuild')
-    if doc['metadata']['hp_workshop']['day']==1:
+    if doc['metadata']['hp_workshop']['day'] in (1,2):
         if '狀態圖' not in ''.join(doc['cells'][0]['source']):
             errors.append(name+': missing opening state diagram')
         text='\n'.join(''.join(c['source']) for c in doc['cells'])

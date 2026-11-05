@@ -11,8 +11,9 @@ from nbclient import NotebookClient
 
 p=argparse.ArgumentParser()
 p.add_argument('--out',default=None)
+p.add_argument('--notebook',default=None,help='只驗證指定檔名，例如04_research_loop.ipynb')
 p.add_argument('--day', choices=['1','2','all'], default='1')
-p.add_argument('--live-model', action='store_true', help='只跑第一天，讀取指定 .env，真的呼叫模型 API')
+p.add_argument('--live-model', action='store_true', help='讀取指定 .env，真的呼叫模型 API')
 p.add_argument('--env-file', type=Path, default=Path(__file__).resolve().parents[2]/'.env')
 args=p.parse_args()
 root=Path(__file__).resolve().parents[1]
@@ -35,21 +36,23 @@ os.environ['HP_WORKSHOP_SKIP_INSTALL']='1'
 os.environ['IPYTHONDIR']=str(out/'ipython')
 results=[]
 for path in sorted((root/'notebooks').glob('*.ipynb')):
+    if args.notebook and path.name!=args.notebook:
+        continue
     nb=nbformat.read(path,as_version=4)
     day=nb.metadata.hp_workshop.get('day',2)
-    if args.live_model and day!=1:
-        continue
     if args.day!='all' and int(args.day)!=day:
         continue
     work=out/path.stem
     work.mkdir(parents=True,exist_ok=True)
-    if day==1:
+    if day in (1,2):
         # 注入只存在於測試副本的模型替身；發布 notebook 不含此格。
-        if not args.live_model:
+        if not args.live_model and day==1:
             nb.cells.insert(0,nbformat.v4.new_code_cell(
                 f'import sys, openai\nsys.path.insert(0, {str(root/"tests")!r})\n'
                 'from day1_fakes import FakeClient\n'
                 'openai.AsyncOpenAI = FakeClient\n'))
+        if not args.live_model and day==2:
+            raise SystemExit('第二天請加 --live-model；不把固定回覆當成模型驗證。')
         for c in nb.cells:
             if c.cell_type=='code' and 'API_KEY = getpass(' in c.source:
                 # nbclient 不支援互動輸入；僅在測試副本取代此提示。
@@ -60,7 +63,7 @@ for path in sorted((root/'notebooks').glob('*.ipynb')):
     if live_key:
         kernel_env['HP_WORKSHOP_QA_KEY']=live_key
     try:
-        NotebookClient(nb,timeout=180,kernel_name='python3',resources={'metadata':{'path':str(work)}}).execute(env=kernel_env)
+        NotebookClient(nb,timeout=360,kernel_name='python3',resources={'metadata':{'path':str(work)}}).execute(env=kernel_env)
     except Exception as error:
         message=str(error)
         if live_key:

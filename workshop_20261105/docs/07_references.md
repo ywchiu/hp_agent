@@ -13,6 +13,6 @@
 - [Antigravity Settings](https://www.antigravity.google/docs/settings)：設定與 MCP 自訂功能；UI 位置依版本確認。
 - [Google Colab](https://colab.research.google.com/)：本課用上傳 notebook，不依賴私人 Drive 連結。
 
-第二天 RAG 仍用字元二元組關鍵字排序，不包含付費 embedding、向量庫或 reranker；第二天 Python 研究角色仍為固定流程。第一天下午已使用真實模型選工具，不能再以「全部 Colab 都是固定規則」描述。
+第二天RAG使用中英詞彙及中文字元二元組檢索，不使用embedding、向量庫或reranker；回答與研究角色分別真實呼叫模型。官方資料出處與採用邊界見 [第二天來源說明](../day2/SOURCES.md)。L04選做即時web_search，L06選做真實PDF快照，沒有虛構歷史報價。
 
 投影片中的產業新聞、效能統計與產品故事屬原簡報內容，本版不重新驗證或延伸其數字，也不將它們當成程式測試的證據。

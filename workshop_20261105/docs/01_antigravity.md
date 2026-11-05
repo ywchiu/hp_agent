@@ -13,4 +13,4 @@ Skill 章由程式將 `day1/SKILL.md` 文字傳給模型，不依賴某版 UI �
 
 資料只來自教材，不以模擬資料冒充即時官網。學員可以請 AI 改問題／規則；每次都需重跑與核對，不能只看「完成」宣告。
 
-第二天仍沿用 [P04](../prompts/04_rag.txt) 到 [P07](../prompts/07_review.txt) 的 v0.1 教學內容，後續另行改寫。真實官網研究 [P08](../prompts/08_live_sources.txt) 與比較頁 [P09](../prompts/09_comparison_page.txt) 是選做，主線完成後由老師安排。
+第二天從[120台企業採購入口](../day2/README.md)開始，依 [P04](../prompts/04_rag.txt) 到 [P07](../prompts/07_review.txt) 執行真實模型研究、跨程序恢復與詢價審核。老師已放入專案.env時直接讀取，學員只改中文需求，不展示Key。真實官網研究 [P08](../prompts/08_live_sources.txt) 與比較頁 [P09](../prompts/09_comparison_page.txt) 是選做，主線完成後由老師安排。

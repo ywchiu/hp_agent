@@ -1,0 +1,81 @@
+{
+  "project_id": "TW-120-REFRESH",
+  "data_boundary": "企業與採購數字是教學情境；產品與服務片段來自真實官網，非供應商正式報價。",
+  "market": "TW",
+  "quantity": 120,
+  "departments": [
+    {
+      "name": "業務與顧問",
+      "units": 60
+    },
+    {
+      "name": "工程與分析",
+      "units": 40
+    },
+    {
+      "name": "行政與管理",
+      "units": 20
+    }
+  ],
+  "budget_twd_tax_included": 6000000,
+  "deadline": "2027-01-15",
+  "brands": [
+    "HP",
+    "Lenovo",
+    "Dell"
+  ],
+  "products": {
+    "HP": "EliteBook 8 G1a 14 Next Gen AI",
+    "Lenovo": "ThinkPad T14 Gen 6 AMD",
+    "Dell": "Pro 14 Plus PB14250 Core Ultra 200V"
+  },
+  "requirements": [
+    {
+      "id": "R01",
+      "topic": "memory",
+      "text": "至少 32 GB，能否未來升級須單列"
+    },
+    {
+      "id": "R02",
+      "topic": "storage",
+      "text": "至少 1 TB SSD"
+    },
+    {
+      "id": "R03",
+      "topic": "weight",
+      "text": "出差配置不超過 1.5 kg，指定顏色、電池、面板"
+    },
+    {
+      "id": "R04",
+      "topic": "os",
+      "text": "Windows 11 Pro 出貨授權"
+    },
+    {
+      "id": "R05",
+      "topic": "ports",
+      "text": "USB4 / Thunderbolt 與既有底座相容"
+    },
+    {
+      "id": "R06",
+      "topic": "display",
+      "text": "兩台外接 4K 顯示器的實際連接方案"
+    },
+    {
+      "id": "R07",
+      "topic": "security",
+      "text": "TPM、BIOS 與企業映像相容性由 IT 驗收"
+    },
+    {
+      "id": "R08",
+      "topic": "service",
+      "text": "台灣三年次工作日到府，寫明遠端診斷與地區限制"
+    },
+    {
+      "id": "R09",
+      "topic": "commercial",
+      "text": "台灣含稅 TWD 報價、SKU、交期、報價有效期與三年總成本"
+    }
+  ],
+  "scenario_revision": 2,
+  "notes": "尚未取得任何台灣指定 SKU 報價，不可判定最便宜、立即下單或已全數合規。"
+}

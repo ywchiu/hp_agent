@@ -1,0 +1,129 @@
+{
+  "date": "2026-11-05",
+  "model": "gpt-6-luna",
+  "environment": "本機 Python 3.11 / 獨立 Jupyter kernels；非 Colab 網頁端",
+  "unit_tests": {
+    "passed": 33,
+    "new_day2": 7,
+    "model_for_unit_tests": "模型替身；LangGraph及SQLite實際執行"
+  },
+  "notebooks": [
+    {
+      "name": "03_rag.ipynb",
+      "status": "passed",
+      "executed_code_cells": 8
+    },
+    {
+      "name": "04_research_loop.ipynb",
+      "status": "passed",
+      "executed_code_cells": 9
+    },
+    {
+      "name": "05_recovery.ipynb",
+      "status": "passed",
+      "executed_code_cells": 9
+    },
+    {
+      "name": "06_review_monitor.ipynb",
+      "status": "passed",
+      "executed_code_cells": 10
+    }
+  ],
+  "fresh_model_calls_in_successful_main_flows": 14,
+  "additional_live_search": {
+    "searched": true,
+    "status": "completed",
+    "citations": 1,
+    "automatic_evidence_adoption": false
+  },
+  "web_monitor": {
+    "old": {
+      "status": "ok",
+      "source_id": "LEN-PSREF",
+      "url": "https://psref.lenovo.com/syspool/Sys/PDF/ThinkPad/ThinkPad_T14_Gen_6_AMD/ThinkPad_T14_Gen_6_AMD_Spec.PDF",
+      "sha256": "4c261e49d1d375151727e6b8afdb433818cb92db96c6f669a91a318831c065a9",
+      "bytes": 1128981,
+      "fetched_at": "2026-11-05T11:25:35.440675+00:00"
+    },
+    "new": {
+      "status": "ok",
+      "source_id": "LEN-PSREF",
+      "url": "https://psref.lenovo.com/syspool/Sys/PDF/ThinkPad/ThinkPad_T14_Gen_6_AMD/ThinkPad_T14_Gen_6_AMD_Spec.PDF",
+      "sha256": "4c261e49d1d375151727e6b8afdb433818cb92db96c6f669a91a318831c065a9",
+      "bytes": 1128981,
+      "fetched_at": "2026-11-05T11:25:35.807032+00:00"
+    },
+    "comparison": "unchanged"
+  },
+  "checks": {
+    "sources": 7,
+    "evidence": 29,
+    "eligible_evidence": 27,
+    "coverage_rows": 27,
+    "team_roles": [
+      "Planner",
+      "Researcher-HP",
+      "Researcher-Lenovo",
+      "Researcher-Dell",
+      "Writer",
+      "Reviewer",
+      "Writer",
+      "Reviewer"
+    ],
+    "team_citations": {
+      "cited_ids": [
+        "DELL-01",
+        "DELL-02",
+        "DELL-03",
+        "DELL-04",
+        "DELL-06",
+        "DELL-07",
+        "DELL-08",
+        "HP-01",
+        "HP-02",
+        "HP-03",
+        "HP-04",
+        "HP-05",
+        "LEN-01",
+        "LEN-02",
+        "LEN-03",
+        "LEN-04",
+        "LEN-06",
+        "LEN-08",
+        "LEN-09",
+        "LEN-10",
+        "LEN-11",
+        "LEN-14"
+      ],
+      "unknown_ids": [],
+      "status": "ids_valid",
+      "limitation": "僅驗證 ID 存在且在本次上下文；是否支持結論仍須人讀原文。"
+    },
+    "team_format": {
+      "missing_items": []
+    },
+    "recovery_execution": [
+      "HP",
+      "Lenovo",
+      "Lenovo(reused)",
+      "Dell"
+    ],
+    "unique_brand_results": 3,
+    "approval_outbox": 1,
+    "sent": 0,
+    "day1_files_unchanged": true,
+    "published_notebooks_outputs_cleared": true
+  },
+  "observed_failures_and_fixes": [
+    "Planner輸出截斷：限制角色篇幅並提高輸出額度。",
+    "Writer修訂只回審查摘要：以明確角色及完整章節要求修正，確認三品牌比較與供應商問題。",
+    "測試曾遇API讀取逾時；重試通過，加入已完成角色回覆快取及來源／任務變動失效，避免整組重做。"
+  ],
+  "not_verified": [
+    "Colab網頁端的登入、Key互動、下載UI",
+    "Antigravity App介面",
+    "Windows",
+    "真正寄件或持續排程",
+    "兩週後的歷史變化"
+  ]
+}

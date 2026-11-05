@@ -9,5 +9,9 @@
   "simulated_data": true,
   "repository": "https://github.com/ywchiu/hp_agent",
   "distribution_branch": "main",
-  "revised_scope": "僅第一天下午 PDF 95–172；第二天 notebooks 與課堂內容未變更"
+  "revised_scope": "第一天下午 PDF 95–172；第二天 PDF 173–350",
+  "data_scope": {
+    "day1": "模擬產品；真實模型、MCP與SQLite",
+    "day2": "真實官網片段；企業、數量、預算、交期為教學情境"
+  }
 }

@@ -3,6 +3,7 @@ import hashlib
 import json
 from pathlib import Path
 from day1_cells import day1_lessons
+from day2_cells import day2_lessons
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -18,7 +19,8 @@ def cell(kind, source, index, folded=False):
 
 def source_files():
     return sorted([ROOT/'data/products.json', ROOT/'day1/requirements.txt']+
-                  list((ROOT/'day1').glob('*.py'))+list((ROOT/'day1').glob('*.md')))
+                  list((ROOT/'day1').glob('*.py'))+list((ROOT/'day1').glob('*.md'))+
+                  [p for p in (ROOT/'day2').glob('*') if p.suffix in {'.py','.json','.txt','.md'}])
 
 
 def documents():
@@ -26,9 +28,9 @@ def documents():
     return {name: {'nbformat': 4, 'nbformat_minor': 5,
                   'metadata': {'kernelspec': {'display_name': 'Python 3', 'language': 'python', 'name': 'python3'},
                                'language_info': {'name': 'python', 'version': '3.11'}, 'colab': {'name': name},
-                               'hp_workshop': {'version': version, 'day': 1}},
+                               'hp_workshop': {'version': version, 'day': 1 if name.startswith(('01_','02_','02b_')) else 2}},
                   'cells': [cell(kind, source, i, folded) for i, (kind, source, folded) in enumerate(cells)]}
-            for name, cells in day1_lessons(ROOT).items()}
+            for name, cells in (day1_lessons(ROOT) | day2_lessons(ROOT)).items()}
 
 
 def build():
