@@ -1,8 +1,8 @@
 # LLM Application - AI Agent 實戰課程
 
-## 2026/11/05 課程教材｜v0.1.0
+## 2026/11/05 課程教材
 
-以本次 357 頁投影片 PDF 為基準，沿著同一個產品研究任務，逐步加入 Skill、MCP、RAG、研究分工、中斷恢復與人工審核。
+以投影片 PDF 為基準，沿著同一個產品研究任務，逐步加入 Skill、MCP、RAG、研究分工、中斷恢復與人工審核。
 
 **同學請先開啟 [逐步教材首頁](workshop_20261105/README.md)，完成 [課前準備](workshop_20261105/docs/00_setup.md)，再依老師進度操作。**
 
@@ -27,8 +27,6 @@
 - [講師手冊與參考答案](workshop_20261105/docs/02_instructor.md)／[學生成果清單](workshop_20261105/docs/03_submission.md)
 - [投影片頁碼對照與同步方式](workshop_20261105/docs/05_slide_sync.md)／[GitHub 更新步驟](workshop_20261105/docs/06_github.md)
 - [排錯](workshop_20261105/docs/04_troubleshooting.md)／[驗證範圍](workshop_20261105/VERIFICATION.md)
-
-七份 notebooks 已通過本機逐格執行，17 項核心驗收通過。Antigravity App、Colab 網頁端與 Windows 仍需課前演練。產品資料及通知均為教學模擬；未部署正式排程或寄件服務。
 
 ---
 
