@@ -1,51 +1,170 @@
 {
   "date": "2026-11-05",
-  "platform": "Google Colab 網頁 / 已登入帳號 / Python 3 CPU 雲端執行階段",
-  "notebook": "03_rag.ipynb",
-  "loaded_revision": "fc4eb0f",
-  "notebook_url": "https://colab.research.google.com/github/ywchiu/hp_agent/blob/main/workshop_20261105/notebooks/03_rag.ipynb",
+  "platform": "Google Colab 網頁；已登入帳號；各章新建 Python 3 CPU 雲端執行階段",
   "model": "gpt-6-luna",
-  "actual_model_calls": 3,
-  "main_flow_code_cells": 8,
-  "checks": {
-    "diagram_rendered": true,
-    "install_on_cloud_runtime": true,
-    "official_source_table": true,
-    "getpass_masked_input": true,
-    "before_report": true,
-    "after_report": true,
-    "citations_unknown_ids": [],
-    "question_edited_in_form_and_rerun": true,
-    "copy_to_drive_saved": true,
-    "zip_automatic_download": true,
-    "zip_files_panel_download": true,
-    "zip_crc_valid": true,
-    "zip_contains_actual_key": false,
-    "source_cell_folded_and_executed_after_title_fix": true
-  },
-  "download": {
-    "name": "03_rag_成果.zip",
-    "sha256": "d969c4af90677be772d75bdce60f60f4888fa8eeea3f973f113d09de235a3748",
-    "file_count": 8,
-    "files": [
-      "before/report.md",
-      "before/trace.json",
-      "after/report.md",
-      "after/trace.json",
-      "questions.json",
-      "inputs/case.json",
-      "inputs/sources.json",
-      "inputs/evidence.json"
-    ],
-    "scope": "原始問題與預設改問後的兩份報告；額外表單改問重跑由網頁輸出核對。"
-  },
-  "observed_fix": "%%writefile下方補上Colab @title；網頁已確認原始碼收起且可執行，四份Day 2 notebook共用此修正。",
-  "automation_note": "Colab輸出iframe發起的下載未被page download事件捕捉；另從瀏覽器下載記錄確認3次檔案下載完成，取得實際ZIP核對內容。",
+  "tested_revision": "028ab72",
+  "execution": "透過瀏覽器按播放、輸入隱藏Key、操作表單及下載；非本機Jupyter結果代替",
+  "all_lessons_passed": true,
+  "lessons": [
+    {
+      "notebook": "03_rag.ipynb",
+      "url": "https://colab.research.google.com/github/ywchiu/hp_agent/blob/main/workshop_20261105/notebooks/03_rag.ipynb",
+      "code_cells": 8,
+      "passed": true,
+      "download": {
+        "artifact": "03_rag.zip",
+        "sha256": "4907445ab253e6f07585637de54d5ea8dd0566d0403fce43694874c133493d31",
+        "file_count": 8,
+        "crc_valid": true,
+        "actual_key_absent": true
+      },
+      "actual_model_calls": 2,
+      "checks": {
+        "before_after_rag": true,
+        "unknown_citation_ids": [],
+        "source_filter_excludes_desktop_and_unverified": true
+      }
+    },
+    {
+      "notebook": "04_research_loop.ipynb",
+      "url": "https://colab.research.google.com/github/ywchiu/hp_agent/blob/main/workshop_20261105/notebooks/04_research_loop.ipynb",
+      "code_cells": 9,
+      "passed": true,
+      "download": {
+        "artifact": "04_research.zip",
+        "sha256": "b5394e5f131030700448b5eb63b5cdc4899ff403968ef3bc021005167f9d5e7b",
+        "file_count": 16,
+        "crc_valid": true,
+        "actual_key_absent": true
+      },
+      "loaded_revision": "8954dec",
+      "notebook_unchanged_at_tested_revision": true,
+      "actual_model_calls": 8,
+      "optional_search_model_calls": 1,
+      "checks": {
+        "independent_role_calls": 8,
+        "revisions": 1,
+        "coverage_rows": 27,
+        "complete_final_report": true,
+        "unknown_citation_ids": [],
+        "optional_live_search": true,
+        "official_citations": 2
+      }
+    },
+    {
+      "notebook": "05_recovery.ipynb",
+      "url": "https://colab.research.google.com/github/ywchiu/hp_agent/blob/main/workshop_20261105/notebooks/05_recovery.ipynb",
+      "code_cells": 9,
+      "passed": true,
+      "download": {
+        "artifact": "05_recovery.zip",
+        "sha256": "980f021554da3dc7f429f38475c6c44a17e4f7241f819254b8a35f1ec8ba377b",
+        "file_count": 13,
+        "crc_valid": true,
+        "actual_key_absent": true
+      },
+      "actual_model_calls": 4,
+      "checks": {
+        "expected_pause_exit_code": 23,
+        "paused_checkpoint": [
+          "HP"
+        ],
+        "paused_effects": {
+          "HP": 1,
+          "Lenovo": 1
+        },
+        "resumed_execution": [
+          "HP",
+          "Lenovo",
+          "Lenovo(reused)",
+          "Dell"
+        ],
+        "unique_results": 3,
+        "fresh_cloud_runtime_restoration": true,
+        "restoration_new_model_calls": 1,
+        "preserved_original_hp_lenovo_responses": true
+      },
+      "additional_downloads": [
+        {
+          "artifact": "05_paused.zip",
+          "sha256": "b58221d14712f07add3b3abca7593724b7e1131dfe67f6480f4bc22b98073a43",
+          "file_count": 10,
+          "crc_valid": true,
+          "actual_key_absent": true
+        },
+        {
+          "artifact": "05_restored.zip",
+          "sha256": "38e51d16d5d2f05f1fae10ce3e8daac7d9ec802c7dd5a9cc150354f2e3c474fc",
+          "file_count": 13,
+          "crc_valid": true,
+          "actual_key_absent": true
+        }
+      ],
+      "actual_model_calls_scope": "主線3次，加全新執行階段還原後Dell 1次。"
+    },
+    {
+      "notebook": "06_review_monitor.ipynb",
+      "url": "https://colab.research.google.com/github/ywchiu/hp_agent/blob/main/workshop_20261105/notebooks/06_review_monitor.ipynb",
+      "code_cells": 10,
+      "passed": true,
+      "download": {
+        "artifact": "06_approved.zip",
+        "sha256": "843ffb42e50c2f638f34e3d0c639c8b8858179cfdcde3b45bf1505ddcf0186b1",
+        "file_count": 12,
+        "crc_valid": true,
+        "actual_key_absent": true
+      },
+      "actual_model_calls": 1,
+      "checks": {
+        "interrupt_pending": true,
+        "revised_hash_changed": true,
+        "revised_draft_visible": true,
+        "old_hash_rejected": true,
+        "duplicate_decision_rejected": true,
+        "approved_outbox": 1,
+        "rejected_outbox": 0,
+        "sent": 0,
+        "fresh_cloud_runtime_pending_restore": true,
+        "restored_draft_preserves_original_model_response": true,
+        "official_pdf_fetched_twice": true,
+        "monitor_status": "unchanged",
+        "pdf_bytes": 1128981,
+        "pdf_sha256": "4c261e49d1d375151727e6b8afdb433818cb92db96c6f669a91a318831c065a9"
+      },
+      "additional_downloads": [
+        {
+          "artifact": "06_pending.zip",
+          "sha256": "9555070c1d15203771030e94530dfe432f6e50bb44c2dbaf0282bdb7227695d5",
+          "file_count": 8,
+          "crc_valid": true,
+          "actual_key_absent": true
+        },
+        {
+          "artifact": "06_rejected_restored.zip",
+          "sha256": "031c664c7f7a2aafed79ef22a01cb0a51d34fa0e359677570c59ba7e5443d6e6",
+          "file_count": 8,
+          "crc_valid": true,
+          "actual_key_absent": true
+        }
+      ]
+    }
+  ],
   "not_verified": [
-    "L04–L06的Colab網頁執行",
-    "重新登入或其他Google帳號",
-    "Antigravity App",
+    "重新登入與其他Google帳號",
     "Windows",
+    "Antigravity App",
     "正式寄件與持續排程"
-  ]
+  ],
+  "download_note": "輸出iframe發起下載，從瀏覽器下載記錄核對完成，再驗證實際ZIP、CRC與Key未外洩。",
+  "observed_fixes": [
+    "流程原始碼補Colab標題並預設收合；MCP writefile格同步補標題。",
+    "L06修改草稿後，顯示完整新版待審內容，讓學員在決定前閱讀。"
+  ],
+  "earlier_l03_form_test": {
+    "question_edited_and_rerun": true,
+    "copy_to_drive_saved": true,
+    "actual_model_calls": 3,
+    "sha256": "d969c4af90677be772d75bdce60f60f4888fa8eeea3f973f113d09de235a3748",
+    "source": "同日稍早Colab網頁紀錄；本表另列最新完整重跑。"
+  }
 }

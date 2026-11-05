@@ -1,0 +1,83 @@
+{
+  "date": "2026-11-05",
+  "platform": "Google Colab 網頁；已登入帳號；各章新建 Python 3 CPU 雲端執行階段",
+  "model": "gpt-6-luna",
+  "tested_revision": "028ab72",
+  "execution": "透過瀏覽器按播放、輸入隱藏Key、操作表單及下載；非本機Jupyter結果代替",
+  "all_lessons_passed": true,
+  "lessons": [
+    {
+      "notebook": "01_first_research.ipynb",
+      "url": "https://colab.research.google.com/github/ywchiu/hp_agent/blob/main/workshop_20261105/notebooks/01_first_research.ipynb",
+      "code_cells": 8,
+      "passed": true,
+      "download": {
+        "artifact": "01_research.zip",
+        "sha256": "94d1eda8f9fcf579b0514add871f4fe75551b3d6f872b5057ca2f0b397a37e04",
+        "file_count": 5,
+        "crc_valid": true,
+        "actual_key_absent": true
+      },
+      "actual_model_calls": 6,
+      "checks": {
+        "cloud_install": true,
+        "masked_key": true,
+        "before_and_after_reports": true,
+        "taiwan_16gb_one_year_and_32gb_unknown_reviewed": true
+      }
+    },
+    {
+      "notebook": "02_skill_mcp.ipynb",
+      "url": "https://colab.research.google.com/github/ywchiu/hp_agent/blob/main/workshop_20261105/notebooks/02_skill_mcp.ipynb",
+      "code_cells": 8,
+      "passed": true,
+      "download": {
+        "artifact": "02_skill.zip",
+        "sha256": "6e25224952334adcd62a5f9dfbf71e707adb5906b237d49400325ed8018fb743",
+        "file_count": 6,
+        "crc_valid": true,
+        "actual_key_absent": true
+      },
+      "actual_model_calls": 7,
+      "checks": {
+        "cloud_install": true,
+        "masked_key": true,
+        "before_and_after_reports": true,
+        "taiwan_16gb_one_year_and_32gb_unknown_reviewed": true,
+        "plain_skill_edited_in_browser_and_applied": true
+      }
+    },
+    {
+      "notebook": "02b_company_database.ipynb",
+      "url": "https://colab.research.google.com/github/ywchiu/hp_agent/blob/main/workshop_20261105/notebooks/02b_company_database.ipynb",
+      "code_cells": 10,
+      "passed": true,
+      "download": {
+        "artifact": "02b_mcp.zip",
+        "sha256": "5dafcd209b0bbd2108804c8e97003852527680672d9599cd37fca12a4c6f3cf0",
+        "file_count": 10,
+        "crc_valid": true,
+        "actual_key_absent": true
+      },
+      "actual_model_calls": 5,
+      "checks": {
+        "cloud_install": true,
+        "masked_key": true,
+        "before_and_after_reports": true,
+        "taiwan_16gb_one_year_and_32gb_unknown_reviewed": true,
+        "real_mcp_stdio_and_sqlite": true,
+        "unknown_id_not_found": true,
+        "no_fileno_exception": true,
+        "mcp_source_folded": true,
+        "sqlite_product_rows": 3
+      }
+    }
+  ],
+  "not_verified": [
+    "重新登入與其他Google帳號",
+    "Windows",
+    "Antigravity App",
+    "正式寄件與持續排程"
+  ],
+  "download_note": "輸出iframe發起下載，從瀏覽器下載記錄核對完成，再驗證實際ZIP、CRC與Key未外洩。"
+}

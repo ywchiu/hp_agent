@@ -120,11 +120,10 @@
     "測試曾遇API讀取逾時；重試通過，加入已完成角色回覆快取及來源／任務變動失效，避免整組重做。"
   ],
   "not_verified": [
-    "L04–L06的Colab網頁流程；L03後續已測，見day2_colab_validation.json",
     "Antigravity App介面",
     "Windows",
     "真正寄件或持續排程",
     "兩週後的歷史變化"
   ],
-  "subsequent_colab_validation": "day2_colab_validation.json（L03網頁完整流程與改問重跑已測）"
+  "subsequent_colab_validation": "day2_colab_validation.json（L03–L06網頁逐章、選做與跨全新執行階段恢復已測）"
 }

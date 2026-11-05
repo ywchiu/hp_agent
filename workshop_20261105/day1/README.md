@@ -57,3 +57,8 @@ python3 -m venv .venv
 ```
 
 本機程式優先讀取專案根目錄 `.env` 的 `OPENAI_API_KEY` 或 `OPENAIAPI_KEY`；沒有時才顯示 Key 輸入提示。修改規則使用 [SKILL.md](SKILL.md)；修改問題讓 AI 在命令加上 `--task "你的中文問題"`，並換一個 `--out` 留下前後版本。Colab 仍使用老師當堂提供的隱藏輸入框，不需上傳 `.env`。
+
+
+## 課前驗證
+
+2026-11-05 已在 Colab 網頁逐份跑通本頁三份 notebook，使用老師提供的 Key 與 `gpt-6-luna`，實際修改白話 Skill、查詢 MCP／SQLite 及不存在的 ID，完成前後報告與 ZIP 下載。先前 MCP 的 `fileno()` 問題已在雲端確認修正。詳見[Colab 驗證紀錄](../examples/day1_colab_validation.json)。

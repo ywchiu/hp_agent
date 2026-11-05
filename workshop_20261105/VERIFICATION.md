@@ -1,5 +1,25 @@
 # 驗證紀錄
 
+## Colab 網頁完整演練｜2026-11-05
+
+七份 notebook 共62個程式格，已透過實際 Colab 網頁、已登入帳號、Python 3 CPU 雲端執行階段逐份執行；每章重新安裝套件並輸入隱藏 Key，使用專案既有 Key 與 `gpt-6-luna` 真實呼叫模型。這份結果有別於下方本機 Jupyter 與單元測試紀錄。
+
+|章節|網頁實測與驗收|
+|---|---|
+|L01|前後研究、資料 ID／日期、台灣32GB保固待確認、成果下載。|
+|L02A|在網頁編輯 Skill 加入三句主管摘要，確認規則寫入並改變報告，前後成果下載。|
+|L02B|真實 MCP stdio 啟動與 SQLite 查詢，正常資料與 `not_found`、原始碼格收合、成果下載；沒有 `fileno()` 例外。|
+|L03|前後 RAG、有效引用、排除桌機與不可用來源、成果下載；同日另測表單改問重跑與儲存 Drive 副本。|
+|L04|8次角色模型呼叫、1輪修訂、27格矩陣及完整報告；選做即時搜尋取得2個官方引用，成果下載。|
+|L05|預期結束碼23、中斷時 checkpoint／帳本差異、Lenovo重進沿用、三品牌唯一結果；下載中斷ZIP，刪除測試執行階段後，在全新Colab上傳還原，僅新增Dell一次模型呼叫。|
+|L06|真實interrupt、修改後顯示完整新版草稿、舊hash與重複決定拒絕、核准僅存一筆；待審ZIP在全新Colab還原後駁回為零存檔；兩分支零寄送。官方PDF連讀兩次，建立基準後為unchanged。|
+
+七章成果與四份中斷／還原／待審分支 ZIP 都已從瀏覽器實際下載，逐檔解壓CRC與既有Key外洩檢查通過；各ZIP的SHA-256及驗收結果見[第一天網頁紀錄](examples/day1_colab_validation.json)、[第二天網頁紀錄](examples/day2_colab_validation.json)。原始下載與瀏覽器截取保留於測試端，公開紀錄不含帳號、Key或本機私人路徑。
+
+網頁演練修正：MCP來源格補Colab標題以預設收合；L06原本修改後只顯示狀態，現補上完整新版待審草稿。同步修正產生器並重建notebook；33項單元測試及七份教材同步、語法、連結、狀態圖與發布輸出檢查通過。單元測試使用模型替身，網頁演練使用真實API。
+
+驗證範圍為目前已登入的Google帳號；未測重新登入、其他帳號、Windows或Antigravity App，未正式寄件或部署持續排程。L04快取失效與其他錯誤分支的覆蓋來自單元測試，未逐一重演所有網頁輸入組合。
+
 ## 第二天｜2026-11-05
 
 - 四份Day 2 notebook已使用專案.env的既有Key與gpt-6-luna，在各自獨立本機Jupyter kernel逐格跑通。主線成功執行含14次新模型呼叫；調整、逾時及重試另計。
@@ -8,11 +28,11 @@
 - L05兩個獨立Python程序：中斷後checkpoint只有HP，帳本有HP／Lenovo；恢復後log為HP→Lenovo→Lenovo(reused)→Dell，唯一結果三筆。新增中斷現場ZIP及還原格，跨目錄還原後接續的測試通過。
 - L06真實LangGraph interrupt：待審零存檔、修改仍待審、舊hash拒絕、核准存本機一筆、重複決定拒絕；駁回分支測試零存檔。所有分支都沒有寄送。
 - 33項測試通過（第二天新增7項），涵蓋來源適用性、27格矩陣、角色上限、操作／checkpoint差異、資料身分、ZIP恢復、快取失效及審核／監測錯誤分支。單元測試使用模型替身；實跑notebook使用真實API。
-- 四張draw.io狀態圖已匯出並目視核對。七份notebook皆為明文程式，圖放上方、六步白話說明，發布版清空執行輸出。來源manifest、357頁對照、語法及相對連結通過；第一天檔案SHA-256完全相同。
+- 四張draw.io狀態圖已匯出並目視核對。七份notebook皆為明文程式，圖放上方、六步白話說明，發布版清空執行輸出。來源manifest、357頁對照、語法及相對連結通過；第一天研究邏輯未改，後續Colab顯示修正見上方。
 - 實測修正：角色輸出截斷、修訂稿誤回審查摘要，以及API讀取逾時。現在限制篇幅、要求完整報告；L04相同輸入重用已完成角色回覆，任務／證據變動會重新呼叫。
 - 已在實際Colab網頁、已登入帳號與Python 3 CPU雲端執行階段跑通L03：安裝、來源表、隱藏Key輸入、前後兩份RAG報告、引用檢查、ZIP下載及複製到雲端硬碟。另透過表單修改中文問題並重跑，這次網頁測試共3次真實gpt-6-luna呼叫。ZIP解壓CRC通過，8個檔案含需求／來源／片段、前後報告與trace，逐檔確認不含Key。詳見[Colab網頁驗證](examples/day2_colab_validation.json)。
 - 網頁實測發現流程原始碼格缺少Colab表單標題，導致整段程式攤開；已補上標題，並在Colab確認收合後仍可執行，同步套用第二天四份notebook。
-- L04–L06仍只有本機Jupyter實跑；本次未驗證重新登入、其他Google帳號、Antigravity App或Windows，未部署持續排程或正式寄件。
+- 後續已補齊四章Colab網頁實測與跨全新執行階段還原，詳見上方完整演練。
 
 實際產物：[驗證摘要](examples/day2_validation.json)、[講師示例](examples/day2/README.md)。重跑：`python scripts/run_notebooks.py --day 2 --live-model`；只跑一章可加`--notebook 04_research_loop.ipynb`。Key不寫入程式、報告、ZIP或發布notebook。
 
@@ -26,7 +46,7 @@ Colab MCP 相容性修正：重現預設 stderr 不支援 `fileno()` 時的同�
 - 三張狀態圖已以 draw.io 匯出並目視核對；第一天 notebook 的圖放在第一個執行格上方。
 - 相對連結、357 頁對照、原始碼同步與 notebook 語法檢查通過；三份成果 ZIP 完整且未含測試 Key。
 - 已使用使用者指定 `.env` 的既有 Key，以 `gpt-6-luna` 真實執行第一天三份 notebook、六次研究，共 17 次模型呼叫。核對 TW 兩筆資料、保固缺漏、Skill 規則、MCP 查詢與 not_found 均符合預期。
-- 尚未在 Colab 網頁端、Antigravity App 或 Windows 演練；Colab 隱藏輸入框仍需在網頁端確認。
+- 後續三章Colab網頁演練已完成，隱藏Key輸入及MCP雲端啟動均通過，詳見上方完整演練；Antigravity App與Windows未測。
 - 此段記錄第一天下午驗證；第二天更新與驗證見上方。
 
 實際模型紀錄：[GPT-6 Luna 驗證](examples/day1_gpt6_luna_validation.json)；離線紀錄：[第一天下午驗證](examples/day1_validation.json)。維護者執行 `python scripts/run_notebooks.py`，預設只驗證第一天下午。加上 `--live-model` 可讀取專案根目錄 `.env`，實際呼叫 `gpt-6-luna`。

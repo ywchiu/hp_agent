@@ -33,5 +33,6 @@
     "skill_rules_applied": true,
     "true_mcp_sqlite": true,
     "mcp_not_found": true
-  }
+  },
+  "subsequent_colab_validation": "day1_colab_validation.json（此檔記錄本機執行；後續三章Colab網頁已完成）"
 }

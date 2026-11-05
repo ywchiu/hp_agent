@@ -35,3 +35,6 @@
 第一天的程式與 Skill 在 `day1/`；Colab 教學文字在 `scripts/day1_cells.py`。更新後執行 `python scripts/build_notebooks.py`，再跑 `python scripts/check_materials.py`，確保原始碼與教學同步。第二天程式與來源在 `day2/`，教學文字在 `scripts/day2_cells.py`。`src/workshop/` 與 `scripts/lesson_cells.json` 保留早期固定規則範例，非本次Day 2入口。
 
 基準 SHA-256 與日期見 `course.json`，PDF 對照見 `slide_map.json`。Colab 與狀態圖連結使用本儲存庫 `main`；複製到其他儲存庫時須同步更新連結。
+
+
+2026-11-05 已在 Colab 網頁完成七份 notebook 的逐格實測與成果下載；L05、L06 另測全新執行階段 ZIP 還原。逐章結果與範圍見[驗證紀錄](VERIFICATION.md)。
