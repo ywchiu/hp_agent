@@ -59,17 +59,19 @@ async def connect_tools(data_path, mcp_server=None, output_dir='results'):
         from mcp.client.stdio import stdio_client
         parameters = StdioServerParameters(command=sys.executable, args=[str(mcp_server),
             '--data', str(Path(data_path).resolve()), '--db', str(Path(output_dir).resolve()/'products.sqlite')])
-        async with stdio_client(parameters) as (read, write):
-            async with ClientSession(read, write) as session:
-                await session.initialize()
-                discovered = (await session.list_tools()).tools
-                schemas = [{'type': 'function', 'name': tool.name, 'description': tool.description,
-                            'parameters': tool.inputSchema} for tool in discovered]
-                async def call(name, arguments):
-                    result = await session.call_tool(name, arguments)
-                    text = '\n'.join(item.text for item in result.content if hasattr(item, 'text'))
-                    return {'status': 'error', 'message': text} if result.isError else json.loads(text)
-                yield schemas, call
+        # Colab 的 stderr 可能沒有 fileno；子程序改寫入真正檔案，保留排錯紀錄。
+        with (Path(output_dir)/'mcp_server.log').open('a', encoding='utf-8') as errlog:
+            async with stdio_client(parameters, errlog=errlog) as (read, write):
+                async with ClientSession(read, write) as session:
+                    await session.initialize()
+                    discovered = (await session.list_tools()).tools
+                    schemas = [{'type': 'function', 'name': tool.name, 'description': tool.description,
+                                'parameters': tool.inputSchema} for tool in discovered]
+                    async def call(name, arguments):
+                        result = await session.call_tool(name, arguments)
+                        text = '\n'.join(item.text for item in result.content if hasattr(item, 'text'))
+                        return {'status': 'error', 'message': text} if result.isError else json.loads(text)
+                    yield schemas, call
 
 
 async def run_research(task=DEFAULT_TASK, *, api_key=None, model='gpt-6-luna', skill='',

@@ -1,8 +1,10 @@
 import json
+import io
 from pathlib import Path
 import sys
 import tempfile
 import unittest
+from unittest.mock import patch
 from day1_fakes import FakeClient, response, tool
 
 ROOT=Path(__file__).resolve().parents[1]
@@ -11,6 +13,20 @@ from research_agent import run_research, local_tool
 
 
 class Day1Tests(unittest.IsolatedAsyncioTestCase):
+    async def test_mcp_with_notebook_stderr_without_fileno(self):
+        from mcp.client.stdio import stdio_client
+        notebook_stderr=io.StringIO()
+        with self.assertRaises(io.UnsupportedOperation):
+            notebook_stderr.fileno()
+        # MCP 的預設 errlog 在 import 時綁定；模擬 Colab 的無 fileno 串流。
+        with patch.object(stdio_client.__wrapped__, '__defaults__', (notebook_stderr,)):
+            with tempfile.TemporaryDirectory() as folder:
+                result=await run_research(client=FakeClient(),data_path=ROOT/'data/products.json',
+                    mcp_server=ROOT/'day1/company_database.py',output_dir=folder)
+                self.assertEqual(result['tool_log'][0]['transport'],'mcp')
+                self.assertEqual(result['tool_log'][0]['result']['status'],'ok')
+                self.assertTrue((Path(folder)/'mcp_server.log').exists())
+
     async def test_real_openai_sdk_with_mock_http_tool_round_trip(self):
         import httpx
         from openai import AsyncOpenAI

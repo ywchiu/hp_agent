@@ -1,5 +1,7 @@
 # 驗證紀錄
 
+Colab MCP 相容性修正：重現預設 stderr 不支援 `fileno()` 時的同一個例外，改將 MCP 子程序錯誤輸出寫入成果資料夾的 `mcp_server.log`。回歸測試使用無檔案描述元的串流，仍實際啟動 MCP、探索工具及查詢 SQLite；未以直接讀 JSON 替代 MCP。
+
 ## v0.2.0｜2026-11-05｜僅第一天下午
 
 - 三份第一天 notebook 已在獨立本機 Jupyter kernel 逐格通過，包含前後報告、Skill、真實 MCP／SQLite 與成果 ZIP。
