@@ -16,7 +16,7 @@
 
 ## 第二天：企業120台商務筆電採購研究
 
-從[第二天入口](day2/README.md)開始：L03上傳三品牌官方PDF，以`text-embedding-3-small`做向量檢索、`gpt-6-luna`附PDF頁碼回答。L04–L06沿用HP、Lenovo、Dell三品牌，7份官方來源、29筆可回查片段與27格需求矩陣。真實模型、LangGraph與SQLite；每份Colab可獨立跑，來源、缺口與採購數字的界線都有說明。
+從[第二天入口](day2/README.md)開始：L03直接下載三品牌官方PDF，以`text-embedding-3-small`建立Chroma向量庫，先看搜尋片段，再由`gpt-6-luna`附PDF頁碼回答。L04–L06沿用HP、Lenovo、Dell三品牌，7份官方來源、29筆可回查片段與27格需求矩陣。真實模型、LangGraph與SQLite；每份Colab可獨立跑，來源、缺口與採購數字的界線都有說明。
 
 |ID|PDF 頁碼|學生步驟|Colab|
 |---|---|---|---|

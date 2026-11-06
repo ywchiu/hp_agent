@@ -13,6 +13,8 @@
 - [Antigravity Settings](https://www.antigravity.google/docs/settings)：設定與 MCP 自訂功能；UI 位置依版本確認。
 - [Google Colab](https://colab.research.google.com/)：本課用上傳 notebook，不依賴私人 Drive 連結。
 
-L03實際讀取學員上傳的三品牌PDF，以 `text-embedding-3-small` 建立文件與問題向量、本機JSON索引與餘弦相似度檢索，再由 `gpt-6-luna` 回答；參考[OpenAI embedding文件](https://developers.openai.com/api/docs/guides/embeddings)。其他研究角色也真實呼叫模型。官方資料出處與採用邊界見 [第二天來源說明](../day2/SOURCES.md)。L04選做即時web_search，L06選做真實PDF快照，沒有虛構歷史報價。
+L03實際讀取Colab直接下載或自行上傳的三品牌PDF，以 `text-embedding-3-small` 建立文件與問題向量，以Chroma保存向量、原文與頁碼，實際查詢collection並先顯示片段，再由 `gpt-6-luna` 回答；參考[OpenAI embedding文件](https://developers.openai.com/api/docs/guides/embeddings)。其他研究角色也真實呼叫模型。官方資料出處與採用邊界見 [第二天來源說明](../day2/SOURCES.md)。L04選做即時web_search，L06選做真實PDF快照，沒有虛構歷史報價。
 
 投影片中的產業新聞、效能統計與產品故事屬原簡報內容，本版不重新驗證或延伸其數字，也不將它們當成程式測試的證據。
+
+L03使用[Chroma明確提供向量寫入](https://docs.trychroma.com/docs/collections/add-data)、[collection查詢與metadata篩選](https://docs.trychroma.com/docs/querying-collections/query-and-get)、[HNSW與cosine設定](https://docs.trychroma.com/docs/collections/configure)。Chroma負責儲存與搜尋，OpenAI負責embedding；相似度顯示為1減cosine distance，並非正確率。

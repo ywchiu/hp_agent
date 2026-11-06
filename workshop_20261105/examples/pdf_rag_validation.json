@@ -1,4 +1,6 @@
 {
+  "tested_revision": "1592341",
+  "historical_scope": "PDF upload and JSON vector index; current Chroma validation is chroma_rag_validation.json",
   "date": "2026-11-06",
   "lesson": "L03",
   "objective": "三品牌PDF競品研究；120台台灣商務筆電採購情境",

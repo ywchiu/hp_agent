@@ -1,0 +1,121 @@
+{
+  "date": "2026-11-06",
+  "lesson": "L03",
+  "scope": "Only L03 changed; other six notebooks retain their previous validation.",
+  "notebook_sha256": "1e5b7d2135f2fed7233905218473e1d400fe06e3ce575cd8786d0737c782df4b",
+  "module_sha256": "d9e7372e44ee0c779cd2240d9cee4e8657d18d415371e47f0b12c10c958cb0dc",
+  "embedding_model": "text-embedding-3-small",
+  "answer_model": "gpt-6-luna",
+  "vector_database": {
+    "package": "chromadb==1.5.9",
+    "client": "PersistentClient",
+    "path": "results/03_rag/chroma",
+    "collection": "pdf_d13c9664d70ab39c03dc5f803d2f9ea1",
+    "count": 441,
+    "dimensions": 1536,
+    "document_embedding_calls": 14,
+    "explicit_openai_embeddings": true,
+    "storage": [
+      "embeddings",
+      "documents",
+      "file and PDF page metadata"
+    ],
+    "json_manifest_contains_vectors": false,
+    "fresh_process_reopen_verified": true
+  },
+  "documents": [
+    {
+      "file": "hp_manual.pdf",
+      "sha256": "67b40c894b4d0b997df6646533fbd6e4eff42a24a9132173e18ce31b3a3bc291",
+      "pages": 108,
+      "chunks": 315
+    },
+    {
+      "file": "lenovo_t14.pdf",
+      "sha256": "4c261e49d1d375151727e6b8afdb433818cb92db96c6f669a91a318831c065a9",
+      "pages": 10,
+      "chunks": 26
+    },
+    {
+      "file": "dell_pro.pdf",
+      "sha256": "6284951e3adec09269d7b1bca8aadb22a9c11db2ed9ae76c3868e5a903ea3d7b",
+      "pages": 15,
+      "chunks": 100
+    }
+  ],
+  "local_jupyter": {
+    "status": "passed",
+    "code_cells": 9,
+    "real_api": true,
+    "questions": {
+      "before": {
+        "retrieved_chunks": 15,
+        "files": [
+          "dell_pro.pdf",
+          "hp_manual.pdf",
+          "lenovo_t14.pdf"
+        ],
+        "query_embedding_calls": 1,
+        "answer_model": "gpt-6-luna",
+        "citation_status": "ids_valid",
+        "unknown_ids": []
+      },
+      "after": {
+        "retrieved_chunks": 18,
+        "files": [
+          "dell_pro.pdf",
+          "hp_manual.pdf",
+          "lenovo_t14.pdf"
+        ],
+        "query_embedding_calls": 1,
+        "answer_model": "gpt-6-luna",
+        "citation_status": "ids_valid",
+        "unknown_ids": []
+      }
+    }
+  },
+  "unit_tests": {
+    "passed": 44,
+    "includes": "Actual Chroma persistence, vector query, per-file filtering, cache identity/invalidation, deleted collection rebuild, PDF validation and failed downloads, preview/answer reuse with no second embedding, HTML escaping, citation bounds."
+  },
+  "limitations": [
+    "Citation validation checks ID existence and page mapping, not factual entailment.",
+    "PDF tables and model/version applicability require manual verification. No OCR.",
+    "Colab storage is removed when its runtime is deleted. No external Chroma server or cloud account.",
+    "Windows and Antigravity App UI were not tested."
+  ],
+  "colab_web": {
+    "status": "passed",
+    "runtime": "Fresh CPU Python 3 runtime",
+    "installed_packages": "Pinned notebook installation passed without runtime restart",
+    "code_cells": 9,
+    "direct_official_downloads": 3,
+    "pdf_hashes_match_local": true,
+    "chroma_count": 441,
+    "dimensions": 1536,
+    "before_preview_rows": 15,
+    "default_after_preview_rows": 18,
+    "preview_shown_before_answer": true,
+    "separate_answer_cell_uses_same_rows": true,
+    "complete_fragment_summary_clicked": true,
+    "default_answers_citation_status": [
+      "ids_valid",
+      "ids_valid"
+    ],
+    "cache_rerun": {
+      "reused": true,
+      "document_embedding_calls_this_run": 0,
+      "rows": 441
+    },
+    "download_rerun": "All three complete PDFs reused",
+    "edited_form": {
+      "question": "比較三品牌重量與USB-C／Thunderbolt；保留型號與資訊缺口",
+      "top_k_per_file": 3,
+      "retrieved_rows": 9,
+      "answer_citation_status": "ids_valid"
+    },
+    "query_embedding_calls": 4,
+    "generation_calls": 3,
+    "limits": "The interface and citation ID/page mapping passed; this is not an automatic factual-accuracy guarantee."
+  }
+}

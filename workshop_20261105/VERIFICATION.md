@@ -1,5 +1,18 @@
 # 驗證紀錄
 
+## 直接下載PDF、Chroma與搜尋預覽｜2026-11-06
+
+本次只更新L03的流程與相應說明，其他六份notebook未變動。三品牌競品研究主題保留，改為Colab直接下載官方PDF → 實際embedding寫入Chroma → 先檢查搜尋片段 → 下一格生成比較表。
+
+- Chroma 1.5.9使用PersistentClient，441筆、1536維；向量、原文、檔名與PDF頁次實際存進collection。JSON只存文件身分與呼叫紀錄。以新的Python程序重新開啟磁碟上的Chroma，確認441筆仍在。
+- 三份PDF共133頁、441段，首次建立文件向量14次API呼叫。每次問題另做一次embedding；生成回答使用預覽的同一批片段，不再計算第二次問題向量。實際查詢Chroma並按檔名篩選，每份文件各取TOP_K段。
+- 44項回歸測試通過，包含實際Chroma持久化與向量排序、逐文件取證、重用與文件／模型／切段失效、collection刪除後重建、下載失敗不留下假PDF、預覽與回答共用證據、HTML跳脫及引用範圍。
+- 本機獨立Jupyter kernel以真實API跑通9個程式格，含兩輪搜尋與gpt-6-luna回答。Colab網頁以全新CPU執行階段實測套件安裝、隱藏Key、直接下載三份官方PDF、抽文、Chroma寫入與資料預覽、兩輪分開搜尋／回答；搜尋先顯示15段與18段，三品牌皆有頁碼與分數。
+- Colab重跑直接下載格沿用三份完整PDF；重跑建立向量庫格顯示「重用索引True、本次文件embedding呼叫0」。另透過表單修改重量／USB-C問題及TOP_K=3，搜尋先顯示三品牌9段，再獨立執行回答。
+- 網頁本次4次問題embedding、3次回答，與首次文件embedding分開計算。44項測試不消耗真實API；本機與Colab完整演練使用真實API。紀錄見[Chroma驗證摘要](examples/chroma_rag_validation.json)。
+
+Colab的Chroma資料夾仍在暫存磁碟，刪除執行階段後需重新下載與建立。引用檢查只確認ID存在及頁次，仍須回原PDF核對型號與表格；本次未測Windows與Antigravity App介面。下方「三品牌PDF競品研究」為1592341的上傳／JSON索引版本驗證，不能當作Chroma驗證。
+
 ## 三品牌PDF競品研究｜2026-11-06
 
 本次只更換L03，維持120台商務筆電競品研究主題：學員下載並上傳HP、Lenovo、Dell官方PDF，實際建立文件／問題embedding，再交gpt-6-luna產出三品牌比較、證據缺口與供應商問題。其他六份notebook未變動。

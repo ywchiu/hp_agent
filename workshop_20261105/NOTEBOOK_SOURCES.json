@@ -5,12 +5,12 @@
   "day1/company_database.py": "d9930f1eb5df7bef2f4e1a42078407794c3782e1335931810d5279e236814c7c",
   "day1/requirements.txt": "5edec7c36634b25484b7b1509095f5fbc300d5d80411430d5b11aecd14b58d4b",
   "day1/research_agent.py": "7e7dfebb5b1ac4a9f81bc9eba7a4c714aca374eb2179f8076a8348c701474584",
-  "day2/README.md": "26c5bfaece66daed13bcf55d8ed44eec2a312b6a170d0f84e17a2c0e66843030",
-  "day2/SOURCES.md": "91550e1ae31de9554002d0a1a817ec160ab60c6489e15505aee31cce03b3593c",
+  "day2/README.md": "ac7643aeebed3c91cc743b749e139585b48d550aeff3c01008fcc17f0ce0a40a",
+  "day2/SOURCES.md": "785c26b3b3e96b1a3bb52ac50e484993b0180a38b7666837b33e225a0aaeaf5d",
   "day2/case.json": "84ccca97674ac9f06b3d4bd6dca3eb0e01259ff373e2f24c586048a2b648f52f",
   "day2/evidence.json": "7104ea5373e1c5cebf86e8357bfe47a5506f80500bfaa655f2fd8950c404a0eb",
-  "day2/pdf_rag.py": "3cb694d23406c919c5b67c16e4777c00b3251b922d13fec30e1563d1057edce7",
+  "day2/pdf_rag.py": "d9e7372e44ee0c779cd2240d9cee4e8657d18d415371e47f0b12c10c958cb0dc",
   "day2/procurement.py": "185f5bac0a76a80b05fa5539e4f7e784310805e9945d4afad08c8cb593f13a57",
-  "day2/requirements.txt": "d919fd79ab91b9a601c9e4e1d5e6d6dbf5e7f3bbfb9a79213cceb2a1558de892",
+  "day2/requirements.txt": "ff20b18320b3a293ebc9ebc47fe64ac72ddd33b267c3c4f7e4f878d98c75451f",
   "day2/sources.json": "ddfd77b393be972aa401867b713d6c1c232a8c204736b3d1416c4d2edd226025"
 }
