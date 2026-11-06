@@ -1,0 +1,48 @@
+{
+  "checked_at": "2026-11-06",
+  "scope": [
+    "L05",
+    "L06"
+  ],
+  "source_slides": {
+    "L05": [
+      262,
+      306
+    ],
+    "L06": [
+      307,
+      350
+    ]
+  },
+  "unit_tests": {
+    "passed": 60,
+    "new_semantic_tests": 4
+  },
+  "material_checks": "passed",
+  "local_live": {
+    "L05": {
+      "notebook": "05_recovery.ipynb",
+      "status": "passed",
+      "model": "gpt-6-luna",
+      "code_cells": 10,
+      "seconds": 17.5
+    },
+    "L06": {
+      "notebook": "06_review_monitor.ipynb",
+      "status": "passed",
+      "model": "gpt-6-luna",
+      "code_cells": 13,
+      "seconds": 13.35
+    }
+  },
+  "colab_browser": {
+    "L05": "all 10 code cells passed, including completed-resume and wrong-thread checks",
+    "L06": "all 13 code cells passed; wait, manual approve, repeated approve and 39000 no-alert form path passed"
+  },
+  "boundaries": [
+    "Official PDF observations are real HTTP reads.",
+    "Two-week quotation prices and SKU are explicitly simulated teaching data.",
+    "Approval stores local drafts only; no messages are sent.",
+    "No scheduler or production reviewer authorization system is deployed."
+  ]
+}

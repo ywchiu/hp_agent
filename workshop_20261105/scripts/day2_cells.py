@@ -74,7 +74,9 @@ print("Key 已暫存，不顯示也不存檔。模型：", MODEL)
 **應該看到：** Key 已暫存與模型名稱，不會顯示 Key。本章真的呼叫模型，重跑會產生用量。401 請老師確認 Key；429 請老師確認課堂額度；模型不存在時使用老師指定名稱。只回報錯誤碼，不貼 Key，不要將 Key 放進 AI 對話或 GitHub。
 ''')
     def start(title,diagram,flow,state):
-        return [opening(title,diagram,flow,state),prepare,c(install),c('%%writefile day2_case.py\n# @title 寫入本章流程（按播放，不用修改）\n'+(root/'day2/procurement.py').read_text()),c(dataset),key,c(creds)]
+        return [opening(title,diagram,flow,state),m(prepare[1].replace('下面三格','下面五格')),c(install.replace('請接著播放下兩格','請接著播放其餘準備格')),c('%%writefile day2_case.py\n# @title 寫入本章流程（按播放，不用修改）\n'+(root/'day2/procurement.py').read_text()),c(dataset),key,c(creds)]
+    def afternoon_cells():
+        return [c('%%writefile afternoon.py\n# @title 寫入下午的比較與觀察工具（不必修改）\n'+(root/'day2/afternoon.py').read_text()), c('# @title 載入下午的觀察工具（不必修改）\nimport afternoon as lab\n')]
     def restore(folder):
         return [m('### 選做：在全新 Colab 還原既有備份\n\n第一次上課跳過。若已有含輸入資料及SQLite的完整備份ZIP，可用左側「檔案 → 上傳」放入，再只填下格檔名並播放。L05可使用第4步產生的中斷現場備份。接下來照原步驟操作；程式會沿用已還原的任務，不重新建立。請用全新執行階段，不能覆蓋已有成果的資料夾。'),
                 c(f'''# @title 選做：還原上次下載的ZIP（第一次執行留空）
@@ -318,6 +320,7 @@ print("原文與每輪紀錄：results/04_research/trace.json；引用有效仍�
 ''')]
     docs['04_research_loop.ipynb']=cells
     cells=start('L05｜120 台研究案中斷後接續','05_recovery','HP → Lenovo → Dell → 彙整；每個完成節點寫 checkpoint。課堂故意在 Lenovo 結果存入操作帳本後中斷，讓你看到帳本與 checkpoint 的差別。','results 已完成品牌；next 下一節點另存在 checkpoint；operations.sqlite 是已提交結果帳本')
+    cells[5:5] = afternoon_cells()
     cells += restore('05_recovery')
     cells += [m('''## 第 3 步｜啟動批次，保留中斷現場
 
@@ -355,7 +358,7 @@ else:
 **給 AI：**「請根據這份中斷狀態說明應從哪個節點接續，以及哪一筆可能重進；只解釋，不刪SQLite、不改Thread、不重做已完成品牌。」同 Thread、同來源與模型才是接續，改 Thread 是新任務。
 '''),c('''# @title 核對中斷現場（不呼叫模型）
 paused = case.inspect_batch(BATCH_DIR)
-print(json.dumps(paused,ensure_ascii=False,indent=2))
+display(Markdown(lab.recovery_table(paused)))
 if paused["next"]:
     assert paused["completed_brands"]==["HP"]
     assert paused["next"]==["Lenovo"]
@@ -369,96 +372,147 @@ shutil.make_archive("05_recovery_中斷現場","zip","results/05_recovery")
 
 **怎麼做：** 播放下格，使用同 BATCH_DIR、THREAD、MODEL。這次真的是另一個程序讀 SQLite，沒有把第一個程序的記憶體變數帶過去。Lenovo 節點會重新進入，但讀回已存結果；然後才呼叫模型研究 Dell。
 
-**應該看到：** 執行紀錄 HP → Lenovo → Lenovo（reused=True）→ Dell；唯一結果共3筆；next 變空，報告有三品牌。不能只看「恢復成功」四個字，須核對 SQLite 與紀錄。
+**應該看到：** 執行紀錄 HP → Lenovo → Lenovo（reused=True）→ Dell；唯一結果共3筆；next 變空，報告有三品牌。下方再接續一次，新增操作與模型呼叫都應為0；刻意用錯Thread則應先被拒絕，不執行研究。不能只看「恢復成功」四個字，須核對 SQLite 與紀錄。
 
 **跨全新 Colab：** 第4步已額外產生 `05_recovery_中斷現場.zip`，可從左側「檔案」下載。重新開機時先準備程式及 Key，再用選做還原格載入這份ZIP；照第3～5步播放即可沿用原進度。若沒有保存ZIP，Colab 暫存檔回收後不能憑 Thread 名找回資料。
 '''),c('''# @title 第二個 Python 程序接續同一任務
 await asyncio.to_thread(run_worker,"resume")
 resumed = case.inspect_batch(BATCH_DIR)
-print(json.dumps(resumed,ensure_ascii=False,indent=2))
+display(Markdown(lab.recovery_table(resumed)))
 assert resumed["next"]==[] and len(resumed["completed_brands"])==3
 assert resumed["effects"]=={"HP":1,"Lenovo":1,"Dell":1}
 assert [e["brand"] for e in resumed["execution"]]==["HP","Lenovo","Lenovo","Dell"]
 assert resumed["execution"][2]["reused"] is True
 display(Markdown(Path(BATCH_DIR,"report.md").read_text()))
+# 同一份已完成工作再接續，不產生新的研究操作。
+before_repeat = len(resumed["execution"])
+await asyncio.to_thread(run_worker,"resume")
+after_repeat = case.inspect_batch(BATCH_DIR)
+assert len(after_repeat["execution"])==before_repeat
+print("同一任務再次恢復：新增研究操作0筆、新增模型呼叫0次。")
+try:
+    await asyncio.to_thread(case.run_batch,BATCH_DIR,API_KEY,MODEL,THREAD+"-wrong",resume=True)
+except ValueError as error:
+    if "無法恢復" not in str(error): raise
+    print("錯誤Thread：已在呼叫模型前拒絕，原進度保留。")
+else:
+    raise AssertionError("錯誤Thread不應被接受")
+
 ''')]
     docs['05_recovery.ipynb']=cells
-    cells=start('L06｜來源追蹤、詢價草稿與人工審核','06_review','模型產詢價草稿 → interrupt 等人決定 → 修改再審／駁回結束／核准存本機 outbox。官網追蹤是另外的讀取檢查，不會自動核准任何草稿。','draft 收件對象、內容與需求hash；decision 決定；receipt 本機存檔回執；pending 是否等候')
+    cells=start('L06｜兩週變化、來源追蹤與人工審核','06_review','先讀真實官方PDF快照，再用明確標示的兩週模擬報價演練比較規則；重大變化 → 模型草擬詢價 → interrupt 等人 → 修改再審／駁回／核准存本機outbox。','比較基準與事件；draft 含收件人、正文、證據與比較附件；decision 決定；receipt 本機回執；pending 是否等候')
+    cells[5:5] = afternoon_cells()
     cells += restore('06_review')
-    cells += [m('''## 第 3 步｜產生詢價草稿，停在人工審核
+    cells += [m('''## 第 3 步｜先看來源，再比較兩週變化
 
-**怎麼做：** 播放下格。模型依九項需求及真實來源寫 RFQ 草稿，LangGraph 以 interrupt 暫停。這份草稿是要求供應商補報價、SKU及服務證明，不是訂購承諾。
+**為什麼：** 投影片的完整流程是「取得新資料 → 對照有效基準 → 判斷重要性 → 決定是否交人工」。不能看到網頁改字，就直接寫成降價通知。
 
-**應該看到：** pending=True、outbox_count=0、sent_count=0，並顯示草稿及 hash。hash 是整份草稿的指紋，收件對象、內容或需求變動都會改變。使用 .invalid 教學地址，這套範例沒有寄信工具。
-'''),c('''# @title 產生詢價草稿並暫停等人審核
-REVIEW_DIR = "results/06_review/approval_01"
-if not Path(REVIEW_DIR,"checkpoints.sqlite").exists():
-    draft = await asyncio.to_thread(case.draft_rfq,"請寫給供應商的正式詢價草稿，保留未確認項，不承諾下單。",API_KEY,MODEL)
-    review_state = case.approval(REVIEW_DIR,draft=draft)
-else:
-    review_state = case.approval(REVIEW_DIR)
-show(review_state)
-display(Markdown(review_state["draft"]["body"]))
-'''),m('''## 第 4 步｜修改草稿，讓舊核准失效
+**先做真實觀察：** 播放第一格，Colab會實際讀取Lenovo官方PSREF PDF，顯示網址、取得時間、檔案指紋與判定。首次建立今天的有效基準；重跑才比較。取得失敗也會保留紀錄，不能覆蓋基準。指紋改變只表示檔案有變，須回原PDF查讀，不能推論價格。這段不呼叫模型。
 
-**怎麼做：** 只改下格 ADD_REQUIREMENT 中文，例如要求報價逐項列出三年到府與交期。按播放，會保留原文、加入你的要求，再次等待審核。這是你手動修改草稿，不會再呼叫模型。
+**再做兩週規則演練：** 播放第二格。表格會明確標示「教學模擬報價」，使用模擬SKU、第一週40,000元、第二週34,000元；這不是三家品牌的官網價格或真實歷史。真實產品資料仍使用本章官方來源，規則演練的假價格不會當成詢價正文的市場事實。
 
-**應該看到：** hash 改變、仍 pending=True、零存檔、零寄送。內容改了，舊 hash 不能拿來核准新稿。
+**只需要改：** SECOND_WEEK_PRICE（第二週模擬價格）、ALERT_THRESHOLD（百分比門檻）。先用預設值，看見−15%進待審；之後可改39,000，觀察不達10%門檻。表格還會比較「沒有變動」「不同SKU」「讀取失敗」三種情況，不能全部當成無變化。
 
-**給 AI：**「請將我的補充條件改寫成一句供應商可回答的詢價問題，保留台灣市場、交付SKU和服務條件，不編造報價，只回傳 ADD_REQUIREMENT 中文字串。」
-'''),c('''# @title 只改這個補充要求，再送回待審
-ADD_REQUIREMENT = "請將台灣三年次工作日到府服務、遠端診斷限制、可交付SKU、含稅TWD總價與承諾交期分別列項，並註明報價有效期。" # @param {type:"string"}
-old_hash = review_state["hash"]
-new_text = review_state["draft"]["body"]+"\\n\\n補充要求："+ADD_REQUIREMENT
-review_state = case.approval(REVIEW_DIR,decision={"action":"revise","hash":old_hash,"text":new_text})
-show(review_state)
-display(Markdown("### 修改後的待審草稿"))
-display(Markdown(review_state["draft"]["body"]))
-assert review_state["pending"] and review_state["hash"]!=old_hash
-assert review_state["outbox_count"]==0
-''',False),m('''## 第 5 步｜決定是否核准，並讀取真實來源快照
-
-**怎麼做：** 先閱讀新草稿，再在 DECISION 選 approve 或 reject。核准只會把指定版本存入本機 outbox 一次；駁回不存。下格也會測試舊 hash 被拒絕、重複決定不增加紀錄。
-
-**應該看到：** approve 後 outbox_count=1、sent_count=0；reject 為0、0。要測另一分支，請改新的 REVIEW_DIR 從第3步重做，不要刪原證據。
-
-**選做來源追蹤：** 第二格將 CHECK_WEB 改 True，會實際下載 Lenovo 官方 PSREF PDF 並保存本次時間與 SHA-256。首次建立基準；日後再執行同格比較。unchanged 是檔案沒變、content_changed_needs_review 是內容指紋變動待人工讀文件、data_error 是讀取失敗。檔案變化不能直接稱為價格下跌；失敗不能覆蓋有效基準。
-
-**兩週後怎麼做：** 請老師保留 `results/06_review`，包括 `monitor/baseline.json`，兩週後在同目錄再播放追蹤格。Colab 暫存資料可能被回收，保存 notebook 不會保留這些檔案。教材沒有捏造歷史報價或已發生的降價，也沒有在 Colab 部署持續排程。沒有官方含稅價格和相同SKU，不能算折扣。新證據若影響已核准草稿，請用新 REVIEW_DIR 重新產稿與審核。
-'''),c('''# @title 核准或駁回目前草稿（只存本機，不寄送）
-DECISION = "approve" # @param ["approve","reject"]
-try:
-    case.approval(REVIEW_DIR,decision={"action":"approve","hash":old_hash})
-    raise AssertionError("舊hash不應被接受")
-except ValueError:
-    print("舊hash已被拒絕。")
-review_state = case.approval(REVIEW_DIR,decision={"action":DECISION,"hash":review_state["hash"]})
-show(review_state)
-try:
-    case.approval(REVIEW_DIR,decision={"action":DECISION,"hash":review_state["hash"]})
-except ValueError:
-    print("重複決定已拒絕，沒有新增紀錄。")
-assert review_state["outbox_count"]==(1 if DECISION=="approve" else 0)
-assert review_state["sent_count"]==0
-''',False),c('''# @title 選做：讀取真實官網，建立或比較追蹤基準
-CHECK_WEB = False # @param {type:"boolean"}
-if CHECK_WEB:
-    monitor = Path("results/06_review/monitor")
-    current = await asyncio.to_thread(case.fetch_snapshot)
-    case.save(monitor/"latest.json",current)
-    baseline_path = monitor/"baseline.json"
-    if baseline_path.exists():
-        old = json.loads(baseline_path.read_text())
-        status = case.compare_snapshots(old,current)
-        case.save(monitor/"comparison.json",{"old":old,"new":current,"status":status})
-        print(status,"；有效基準未自動覆蓋。")
-    elif current["status"]=="ok":
-        case.save(baseline_path,current)
-        print("已建立今天的真實PDF基準；日後重新執行此格比較。")
+**應該看到：** 兩週條件與來源標示、變動率、規則、四種處理路徑；只有重大變化才建立本次待審任務。不同SKU要先補條件，讀取失敗要補查。若你改為無重大變化，後面只顯示狀態，不會新增草稿或自動核准。
+'''),c('''# @title 讀取真正的官方PDF，保存有效基準與觀察歷史
+monitor_result = await asyncio.to_thread(lab.monitor_once,"results/06_review/monitor")
+current = monitor_result["new"]
+display(Markdown("|本次觀察|結果|\\n|---|---|\\n"+"\\n".join(
+    f"|{name}|{current.get(field,'未取得')}|" for name,field in
+    [("官方來源","url"),("實際取得時間","fetched_at"),("PDF指紋","sha256"),("取得狀態","status")])+f"\\n|比較判定|{monitor_result['status']}|"))
+print("這是真實PDF觀察；歷史報價尚未建立，不能從指紋推定降價。")
+'''),c('''# @title 比較兩週教學模擬報價（這些價格不是真實產品報價）
+SECOND_WEEK_PRICE = 34000 # @param {type:"number"}
+ALERT_THRESHOLD = 10 # @param {type:"number"}
+weeks = lab.teaching_weeks(SECOND_WEEK_PRICE,ALERT_THRESHOLD)
+case.save("results/06_review/teaching_weeks.json",weeks)
+display(Markdown("### 教學模擬報價｜非真實市場或歷史證據"))
+display(Markdown("|欄位|第一週|第二週|\\n|---|---|---|\\n"+"\\n".join(
+    f"|{field}|{weeks['first'][field]}|{weeks['second'][field]}|" for field in
+    ("sku","market","currency","tax","configuration","price","observed_at","source"))))
+display(Markdown("|情況|變動率|處理路徑|原因|\\n|---|---|---|---|\\n"+"\\n".join(
+    f"|{r['scenario']}|{str(r.get('change_pct','—'))+'%' if 'change_pct' in r else '—'}|{r['route']}|{r['reason']}|" for r in weeks["comparisons"])))
+trigger = weeks["comparisons"][0]
+event_identity = case.digest({"comparison":trigger,"source":{k:current.get(k) for k in ("status","url","sha256")}})
+REVIEW_DIR = "results/06_review/events/"+event_identity[:16]
+review_state = None
+if trigger["route"]=="重大變化待審":
+    if not Path(REVIEW_DIR,"checkpoints.sqlite").exists():
+        draft = await asyncio.to_thread(case.draft_rfq,"請寫給供應商的正式詢價草稿，保留未確認項，不承諾下單。價格變動只是課堂規則模擬，不得寫成真實市價或真實降價。",API_KEY,MODEL)
+        draft["comparison_attachment"] = weeks
+        draft["monitor_observation"] = monitor_result
+        review_state = case.approval(REVIEW_DIR,draft=draft)
     else:
-        print("data_error：沒有取得有效資料，未建立基準。")
+        review_state = case.approval(REVIEW_DIR)
+    show(review_state)
+    display(Markdown("**收件人：** "+review_state["draft"]["recipient"]+"；**操作：** 只保存本機詢價草稿。"))
+    display(Markdown(review_state["draft"]["body"]))
 else:
-    print("本次未即時連官網；人工審核使用封存來源。")
-''',False)]
+    print(trigger["route"],"：本次未建立待審任務。回到預設34,000可繼續審核演練。")
+'''),m('''## 第 4 步｜修改草稿，讓舊版本不能放行新版
+
+**怎麼做：** 先讀收件人、正文與上方比較附件，再只改ADD_REQUIREMENT的中文要求並播放。它會保留原文、附加你的要求，產生新指紋，回到待審，不另外呼叫模型。同一句要求重跑只會沿用，不重複附加。
+
+**應該看到：** 新舊版本指紋、修改理由與新版正文；新稿仍pending=True、outbox_count=0、sent_count=0。下一格會真的拿舊指紋嘗試核准，確認被拒絕。指紋會把正文、收件人、比較附件與本次來源觀察一起算進去；日後來源更新影響內容，須建立新事件重新審核。
+
+**給AI：**「請將我的條件寫成一句供應商能回答的詢價問題，保留台灣SKU、含稅報價、交期與服務適用條件，不把模擬價格當成市價；只回傳ADD_REQUIREMENT中文，不改審核程式。」
+
+**重跑時：** 已完成核准或駁回的任務只讀既有結果；要改已結束的內容，應建立新事件，不覆寫已決定的草稿。
+'''),c('''# @title 只改中文補充要求，查看版本與理由
+ADD_REQUIREMENT = "請將台灣三年次工作日到府服務、遠端診斷限制、可交付SKU、含稅TWD總價與承諾交期分別列項，並註明報價有效期。" # @param {type:"string"}
+if review_state is not None:
+    review_state = lab.revise_once(REVIEW_DIR,ADD_REQUIREMENT)
+    revision_path = Path(REVIEW_DIR,"revision.json")
+    if revision_path.exists():
+        revision = json.loads(revision_path.read_text())
+        display(Markdown(f"|版本|指紋|\\n|---|---|\\n|修改前|{revision['old_hash']}|\\n|修改後|{revision['new_hash']}|\\n\\n修改理由：{revision['reason']}"))
+    show(review_state)
+    display(Markdown(review_state["draft"]["body"]))
+else:
+    print("本次沒有重大變化待審；不需修改或核准。")
+'''),m('''## 第 5 步｜人作決定，再看三種分支與重複執行結果
+
+**先測版本：** 播放第一格，確認舊版本核准被拒絕、新版仍待審。未改稿或任務已結束會明說，不能把「流程已結束」冒充「舊版本不符」。
+
+**再自己決定：** 第二格DECISION預設wait，播放只會保持待審。閱讀後可選approve（核准存本機）或reject（駁回不存），在REASON填自己的理由，再播放。會保存指定版本、收件人、理由與結果；重跑不新增存檔。等待不會自動變成同意。這是課堂審核介面，沒有登入身分、權限驗證或正式郵件寄送。
+
+**最後比較三條分支：** 第三格在三份獨立測試任務重用同一草稿，當作自動分支演練；不會替你決定上面的主審核任務。看approve一筆、revise改稿再審後一筆、reject零筆；每條都重複執行一次，筆數維持不變，sent_count全部是0。不額外呼叫模型。
+
+**下週如何接續：** 本章保存真實PDF基準、每次觀察與本次模擬事件；沒有捏造真實兩週價格，也沒有部署排程。正式每週追蹤需外部排程器、Asia/Taipei時間、持久磁碟與重疊處理；中斷恢復沿用同一Thread，新一週研究另建Thread。Colab關機後不會自動醒來執行，存notebook也不會保存SQLite。需要跨執行階段時，保留整份results/06_review及輸入資料，再用前面還原格讀回。
+'''),c('''# @title 核對舊版本無法核准新版本（不呼叫模型）
+if review_state is not None:
+    review_state = case.approval(REVIEW_DIR)
+    revision_path = Path(REVIEW_DIR,"revision.json")
+    if review_state["pending"] and revision_path.exists():
+        revision = json.loads(revision_path.read_text())
+        try:
+            case.approval(REVIEW_DIR,decision={"action":"approve","hash":revision["old_hash"]})
+        except ValueError as error:
+            if "草稿已更動" not in str(error): raise
+            print("舊版本核准被拒絕；新版仍待審，零新增存檔。")
+        else:
+            raise AssertionError("舊版本不應被核准")
+    else:
+        print("尚未改稿或任務已結束；本格未做舊版本測試。")
+else:
+    print("沒有待審任務。")
+'''),c('''# @title 選擇等待、核准或駁回，填寫自己的理由
+DECISION = "wait" # @param ["wait","approve","reject"]
+REASON = "已核對收件人、來源與未確認項，本次僅保存詢價草稿。" # @param {type:"string"}
+if review_state is not None:
+    review_state = lab.decide_once(REVIEW_DIR,DECISION,REASON)
+    show(review_state)
+    print("待審" if review_state["pending"] else "任務已結束，重跑沿用既有決定。")
+else:
+    print("沒有重大變化，不建立審核操作。")
+'''),c('''# @title 自動演練三種分支與重複執行（獨立測試，不改上面的決定）
+if review_state is not None:
+    branches = lab.exercise_branches(Path(REVIEW_DIR)/"branch_exercises",review_state["draft"])
+    display(Markdown("|測試分支|首次存檔|再次執行後存檔|實際寄送|\\n|---|---|---|---|\\n"+"\\n".join(
+        f"|{r['branch']}|{r['outbox_count']}|{r['repeat_outbox_count']}|{r['sent_count']}|" for r in branches)))
+    print("三種分支已驗證；主審核任務保持你的決定，模擬價格不能當真實報價。")
+else:
+    print("回到預設模擬價格34,000，建立待審後再演練。")
+''')]
     docs['06_review_monitor.ipynb']=cells
     return docs
