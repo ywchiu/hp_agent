@@ -1,0 +1,104 @@
+{
+  "date": "2026-11-06",
+  "lesson": "L03",
+  "objective": "三品牌PDF競品研究；120台台灣商務筆電採購情境",
+  "embedding_model": "text-embedding-3-small",
+  "answer_model": "gpt-6-luna",
+  "documents": [
+    {
+      "file": "hp_manual.pdf",
+      "sha256": "67b40c894b4d0b997df6646533fbd6e4eff42a24a9132173e18ce31b3a3bc291",
+      "pages": 108,
+      "empty_pages": []
+    },
+    {
+      "file": "lenovo_t14.pdf",
+      "sha256": "4c261e49d1d375151727e6b8afdb433818cb92db96c6f669a91a318831c065a9",
+      "pages": 10,
+      "empty_pages": []
+    },
+    {
+      "file": "dell_pro.pdf",
+      "sha256": "6284951e3adec09269d7b1bca8aadb22a9c11db2ed9ae76c3868e5a903ea3d7b",
+      "pages": 15,
+      "empty_pages": []
+    }
+  ],
+  "index": {
+    "chunks": 441,
+    "dimensions": 1536,
+    "document_embedding_calls": 14,
+    "content_and_settings_cache_verified": true
+  },
+  "local_jupyter": {
+    "notebook": "03_rag.ipynb",
+    "status": "passed",
+    "model": "gpt-6-luna",
+    "code_cells": 7,
+    "seconds": 39.48
+  },
+  "local_answers": {
+    "before": {
+      "query_embedding_calls": 1,
+      "retrieved_chunks": 15,
+      "citation_status": "ids_valid",
+      "unknown_ids": [],
+      "pdf_page_mapping": true,
+      "deterministic_page_table": true
+    },
+    "after": {
+      "query_embedding_calls": 1,
+      "retrieved_chunks": 18,
+      "citation_status": "ids_valid",
+      "unknown_ids": [],
+      "pdf_page_mapping": true,
+      "deterministic_page_table": true
+    }
+  },
+  "colab": {
+    "surface": "實際Colab網頁；已登入帳號；Python 3 CPU雲端執行階段",
+    "code_cells_passed": 7,
+    "real_api": true,
+    "tested": [
+      "安裝套件",
+      "隱藏Key輸入",
+      "左側檔案面板上傳三份官方PDF",
+      "PDF抽文預覽與SHA-256",
+      "真實文件與問題embedding",
+      "記憶體／SSD三品牌比較",
+      "120台採購證據與缺口表",
+      "引用ID及確定性PDF頁碼對照",
+      "修改NEW_QUESTION比較USB-C／外接螢幕，TOP_K改4並重跑",
+      "重跑相同文件索引，reused=True，文件embedding呼叫0次"
+    ],
+    "answer_citation_statuses": [
+      "ids_valid",
+      "ids_valid",
+      "ids_valid",
+      "ids_valid"
+    ],
+    "generation_calls": 4,
+    "query_embedding_calls": 4,
+    "document_embedding_calls": 14
+  },
+  "regression": {
+    "tests": 40,
+    "status": "passed",
+    "api": "單元測試用SDK替身；Jupyter及Colab用真實API"
+  },
+  "limitations": [
+    "ID有效不等於事實受原文支持；須人工查原頁",
+    "保留表格間距仍可能錯位；未做OCR",
+    "HP AI PC維修手冊不自動等同所有Next Gen AI型號",
+    "Dell不同尺寸及200V／200U不能混用",
+    "只有目前片段不足不代表整本無資料",
+    "沒有台灣SKU正式報價、交期或已購服務證明",
+    "其他六份notebook未修改，沿用2026-11-05網頁測試",
+    "未測Antigravity App、Windows或其他Google帳號"
+  ],
+  "source_hashes": {
+    "day2/pdf_rag.py": "3cb694d23406c919c5b67c16e4777c00b3251b922d13fec30e1563d1057edce7",
+    "scripts/day2_cells.py": "a5b9cf5a97e550a8b8d30e8807b35f13dcb0e62146419f545c6e808a94f6773f",
+    "notebooks/03_rag.ipynb": "0efc2e000737d10e2e582e3baf8cc4e918df64d0af9132f872b66a0310acea7a"
+  }
+}

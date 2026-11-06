@@ -4,6 +4,7 @@ import json
 import os
 from pathlib import Path
 import sys
+import shutil
 import tempfile
 import time
 import nbformat
@@ -14,6 +15,7 @@ p.add_argument('--out',default=None)
 p.add_argument('--notebook',default=None,help='只驗證指定檔名，例如04_research_loop.ipynb')
 p.add_argument('--day', choices=['1','2','all'], default='1')
 p.add_argument('--live-model', action='store_true', help='讀取指定 .env，真的呼叫模型 API')
+p.add_argument('--pdf', type=Path, nargs='+', help='L03實測需提供真正PDF，可給三品牌各一份')
 p.add_argument('--env-file', type=Path, default=Path(__file__).resolve().parents[2]/'.env')
 args=p.parse_args()
 root=Path(__file__).resolve().parents[1]
@@ -44,6 +46,16 @@ for path in sorted((root/'notebooks').glob('*.ipynb')):
         continue
     work=out/path.stem
     work.mkdir(parents=True,exist_ok=True)
+    if path.name=='03_rag.ipynb':
+        if not args.pdf:
+            raise SystemExit('L03請加 --pdf 三品牌PDF路徑；測試會實際讀檔與embedding。')
+        for pdf in args.pdf:
+            shutil.copyfile(pdf,work/pdf.name)
+        for cell in nb.cells:
+            if cell.cell_type=='code' and 'PDF_FILES = ' in cell.source:
+                lines=cell.source.splitlines()
+                lines=[f'PDF_FILES = {", ".join(pdf.name for pdf in args.pdf)!r}' if line.startswith('PDF_FILES = ') else line for line in lines]
+                cell.source='\n'.join(lines)+'\n'
     if day in (1,2):
         # 注入只存在於測試副本的模型替身；發布 notebook 不含此格。
         if not args.live_model and day==1:

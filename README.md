@@ -14,11 +14,11 @@
 
 ### 第二天
 
-以「台灣企業120台商務筆電採購」串起四章，使用真實官方來源、模型研究與27格需求矩陣。每份 Colab 有狀態圖與白話五步操作，詳見[第二天入口](workshop_20261105/day2/README.md)。
+L03從上傳HP／Lenovo／Dell官方PDF、`text-embedding-3-small`文件／問題向量到`gpt-6-luna`頁碼回答；接著以「台灣企業120台商務筆電採購」串起後三章，使用真實官方來源、模型研究與27格需求矩陣。每份 Colab 有狀態圖與白話五步操作，詳見[第二天入口](workshop_20261105/day2/README.md)。
 
 | 章節 | 主題 | 學生操作步驟 | Colab |
 |---|---|---|---|
-| L03 | RAG 與引用查證 | [操作步驟](workshop_20261105/labs/03_rag.md) | [開啟 Colab](https://colab.research.google.com/github/ywchiu/hp_agent/blob/main/workshop_20261105/notebooks/03_rag.ipynb) |
+| L03 | 競品PDF、embedding與RAG | [操作步驟](workshop_20261105/labs/03_rag.md) | [開啟 Colab](https://colab.research.google.com/github/ywchiu/hp_agent/blob/main/workshop_20261105/notebooks/03_rag.ipynb) |
 | L04 | 有界研究與角色交接 | [操作步驟](workshop_20261105/labs/04_research_loop.md) | [開啟 Colab](https://colab.research.google.com/github/ywchiu/hp_agent/blob/main/workshop_20261105/notebooks/04_research_loop.ipynb) |
 | L05 | 中斷恢復與冪等性 | [操作步驟](workshop_20261105/labs/05_recovery.md) | [開啟 Colab](https://colab.research.google.com/github/ywchiu/hp_agent/blob/main/workshop_20261105/notebooks/05_recovery.ipynb) |
 | L06 | 詢價審核與來源追蹤 | [操作步驟](workshop_20261105/labs/06_review_monitor.md) | [開啟 Colab](https://colab.research.google.com/github/ywchiu/hp_agent/blob/main/workshop_20261105/notebooks/06_review_monitor.ipynb) |
@@ -29,7 +29,7 @@
 - [投影片頁碼對照與同步方式](workshop_20261105/docs/05_slide_sync.md)／[GitHub 更新步驟](workshop_20261105/docs/06_github.md)
 - [排錯](workshop_20261105/docs/04_troubleshooting.md)／[驗證範圍](workshop_20261105/VERIFICATION.md)
 
-2026-11-05 已在 Colab 網頁逐份跑通上方七份 notebook，使用 `gpt-6-luna` 真實呼叫模型，包含 MCP、即時搜尋、中斷 ZIP 跨新執行階段還原、核准／駁回及成果下載。詳見[逐章驗證紀錄](workshop_20261105/VERIFICATION.md)。
+2026-11-06 L03已改為三品牌PDF embedding競品研究；新版驗證見[驗證紀錄](workshop_20261105/VERIFICATION.md)。2026-11-05 曾在 Colab 網頁逐份跑通當時的七份 notebook（L03為舊關鍵字檢索），使用 `gpt-6-luna` 真實呼叫模型，包含 MCP、即時搜尋、中斷 ZIP 跨新執行階段還原、核准／駁回及成果下載。詳見[逐章驗證紀錄](workshop_20261105/VERIFICATION.md)。
 
 完整入口見 [逐步教材首頁](workshop_20261105/README.md)，實測與尚未實測範圍見 [驗證紀錄](workshop_20261105/VERIFICATION.md)。第一天產品為模擬；第二天使用官方產品資料，企業採購數字為教學情境，詢價草稿只存本機。
 

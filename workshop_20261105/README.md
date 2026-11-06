@@ -16,11 +16,11 @@
 
 ## 第二天：企業120台商務筆電採購研究
 
-從[第二天入口](day2/README.md)開始：HP、Lenovo、Dell三品牌，7份官方來源、29筆可回查片段與27格需求矩陣。真實模型、LangGraph與SQLite；每份Colab可獨立跑，來源、缺口與採購數字的界線都有說明。
+從[第二天入口](day2/README.md)開始：L03上傳三品牌官方PDF，以`text-embedding-3-small`做向量檢索、`gpt-6-luna`附PDF頁碼回答。L04–L06沿用HP、Lenovo、Dell三品牌，7份官方來源、29筆可回查片段與27格需求矩陣。真實模型、LangGraph與SQLite；每份Colab可獨立跑，來源、缺口與採購數字的界線都有說明。
 
 |ID|PDF 頁碼|學生步驟|Colab|
 |---|---|---|---|
-|L03|173–221|[RAG 與引用](labs/03_rag.md)|[開啟](https://colab.research.google.com/github/ywchiu/hp_agent/blob/main/workshop_20261105/notebooks/03_rag.ipynb)|
+|L03|173–221|[PDF RAG 與頁碼引用](labs/03_rag.md)|[開啟](https://colab.research.google.com/github/ywchiu/hp_agent/blob/main/workshop_20261105/notebooks/03_rag.ipynb)|
 |L04|222–261|[有界研究與交接](labs/04_research_loop.md)|[開啟](https://colab.research.google.com/github/ywchiu/hp_agent/blob/main/workshop_20261105/notebooks/04_research_loop.ipynb)|
 |L05|262–306|[中斷恢復](labs/05_recovery.md)|[開啟](https://colab.research.google.com/github/ywchiu/hp_agent/blob/main/workshop_20261105/notebooks/05_recovery.ipynb)|
 |L06|307–350|[人工審核與追蹤](labs/06_review_monitor.md)|[開啟](https://colab.research.google.com/github/ywchiu/hp_agent/blob/main/workshop_20261105/notebooks/06_review_monitor.ipynb)|

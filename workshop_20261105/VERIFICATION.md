@@ -1,5 +1,19 @@
 # 驗證紀錄
 
+## 三品牌PDF競品研究｜2026-11-06
+
+本次只更換L03，維持120台商務筆電競品研究主題：學員下載並上傳HP、Lenovo、Dell官方PDF，實際建立文件／問題embedding，再交gpt-6-luna產出三品牌比較、證據缺口與供應商問題。其他六份notebook未變動。
+
+- 三份官方PDF共133頁，抽取441段；text-embedding-3-small回傳1536維向量，首次文件索引分14次API呼叫。中文問題每次另做一次embedding及一次真實gpt-6-luna回答。
+- 本機獨立Jupyter kernel跑通L03七個程式格；真實PDF及API驗證，不使用固定回覆。單元測試40項通過，其中新增7項覆蓋PDF抽文、頁碼、中文語意排序、索引重用／失效、多文件唯一ID與逐文件檢索、API異常及引用限制。
+- 實際Colab網頁測試包含CPU套件安裝、隱藏Key、左側檔案面板一次上傳三份PDF、抽文預覽、向量索引、預設前後問題與競品表、引用頁碼對照。另修改中文問題與TOP_K重跑；相同索引再跑顯示重用True、文件embedding呼叫0次。本次網頁共4次問題embedding及4次回答。公開摘要見[PDF RAG驗證](examples/pdf_rag_validation.json)。
+- 引用檢查只確認ID存在於本輪取回片段與對應頁次，不能證明模型每個結論都受原文支持。已人工檢查HP封面及Dell第8頁表格；表格抽文雖保留間距仍可能錯位，教材要求回PDF原頁核對。掃描圖片沒有OCR；未測Windows或Antigravity App。
+- HP文件為14 inch Notebook AI PC維修手冊，不自動等同所有Next Gen AI配置；Dell200V與200U分開。PDF不能證明台灣報價、交期或已含三年到府。廣泛採購問題可能找不到部分規格，保留「目前片段不足」，不把缺片段說成整本沒有。
+
+重跑新版L03：`python scripts/run_notebooks.py --day 2 --notebook 03_rag.ipynb --live-model --pdf hp_manual.pdf lenovo_t14.pdf dell_pro.pdf`。跑第二天全部章節時也需提供`--pdf`。Key讀取專案.env，文件保留測試端；不公開轉存整份廠商PDF或原始抽文／向量。
+
+下方2026-11-05紀錄屬當時版本；其中L03使用舊關鍵字檢索，不代表新版PDF流程。
+
 ## 移除末尾下載步驟｜2026-11-05
 
 七份notebook已移除第6步說明與自動下載成果格，改為五步、共55個程式格。研究、MCP、中斷恢復與審核程式沿用先前已實測內容；L05中斷現場備份仍供恢復示範使用。README、Lab、講師說明與選用觀察清單同步更新。

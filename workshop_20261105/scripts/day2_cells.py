@@ -85,41 +85,94 @@ else:
     print("第一次執行，使用新任務。")
 ''',False)]
     docs={}
-    cells=start('L03｜用真實官網片段做 RAG 查證','03_rag','問題 → 詞彙檢索 → 模型回答 → 引用 ID 檢查。這是檢索後生成；未使用向量資料庫或 embedding。','question 問題、rows 取回片段、report 回答、validation 引用檢查')
-    cells += [m('''## 第 3 步｜先跑一次，觀察資料是否足夠
+    cells=[m('''# L03｜上傳三品牌 PDF，建立競品研究 RAG
 
-**怎麼做：** 先不改下格，播放後閱讀報告與 `validation`。這次只取 4 段，問題卻涵蓋三品牌；資料不足應保留待確認，不能靠模型記憶補答案。
+第二天｜先看狀態圖，再依五步操作。研究主題仍是三品牌競品比較。對照投影片 PDF 173–221。
 
-**應該看到：** 每筆取回片段的 ID、範圍與原文位置。ID 檢查通過只代表引用存在，仍須點官網確認這段真的支持結論。若資料不足，應提出補查問題。
-'''),c('''# @title 第一份 RAG 研究（先不用改）
-QUESTION = "比較三品牌的記憶體升級、台灣三年到府保固與出差重量；能直接買120台嗎？"
-result_before = await asyncio.to_thread(case.run_rag, QUESTION, API_KEY, MODEL, k=4, out="results/03_rag/before")
-show(result_before)
-display(Markdown(case.context(result_before["rows"])))
-'''),m('''## 第 4 步｜改問題與閱讀範圍
+![LangGraph 狀態圖]({raw}03_rag.png)
 
-**怎麼做：** 只改下格中文問題與片段數。先聚焦 Lenovo、台灣三年到府與不同配置重量；片段數改成 10。這次讓資料量配合問題範圍，其他程式不動。
+**建資料：** 下載 HP／Lenovo／Dell 官方 PDF → 上傳 Colab → 抽取每頁文字 → 切成小段 → `text-embedding-3-small` 將每段轉成向量 → 保存本機索引。
 
-**給 AI 的指令：**「請把研究問題縮小到 Lenovo ThinkPad T14 Gen 6 AMD，要求區分筆電／桌機服務及不同配置重量，保留來源 ID 與待確認；只回傳 NEW_QUESTION 與 TOP_K 兩行。」
+**問問題：** 中文問題 → 同一個 embedding 模型轉成向量 → 用餘弦相似度從每份文件各取最接近的段落 → `gpt-6-luna` 回答 → 核對片段 ID 與 PDF 頁碼。問答的三個節點實際由 LangGraph 串接。
 
-**先預測：** 1.38 kg 與 1.59 kg 可以同時成立嗎？桌機次工作日到府能拿來證明筆電服務嗎？
-'''),c('''# @title 只改這裡的中文問題與片段數
-NEW_QUESTION = "Lenovo ThinkPad T14 Gen 6 AMD 黑色／灰色配置都低於1.5kg嗎？台灣筆電三年保固等於次工作日到府嗎？請保留條件、引用與供應商問題。" # @param {type:"string"}
-TOP_K = 10 # @param {type:"integer"}
-print(NEW_QUESTION, TOP_K)
-''',False),m('''## 第 5 步｜重跑，檢查改善與排除理由
+**白話理解：** embedding 是把文字轉成能比較語意的數字；它負責找資料，回答模型負責組織答案。本章真的呼叫兩種 API。向量保存在 Colab 的 JSON 索引，不必另外註冊向量資料庫。
 
-**怎麼做：** 播放下格。比較前後報告，對照 Lenovo PSREF 第 5 頁與台灣服務頁「筆記型電腦」章節。下面另列同一問題的未篩選候選與實際排除片段。
+**State 工作紀錄：** question 問題、rows 取回的頁面片段與相似度、report 回答、validation 引用檢查。建索引和問答是兩個階段；換問題不用重算整本手冊的 embedding。
 
-**應該看到：** Lenovo 有些灰色配置超過 1.5 kg；筆電保固頁不能支持三年次工作日到府。桌機片段及僅索引線索被排除。海外 SKU 和全球系列仍可當候選能力證據，不能轉成台灣已出貨的結論。加大 k 不保證正確，只是讓模型多讀片段。
+**案例：** 替台灣企業120台商務筆電更新案比較 HP、Lenovo、Dell 的記憶體／SSD、重量、連接埠與維修性。交付有來源頁碼的比較表、證據不足項目與供應商問題，再接到L04研究團隊。數量為教學情境，不能假裝已有報價。
 
-**驗收：** 前後答案都可能謹慎；如實寫改善的是涵蓋率／條件說明，不要製造原稿一定錯的說法。
-'''),c('''# @title 重跑 RAG 並檢查篩選
-result_after = await asyncio.to_thread(case.run_rag, NEW_QUESTION, API_KEY, MODEL, k=TOP_K, brand="Lenovo", out="results/03_rag/after")
-show(result_after)
-print("未篩選候選：", [r["id"] for r in case.retrieve(NEW_QUESTION,10,filtered=False)])
-print("排除：", [(r["id"],r["scope"]) for r in case.corpus() if not case.eligible(r)])
-case.save("results/03_rag/questions.json", {"before":QUESTION,"after":NEW_QUESTION,"k":TOP_K})
+**文件界線：** 官方維修手冊／規格書是競品證據庫，不是叫你實際維修。先核對封面與版本，HP AI PC手冊不可直接當成所有Next Gen AI配置；Dell同一本型錄有200V與200U，不能把兩者的記憶體混用。上傳一份可先練流程，但缺其他品牌文件時不做完整排名。
+'''.replace('{raw}',raw)),m('''## 第 1 步｜開啟 Colab，下載三品牌官方 PDF
+
+**怎麼做：** 存一份 Colab 副本，使用 Python 3、CPU。播放下面兩格，程式預設收起，不用修改。先下載以下三份真正官方PDF到電腦，方便一起上傳：
+
+|品牌|下載來源|建議改名|先確認什麼|
+|---|---|---|---|
+|HP|[EliteBook 8 G1a 14 維修手冊](https://kaas.hpcloud.hp.com/pdf-public/pdf_12237395_en-US-1.pdf)，[官方手冊清單](https://support.hp.com/us-en/product/setup-user-guides/hp-elitebook-8-g1a-14-inch-notebook-ai-pc/2102811726)|`hp_manual.pdf`|封面是14 inch Notebook AI PC；不能直接當所有Next Gen AI配置。|
+|Lenovo|[ThinkPad T14 Gen 6 AMD PSREF](https://psref.lenovo.com/syspool/Sys/PDF/ThinkPad/ThinkPad_T14_Gen_6_AMD/ThinkPad_T14_Gen_6_AMD_Spec.PDF)|`lenovo_t14.pdf`|AMD、Gen 6與系列可選配置，非台灣交貨證明。|
+|Dell|[Dell Pro 13／14／16 Plus官方型錄](https://www.delltechnologies.com/asset/en-gb/products/laptops-and-2-in-1s/technical-support/dell-pro-13-14-16-plus-laptop-product-brochure.pdf)|`dell_pro.pdf`|只採14吋PB14250 **Core Ultra 200V**欄位，不混用200U／其他尺寸。|
+
+**看什麼：** 下載後用PDF閱讀器打開，核對封面／標題、型號與處理器版本。本章會從你上傳的檔案重新抽文與embedding，不用事先寫好的29筆摘述冒充讀取PDF。
+
+**卡住時：** 官方站若擋取，老師可事先下載這三份官方文件給同學；仍需實際上傳PDF。也可先只用HP手冊學操作，或換成你有權使用、能選取文字的其他競品文件；問題也要配合改。掃描圖片需先OCR，本章不會閱讀圖片或圖表。
+'''),c(install.replace('"httpx==0.28.1"]','"httpx==0.28.1","pypdf==6.21.4"]')),c('%%writefile pdf_rag.py\n# @title 寫入PDF讀取與向量檢索流程（按播放，不用修改）\n'+(root/'day2/pdf_rag.py').read_text()),key,c(creds+'''EMBEDDING_MODEL = "text-embedding-3-small"
+import pdf_rag as rag
+from IPython.display import display, Markdown
+print("找資料的模型：", EMBEDDING_MODEL, "；寫回答的模型：", MODEL)
+'''),m('''## 第 3 步｜上傳三份 PDF，確認文件庫內容
+
+**怎麼做：** 點 Colab 左側資料夾圖示 →「上傳至工作階段儲存空間」，一次選三份PDF；等三個檔名下的上傳進度全部消失，再改下格PDF_FILES，填左側實際檔名，檔名之間用半形逗號分隔。若照上表改名，直接播放即可。不要填自己的電腦路徑。只有一份時可以先填一個檔名，但其他品牌須標缺文件。
+
+**應該看到：** 每份檔名、PDF頁數、片段數、SHA-256及第一段文字。檢查三家都有放進去，且型號符合研究目標。本格尚未呼叫embedding。PDF第1頁指閱讀器第一頁，可能與印刷章節頁碼不同。
+
+**為什麼切段：** 問答時只把找到的幾段交給模型，不用每次送整本手冊。預設每段1200字元、重疊200字元，並保留檔名與頁碼。文字過少的頁會列出，可能是圖片頁，不能宣稱已讀懂。表格雖保留文字間距，欄位仍可能錯位，須回PDF原頁核對。掃描檔完全沒有文字時會停止並提示OCR。
+
+**給 AI：**「這是我上傳的手冊，請確認三品牌實際檔名與PDF型號；保留頁碼與未知資訊，只告訴我要修改哪個檔名欄位，不要替我編造文件內容。」
+'''),c('''# @title 只改上傳後的PDF檔名（半形逗號分隔）
+PDF_FILES = "hp_manual.pdf, lenovo_t14.pdf, dell_pro.pdf" # @param {type:"string"}
+PDF_PATHS = [name.strip() for name in PDF_FILES.split(",") if name.strip()]
+for path in PDF_PATHS:
+    document = rag.extract_pdf(path)
+    print("檔名：",document["file"],"；PDF頁數：",document["pages"],"；片段數：",len(document["rows"]))
+    print("SHA-256：",document["sha256"])
+    print("文字過少、未建立片段的頁：",document["empty_pages"])
+    print("第一段：",document["rows"][0]["text"][:220])
+'''),m('''## 第 4 步｜建立 embedding 索引，先問一個問題
+
+**怎麼做：** 播放下格。第一次會把三份PDF的每個文字片段送到 `text-embedding-3-small`，產生向量並存進 `results/03_rag/indexes`。每一段都保留出自哪份文件與哪一頁。這些向量像資料的語意座標；問題也會轉成相同模型的向量，再從每份PDF各取最接近的5段，避免HP手冊比較長就擠掉其他品牌。最後才由 `gpt-6-luna` 寫答案。
+
+**應該看到：** embedding模型、向量維度、段數、本次建立索引的API呼叫數，以及有頁碼的回答。索引相同時重用文件向量；換PDF、切段設定或embedding模型會建立新索引。每次提問仍會呼叫一次問題embedding與一次回答API；本步會產生課堂Key用量。
+
+**看證據：** 下方列出實際取回的片段與相似度。相似度是排序分數，不是正確率。答案須附 `[PDF-0001]` 形式ID、檔名、PDF頁次。你要打開自己的PDF核對；引用存在不代表模型一定解讀正確。
+'''),c('''# @title 建立真正的embedding索引，執行第一次PDF問答
+index = await asyncio.to_thread(rag.build_index, PDF_PATHS, API_KEY, EMBEDDING_MODEL)
+print("Embedding：",index["identity"]["embedding_model"],"；維度：",index["dimensions"],"；段數：",len(index["rows"]))
+print("重用索引：",index["reused"],"；本次文件embedding呼叫：",len(index["embedding_calls_this_run"]))
+QUESTION = "先核對上傳文件的三品牌型號與版本。比較HP、Lenovo T14 Gen 6 AMD、Dell PB14250 Core Ultra 200V的記憶體升級與SSD更換能力，做三家比較表；只用相符型號證據，附檔名、PDF頁碼和引用，缺資料列待確認。"
+result_before = await asyncio.to_thread(rag.run_pdf_rag, QUESTION, index, API_KEY, MODEL, k=5, out="results/03_rag/before")
+display(Markdown(result_before["report"]))
+print(result_before["validation"])
+for row in result_before["rows"]:
+    print(row["id"],row["file"],"PDF第",row["page"],"頁；相似度",round(row["score"],3),"\\n",row["text"])
+'''),m('''## 第 5 步｜只改中文問題，重跑並查證
+
+**怎麼做：** 只改下格 NEW_QUESTION、TOP_K，再播放下兩格。預設將研究擴成「三品牌32GB／1TB、台灣120台報價和三年到府」，觀察模型是否保留手冊無法回答的缺口。也可比較三品牌USB-C、重量或記憶體配置，問題要配合上傳型號。TOP_K是每份PDF各讀幾段，可用1–12；增加段數不保證正確。
+
+**給 AI 的指令：**「請根據我上傳的三品牌PDF，把問題改成競品研究問題，使用相同的比較欄位，要求先核對型號、附PDF頁次與引用，不把維修手冊當台灣報價或服務憑證。只回傳NEW_QUESTION一行，不改其他程式。」
+
+**應該看到：** 沿用同一份競品文件庫索引，重新計算問題向量與回答。對照前後取回頁次，確認中文提問可找英文手冊；若找不到內容，要分清楚『本次片段不足』與『整本手冊沒有』，不能把相似段落當成證明。
+
+**驗收：** 用PDF閱讀器跳到引用頁，確認型號、條件和原文。手冊沒有提供你的台灣正式報價與已購服務權益，答案應列供應商待確認；不應編出價格或三年到府承諾。若換PDF，回到第3步改檔名清單，再重跑第4、5步。執行階段回收後需重新上傳、輸入Key與建索引。
+'''),c('''# @title 只改中文問題與要讀幾段
+NEW_QUESTION = "替120台台灣企業採購比較HP、Lenovo、Dell：能確認32GB與1TB、台灣含稅報價、交期與已含三年到府嗎？做三品牌證據與缺口表，附PDF頁碼，不混用HP不同型號或Dell 200V與200U；沒有報價就列供應商問題。" # @param {type:"string"}
+TOP_K = 6 # @param {type:"integer"}
+'''),c('''# @title 用新的問題向量重查競品文件庫
+result_after = await asyncio.to_thread(rag.run_pdf_rag, NEW_QUESTION, index, API_KEY, MODEL, k=TOP_K, out="results/03_rag/after")
+display(Markdown(result_after["report"]))
+print(result_after["validation"])
+for row in result_after["rows"]:
+    print(row["id"],row["file"],"PDF第",row["page"],"頁；相似度",round(row["score"],3),"\\n",row["text"])
+print("本次問題embedding：",result_after["embedding_model"],"；回答：",result_after["generation_call"]["model"])
 ''')]
     docs['03_rag.ipynb']=cells
     cells=start('L04｜三品牌研究團隊與 27 格需求矩陣','04_team','Planner 規劃 → 三個品牌 Researcher 分別呼叫模型 → Writer 寫稿 → Reviewer 查核 → 最多修訂一輪。角色各有獨立輸入輸出；共用同一模型，沒有各自長期記憶。','task 任務、plan 計畫、notes 品牌交接、report 草稿、review 意見、revisions 修訂次數')

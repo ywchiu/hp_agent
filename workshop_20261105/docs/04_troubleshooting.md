@@ -28,3 +28,9 @@
 第二天：模型輸出未完整時請縮小問題，保留現有成果，不把截斷結果當完成；來源HTTP失敗為data_error，不覆蓋有效基準。L05／L06使用獨立Python程序或同步SQLite graph，Colab以await asyncio.to_thread執行，不在已有事件迴圈內呼叫asyncio.run。子程序stdout／stderr寫入真實log檔，不依賴ipykernel的fileno。
 
 L05「目錄已有進度」：不要重跑start，改執行resume；要重演用新的BATCH_DIR。L06「已結束」：查看review_state.json，已核准／駁回就不再次提交；另一分支用新的REVIEW_DIR。
+
+## L03上傳PDF與embedding
+
+找不到檔案：在Colab左側檔案區完成上傳，PDF_FILES填該區顯示的檔名，多份用半形逗號分隔，不能填自己的電腦路徑。PDF文字為空：先OCR或換能選取文字的官方手冊。加密、超過50MB／200頁或1000片段會停止，換較短文件再試。API的401／429請老師確認課堂Key與額度，不貼Key。相同檔案及設定可重用文件向量；換問題仍有問題embedding與回答用量。中文提問檢索英文手冊可能有遺漏，調整問題、TOP_K並回原PDF核對，不能把排序分數當正確率。
+
+PDF出現`EOF marker not found`或`Stream has ended unexpectedly`：先確認左側檔案的上傳進度全部消失，再重跑第3步。檔名先出現不代表上傳完成；若仍失敗，重新下載並在電腦上打開確認PDF完整後再上傳。

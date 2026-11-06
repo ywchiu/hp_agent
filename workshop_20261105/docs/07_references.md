@@ -13,6 +13,6 @@
 - [Antigravity Settings](https://www.antigravity.google/docs/settings)：設定與 MCP 自訂功能；UI 位置依版本確認。
 - [Google Colab](https://colab.research.google.com/)：本課用上傳 notebook，不依賴私人 Drive 連結。
 
-第二天RAG使用中英詞彙及中文字元二元組檢索，不使用embedding、向量庫或reranker；回答與研究角色分別真實呼叫模型。官方資料出處與採用邊界見 [第二天來源說明](../day2/SOURCES.md)。L04選做即時web_search，L06選做真實PDF快照，沒有虛構歷史報價。
+L03實際讀取學員上傳的三品牌PDF，以 `text-embedding-3-small` 建立文件與問題向量、本機JSON索引與餘弦相似度檢索，再由 `gpt-6-luna` 回答；參考[OpenAI embedding文件](https://developers.openai.com/api/docs/guides/embeddings)。其他研究角色也真實呼叫模型。官方資料出處與採用邊界見 [第二天來源說明](../day2/SOURCES.md)。L04選做即時web_search，L06選做真實PDF快照，沒有虛構歷史報價。
 
 投影片中的產業新聞、效能統計與產品故事屬原簡報內容，本版不重新驗證或延伸其數字，也不將它們當成程式測試的證據。

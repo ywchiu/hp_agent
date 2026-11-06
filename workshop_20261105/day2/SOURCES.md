@@ -14,6 +14,14 @@
 
 片段皆標 `public_fact`，表示摘述來自公開資料；不代表都適用於此案。`desktop_only` 與 `unverified_lead` 被排除；`regional_sku` 留給模型說明海外配置的邊界。可用片段27筆，不是27筆台灣合規證明。
 
-課堂主流程使用封存摘述，確保官網暫時擋取時仍可演示。L04選做用OpenAI web_search查官方站並保存連結／時間；搜尋結果仍需人工核實。L06抓官方PDF的SHA-256，只能偵測內容指紋變動，不能單靠指紋推定規格、價格或服務變動。
+L04–L06主流程使用封存摘述，確保官網暫時擋取時仍可演示。L04選做用OpenAI web_search查官方站並保存連結／時間；搜尋結果仍需人工核實。L06抓官方PDF的SHA-256，只能偵測內容指紋變動，不能單靠指紋推定規格、價格或服務變動。
 
 想新增資料時，請AI同時補來源網址、原文位置、查閱日期、原文更新日、適用市場與配置，再檢查它是否把「選配」「最高」「起始」「需加購」改成了既定出貨事實。新來源要回到官網，不以另一位代理的摘要互相背書。
+
+## L03：學員上傳的原始PDF
+
+L03不使用上表29筆摘述；學員自行下載並上傳[HP EliteBook 8 G1a 14 inch Notebook AI PC維修手冊](https://kaas.hpcloud.hp.com/pdf-public/pdf_12237395_en-US-1.pdf)，來源為[HP官方手冊清單](https://support.hp.com/us-en/product/setup-user-guides/hp-elitebook-8-g1a-14-inch-notebook-ai-pc/2102811726)，2026-11-06於官方清單核對。先核對封面，不能自行視為Next Gen AI或其他尺寸的手冊。教材不公開轉存整份廠商PDF。
+
+以學員實際上傳檔案的SHA-256識別版本；片段保留檔名與PDF閱讀器頁次。僅擷取文字，圖片／掃描頁不代表已讀。整份文件切段後實際送embedding API，再以問題向量從每份PDF各取前幾段；避免長手冊擠掉其他品牌。手冊型號、選配、維修資格仍須核對原文，不能拿來證明台灣指定SKU、庫存、價格或已購買服務。
+
+另上傳[Lenovo T14 Gen 6 AMD PSREF](https://psref.lenovo.com/syspool/Sys/PDF/ThinkPad/ThinkPad_T14_Gen_6_AMD/ThinkPad_T14_Gen_6_AMD_Spec.PDF)與[Dell Pro 13／14／16 Plus官方型錄](https://www.delltechnologies.com/asset/en-gb/products/laptops-and-2-in-1s/technical-support/dell-pro-13-14-16-plus-laptop-product-brochure.pdf)，建立三品牌競品文件庫。Dell型錄同時含不同尺寸與200V／200U，研究只採PB14250 Core Ultra 200V適用欄位。只有HP文件時可練操作，其他品牌標缺文件，不可補齊假比較。L03產物是三品牌有頁碼的比較表、證據缺口與供應商問題，接續L04的研究任務；不自動將模型答案寫回其他章節的封存證據。
