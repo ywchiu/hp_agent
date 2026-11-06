@@ -77,15 +77,6 @@ print("Key 已暫存，不顯示也不存檔。模型：", MODEL)
         return [opening(title,diagram,flow,state),m(prepare[1].replace('下面三格','下面五格')),c(install.replace('請接著播放下兩格','請接著播放其餘準備格')),c('%%writefile day2_case.py\n# @title 寫入本章流程（按播放，不用修改）\n'+(root/'day2/procurement.py').read_text()),c(dataset),key,c(creds)]
     def afternoon_cells():
         return [c('%%writefile afternoon.py\n# @title 寫入下午的比較與觀察工具（不必修改）\n'+(root/'day2/afternoon.py').read_text()), c('# @title 載入下午的觀察工具（不必修改）\nimport afternoon as lab\n')]
-    def restore(folder):
-        return [m('### 選做：在全新 Colab 還原既有備份\n\n第一次上課跳過。若已有含輸入資料及SQLite的完整備份ZIP，可用左側「檔案 → 上傳」放入，再只填下格檔名並播放。L05可使用第4步產生的中斷現場備份。接下來照原步驟操作；程式會沿用已還原的任務，不重新建立。請用全新執行階段，不能覆蓋已有成果的資料夾。'),
-                c(f'''# @title 選做：還原上次下載的ZIP（第一次執行留空）
-RESTORE_ZIP = "" # @param {{type:"string"}}
-if RESTORE_ZIP:
-    print("已還原：",case.restore_archive(RESTORE_ZIP,"results/{folder}"))
-else:
-    print("第一次執行，使用新任務。")
-''',False)]
     docs={}
     cells=[m('''# L03｜下載三品牌 PDF，建立競品研究 RAG
 
@@ -321,7 +312,6 @@ print("原文與每輪紀錄：results/04_research/trace.json；引用有效仍�
     docs['04_research_loop.ipynb']=cells
     cells=start('L05｜120 台研究案中斷後接續','05_recovery','HP → Lenovo → Dell → 彙整；每個完成節點寫 checkpoint。課堂故意在 Lenovo 結果存入操作帳本後中斷，讓你看到帳本與 checkpoint 的差別。','results 已完成品牌；next 下一節點另存在 checkpoint；operations.sqlite 是已提交結果帳本')
     cells[5:5] = afternoon_cells()
-    cells += restore('05_recovery')
     cells += [m('''## 第 3 步｜啟動批次，保留中斷現場
 
 **怎麼做：** 播放下格。它會開一個獨立 Python 程序，實際研究 HP、Lenovo，然後在寫好 Lenovo 結果、尚未完成節點時故意停止。這個失敗是教學故障，不代表官網或模型故障。
@@ -364,17 +354,13 @@ if paused["next"]:
     assert paused["next"]==["Lenovo"]
     assert paused["effects"]=={"HP":1,"Lenovo":1}
 else:
-    print("這份ZIP的研究已完成；第5步恢復會維持原結果，不新增模型呼叫。")
-# 把中斷現場另外存成ZIP，想跨執行階段演示時可從左側檔案下載。
-shutil.copytree("data_day2",Path("results/05_recovery/inputs"),dirs_exist_ok=True)
-shutil.make_archive("05_recovery_中斷現場","zip","results/05_recovery")
+    print("這個任務的研究已完成；第5步恢復會維持原結果，不新增模型呼叫。")
 '''),m('''## 第 5 步｜用第二個 Python 程序恢復
 
 **怎麼做：** 播放下格，使用同 BATCH_DIR、THREAD、MODEL。這次真的是另一個程序讀 SQLite，沒有把第一個程序的記憶體變數帶過去。Lenovo 節點會重新進入，但讀回已存結果；然後才呼叫模型研究 Dell。
 
 **應該看到：** 執行紀錄 HP → Lenovo → Lenovo（reused=True）→ Dell；唯一結果共3筆；next 變空，報告有三品牌。下方再接續一次，新增操作與模型呼叫都應為0；刻意用錯Thread則應先被拒絕，不執行研究。不能只看「恢復成功」四個字，須核對 SQLite 與紀錄。
 
-**跨全新 Colab：** 第4步已額外產生 `05_recovery_中斷現場.zip`，可從左側「檔案」下載。重新開機時先準備程式及 Key，再用選做還原格載入這份ZIP；照第3～5步播放即可沿用原進度。若沒有保存ZIP，Colab 暫存檔回收後不能憑 Thread 名找回資料。
 '''),c('''# @title 第二個 Python 程序接續同一任務
 await asyncio.to_thread(run_worker,"resume")
 resumed = case.inspect_batch(BATCH_DIR)
@@ -402,7 +388,6 @@ else:
     docs['05_recovery.ipynb']=cells
     cells=start('L06｜兩週變化、來源追蹤與人工審核','06_review','先讀真實官方PDF快照，再用明確標示的兩週模擬報價演練比較規則；重大變化 → 模型草擬詢價 → interrupt 等人 → 修改再審／駁回／核准存本機outbox。','比較基準與事件；draft 含收件人、正文、證據與比較附件；decision 決定；receipt 本機回執；pending 是否等候')
     cells[5:5] = afternoon_cells()
-    cells += restore('06_review')
     cells += [m('''## 第 3 步｜先看來源，再比較兩週變化
 
 **為什麼：** 投影片的完整流程是「取得新資料 → 對照有效基準 → 判斷重要性 → 決定是否交人工」。不能看到網頁改字，就直接寫成降價通知。
@@ -478,7 +463,7 @@ else:
 
 **最後比較三條分支：** 第三格在三份獨立測試任務重用同一草稿，當作自動分支演練；不會替你決定上面的主審核任務。看approve一筆、revise改稿再審後一筆、reject零筆；每條都重複執行一次，筆數維持不變，sent_count全部是0。不額外呼叫模型。
 
-**下週如何接續：** 本章保存真實PDF基準、每次觀察與本次模擬事件；沒有捏造真實兩週價格，也沒有部署排程。正式每週追蹤需外部排程器、Asia/Taipei時間、持久磁碟與重疊處理；中斷恢復沿用同一Thread，新一週研究另建Thread。Colab關機後不會自動醒來執行，存notebook也不會保存SQLite。需要跨執行階段時，保留整份results/06_review及輸入資料，再用前面還原格讀回。
+**下週如何接續：** 本章保存真實PDF基準、每次觀察與本次模擬事件；沒有捏造真實兩週價格，也沒有部署排程。正式每週追蹤需外部排程器、Asia/Taipei時間、持久磁碟與重疊處理；中斷恢復沿用同一Thread，新一週研究另建Thread。Colab關機後不會自動醒來執行，存notebook也不會保存SQLite。本次課堂在同一個Colab執行階段完成，不需下載或上傳備份。
 '''),c('''# @title 核對舊版本無法核准新版本（不呼叫模型）
 if review_state is not None:
     review_state = case.approval(REVIEW_DIR)
