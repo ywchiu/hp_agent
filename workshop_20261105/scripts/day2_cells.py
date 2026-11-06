@@ -193,48 +193,129 @@ print(result_after["validation"])
 print("本次問題embedding：",result_after["embedding_model"],"；回答：",result_after["generation_call"]["model"])
 ''')]
     docs['03_rag.ipynb']=cells
-    cells=start('L04｜三品牌研究團隊與 27 格需求矩陣','04_team','Planner 規劃 → 三個品牌 Researcher 分別呼叫模型 → Writer 寫稿 → Reviewer 查核 → 最多修訂一輪。角色各有獨立輸入輸出；共用同一模型，沒有各自長期記憶。','task 任務、plan 計畫、notes 品牌交接、report 草稿、review 意見、revisions 修訂次數')
-    cells += [m('''## 第 3 步｜先看研究規模，找最重要的缺口
+    cells=[m('''# L04｜深度研究：規劃、搜尋、閱讀與反思補查
 
-**怎麼做：** 播放下格，看到三品牌 × 九項需求，共 27 格。這是可追溯的檢查清單，不是打分排行榜；有系列證據仍不能代表台灣 SKU 合規。
+第二天｜台灣企業120台商務筆電採購案｜先看狀態圖，再依五步操作。對照目前投影片PDF 222–261；流程參考四月的Deep Research完整範例。
 
-**討論：** 工程師在意可升級、業務在意重量、採購在意到府與交期，哪三件最需要供應商回答？所有品牌都沒有正式含稅報價，所以目前不能排名最便宜。
-'''),c('''# @title 顯示需求矩陣（這格不呼叫模型）
-matrix = case.coverage()
-display(Markdown("|品牌|需求|證據ID|狀態|\\n|---|---|---|---|\\n"+"\\n".join(
-    f"|{r['brand']}|{r['requirement']} {r['need']}|{r['evidence_ids'] or '無'}|{r['finding']}|" for r in matrix)))
-'''),m('''## 第 4 步｜交辦完整研究，讓 AI 修改需求
+![LangGraph狀態圖]({raw}04_team.png)
 
-**怎麼做：** 只改 TASK。先用預設採購題，或加入你負責部門的優先項目。修訂上限設 1；改 0 可比較沒有 Writer 修訂的報告。程式會依上限停止，不等所有缺口填滿。
+**完整流程：** Planner拆子問題 → Searcher搜尋官方來源 → Reader實際讀HTML／PDF原文 → Synthesizer整合初稿 → Critic找缺口與矛盾 → 有值得公開補查的問題就回Planner → 最終報告。
 
-**給 AI 的指令：**「請將120台企業採購任務寫清楚，加入〔你的部門優先需求〕。保留九項驗收、台灣市場、正式報價與服務待確認，不指定假贏家。只回傳 TASK 字串。」
-'''),c('''# @title 只改這個研究任務
-TASK = "替台灣企業120台更新案比較HP、Lenovo、Dell：IT看升級與雙螢幕、業務看1.5kg、採購看三年到府與交期；交主管摘要、品牌風險與供應商詢價清單。沒有台灣SKU與正式報價不可選出最便宜或已全數符合的贏家。" # @param {type:"string"}
-MAX_REVISIONS = 1 # @param {type:"integer"}
-print(TASK)
-''',False),m('''## 第 5 步｜執行角色交接，必要時上網補查
+**和上一章的連結：** L03先從已下載的PDF向量庫找片段；本章先拆研究方向，再到官網找新資料。三品牌仍是HP、Lenovo、Dell，研究主題仍是台灣120台筆電更新案。
 
-**怎麼做：** 播放第一格，等報告與 Reviewer 意見出現。一次新研究最多8次模型呼叫，各角色開始與完成都會顯示。相同任務重跑沿用已完成角色回覆，避免逾時後整組重做；修改需求則使用新回覆。可能需要幾分鐘；不要因等待重複按播放。`trace.json` 保留各角色內容、證據 ID 與模型呼叫紀錄，`coverage.csv` 可開試算表。
+**你會看到：** 子問題、實際搜尋詞、候選網址、原文讀取成功／失敗、證據ID、各子題筆記、第一輪初稿、Critic缺口、第二輪新計畫與前後差異。每段分開播放，不必讀底層程式。
 
-**驗收：** Dell 200V 的記憶體不能升級；HP 愛爾蘭32GB/1TB不能當台灣SKU；Lenovo 保固不等於到府。Reviewer 的意見必須回到原始來源，不把 Writer 文字當新證據。達上限後仍交付未解問題。
+**State是研究筆記：** questions累積子問題、searches搜尋與讀取帳本、evidence原文片段、readings子題筆記、synthesis初稿、critique評審、history每輪紀錄。LangGraph暫存在記憶體，讓我們停下來觀察；執行階段刪除後不會保留，跨程序恢復留到L05。
 
-**選做真實上網：** 下方第二格將 SEARCH_NOW 改 True，再播放。沿用老師的 Key，用模型的 web_search 搜尋官方站，最多兩次工具呼叫；保存網址與查閱時間。可能有額外搜尋費用。網站擋取或找不到台灣 SKU 就保留缺口，不可冒充查到。搜尋結果先作候選，須人工開啟核對後才可要求 AI 更新封存資料；不自動混進27格的證據。
+**情境：** 台灣企業要更新120台商務筆電，教學預算含稅600萬、目標2027-01-15前交貨。比較HP EliteBook 8 G1a 14 Next Gen AI、Lenovo ThinkPad T14 Gen 6 AMD與Dell PB14250 Core Ultra 200V。數量、預算與日期是教學情境；官網資料不等於台灣指定SKU、正式報價或已購服務。
+'''.replace('{raw}',raw)),m('''## 第 1 步｜準備本章，認識資料起點
 
-**給 AI：**「根據 coverage.csv 和 Reviewer 意見，只列前三個最值得補查的問題、要找的官方頁面與驗收方式；不要把市場或系列能力換成已確認SKU。」
-'''),c('''# @title 執行研究團隊（等待完成，避免重複播放）
-team_result = await asyncio.to_thread(case.run_team,TASK,API_KEY,MODEL,MAX_REVISIONS,"results/04_research")
-show(team_result)
-print("需求矩陣：",len(team_result["coverage"]),"格；修訂：",team_result["revisions"],"輪")
-'''),c('''# @title 選做：真的上網搜尋官方來源
-SEARCH_NOW = False # @param {type:"boolean"}
-SEARCH_QUESTION = "查HP EliteBook 8 G1a 14 Next Gen AI、ThinkPad T14 Gen 6 AMD、Dell PB14250 Core Ultra 200V的台灣32GB/1TB配置與三年到府服務；找不到就列供應商待確認，保留官方網址。" # @param {type:"string"}
-if SEARCH_NOW:
-    live_result = await asyncio.to_thread(case.live_search,SEARCH_QUESTION,API_KEY,MODEL)
-    show(live_result)
-    print("官方來源候選：",live_result["citations"])
+**怎麼做：** 存一份Colab副本，使用Python 3、CPU。由上往下播放下面四格，程式預設收起，不必修改。會放入研究流程、120台採購需求，以及7份官方來源的29筆封存摘述，其中27筆可用。
+
+**為什麼先給封存資料：** 它是研究起點，有來源、位置、適用市場與查閱日期；接下來仍會真的搜尋、讀取官網原文。封存摘述與本次新讀到的WEB片段分開顯示，不能假裝封存資料是剛上網取得。
+
+**看什麼：** 先看來源表。GLOBAL系列能力、IE海外SKU、TW服務政策各能證明什麼？桌機服務與未讀到正文的搜尋線索會排除。今天要補查的是證據缺口，而不是硬選出一個贏家。
+
+**卡住時給AI：**「請依最後一段錯誤修復Colab，保留真實搜尋、原文讀取與LangGraph迴圈，只告訴我要重跑哪格。」只貼錯誤，不貼Key。
+'''),c(install.replace('"httpx==0.28.1"]','"httpx==0.28.1","pypdf==6.21.4"]').replace('請接著播放下兩格','請接著播放下面三格')),
+        c('%%writefile procurement.py\n# @title 寫入採購來源與共用工具（按播放，不用修改）\n'+(root/'day2/procurement.py').read_text()),
+        c('%%writefile deep_research.py\n# @title 寫入深度研究迴圈（按播放，不用修改）\n'+(root/'day2/deep_research.py').read_text()),
+        c(dataset.replace('import day2_case as case','import procurement as case')),key,
+        c(creds+'''import deep_research as research
+from IPython.display import HTML
+print("本章預設會真正搜尋並讀取官方來源。")
+'''),m('''## 第 3 步｜改研究任務，先看Planner拆出的子問題
+
+**怎麼做：** 下格主要改TASK。MAX_ROUNDS預設2，可用1–3；指的是搜尋／閱讀／評審的完整研究輪數。SOURCE_MODE預設live，會真的上網，沿用課堂Key，不必再申請搜尋服務Key。snapshot只供網路故障時演練，畫面會明說沒有即時搜尋。
+
+**給AI：**「請將120台筆電採購寫成研究任務，加入〔IT／業務／採購最在意的條件〕。要求比較三品牌、核對型號、找反證、保留台灣SKU與報價缺口。只回TASK一段，不改程式。」
+
+播放參數格後，再播放「先產生研究計畫」。Planner只規劃，還沒有搜尋或寫報告。它會拆成三個跨品牌子題，列出規劃的搜尋字詞與查證目的。實際工具字詞會在搜尋後另外列出。
+
+**先停下來看：** 三題是否分別涵蓋規格／維修性、行動／底座、台灣服務／商務？query有正確型號與Dell 200V嗎？計畫若偏題，請AI幫你調整TASK，再重跑這兩格。
+'''),c('''# @title 只改研究任務、輪數與來源模式
+TASK = "替台灣企業120台商務筆電更新案研究HP、Lenovo與Dell：比較32GB／1TB與升級維修、1.5kg出差配置、USB-C底座及雙4K螢幕、台灣三年到府；核對HP型號與Dell 200V／200U差異。主動找證據矛盾、台灣SKU與商務缺口，交主管報告與供應商問題，不編造價格、交期或合規贏家。" # @param {type:"string"}
+MAX_ROUNDS = 2 # @param {type:"integer"}
+SOURCE_MODE = "live" # @param ["live", "snapshot"]
+print("來源模式：",SOURCE_MODE,"；最多研究輪數：",MAX_ROUNDS)
+'''),c('''# @title 先產生研究計畫（此時尚未搜尋）
+# 相同任務重跑本格會保留目前session；改參數才建立新研究。
+settings = (TASK, MODEL, MAX_ROUNDS, SOURCE_MODE)
+if globals().get("research_settings") != settings:
+    session = research.ResearchSession(TASK, API_KEY, MODEL, MAX_ROUNDS, SOURCE_MODE)
+    state = await asyncio.to_thread(session.advance)
+    research_settings = settings
 else:
-    print("本次使用封存的官方片段；未執行即時搜尋。")
-''',False)]
+    state = session.state()
+display(HTML(research.plan_html(state)))
+print("下一階段：",session.app.get_state(session.config).next)
+'''),m('''## 第 4 步｜執行第一輪，先讀證據再看Critic
+
+**怎麼做：** 先播放「搜尋、讀原文並評審」。每個子題會先搜官方站，最多2個候選網址，再實際GET網頁或PDF，取出相關原文交Reader。各角色開始／完成會顯示，可能需幾分鐘，不要重複按播放。
+
+完成後先看原文帳本：哪個網址read_ok？哪個403、擋取或沒有可讀文字？只有讀取成功的內容才新增WEB片段；搜尋摘要不能冒充原文。read_ok也只代表讀到文字，還要核對型號與市場。封存片段保留原查閱日期。
+
+接著播放「看子題筆記、初稿與Critic」。Reader按子題交筆記，Synthesizer整合，Critic回到原始片段找未回答項目、證據矛盾及不當推論。
+
+**討論：** 挑一筆WEB片段打開原網址核對。Critic指出哪件事能再查官網？哪件事只能問供應商？例如系列支援32GB不證明台灣交貨，三年保固也不一定包含到府。分數是模型的完整性意見，不是正確率。
+'''),c('''# @title 第一輪：搜尋、讀原文並評審（等待完成）
+if session.state().get("history"):
+    state = session.state()
+    print("第一輪已完成，保留現場；下一步看補查計畫。")
+else:
+    state = await asyncio.to_thread(session.advance)
+display(HTML(research.evidence_html(state)))
+print("本輪新增原文：",state["round_added"],"段；完成子題：",len(state["readings"]))
+'''),c('''# @title 看子題筆記、第一輪初稿與Critic（這格不再呼叫模型）
+for note in [n for n in state["readings"] if n["round"] == 1]:
+    display(Markdown("### "+note["question_id"]+"｜"+note["question"]+"\\n\\n"+note["answer"]))
+display(Markdown("## 第一輪研究初稿\\n\\n"+state["history"][0]["synthesis"]))
+first_round = dict(state, round=1, critique=state["history"][0]["critique"])
+display(Markdown(research.critique_markdown(first_round)))
+print("下一步判斷：",research.next_action(state))
+'''),m('''## 第 5 步｜看重新規劃與補查，對照報告改變
+
+**先播放「根據Critic決定下一步」：** 若有公開可補查缺口，Planner會讀Critic意見及舊問題，提出最多兩個新子題。先比較新舊搜尋詞，確認這次真的針對缺口。這就是四月範例的Re-plan。
+
+如果資料足以形成研究報告、只剩供應商能回答的事項，或已達輪數上限，就會直接進最終報告；不為了展示第二輪而重複搜尋。第二輪沒有新證據時也會停下，保留缺口。
+
+**再播放「完成剩餘補查與報告」：** 新子題會重新經過Searcher、Reader、Synthesizer與Critic，累積原文與筆記，再交最終報告。最後一格只讀取已完成結果，不重啟整場研究，也不重新呼叫模型。
+
+**怎麼驗收：** 看每輪對照表，說出「Critic提了什麼 → 第二輪改查什麼 → 新增哪個原文ID → 報告改了哪個結論」。若沒有新增證據或改善，也要如實說明。核對報告引用、資料來源、研究限制與供應商問題；達上限不等於資料已充分，更不等於已取得台灣報價。
+
+**給AI：**「請依history與原始片段，比較第一輪初稿和最終報告，列三項改變及新增證據ID；沒有證據改善就寫沒有，不只比較文句。再說下一次最值得改哪個TASK條件。」
+
+**重跑與成本：** 相同任務／資料／模型會沿用已完成角色與搜尋快取，並顯示原查閱時間；不是每次都刷新官網。改TASK會建立新session。預設兩輪最多17次模型回應（含最多5次搜尋請求，工具實際執行次數另列）；實際可能提早停止。SOURCE_MODE=snapshot不會上網，仍會呼叫模型；課堂Key由老師提供。
+'''),c('''# @title 根據Critic決定下一步，先看補查計畫
+if session.state().get("report"):
+    state = session.state()
+elif session.app.get_state(session.config).next == ("planner",):
+    state = await asyncio.to_thread(session.advance)
+elif session.app.get_state(session.config).next == ("final_report",):
+    state = await asyncio.to_thread(session.advance)
+else:
+    state = session.state()
+if state.get("report"):
+    print("已進最終報告；停止原因：",state["stop_reason"])
+else:
+    display(HTML(research.plan_html(state)))
+    print("上方是新計畫；下一格才開始補查，不會重查全部舊問題。")
+'''),c('''# @title 完成剩餘補查與報告（已完成時重跑不再呼叫模型）
+state = await asyncio.to_thread(session.finish)
+display(HTML(research.history_html(state)))
+display(HTML(research.evidence_html(state)))
+for note in [n for n in state["readings"] if n["round"] > 1]:
+    display(Markdown("### 補查筆記 "+note["question_id"]+"\\n\\n"+note["answer"]))
+if len(state["history"]) > 1:
+    display(Markdown(research.critique_markdown(state)))
+print("停止原因：",state["stop_reason"],"；總子題：",len(state["questions"]))
+print("模型回應紀錄：",len(session.llm.log),"；沿用快取：",sum(c["used_cache"] for c in session.llm.log))
+print("本次新呼叫中API回傳的搜尋工具數：",sum(c["web_search_calls"] for c in session.llm.log if not c["used_cache"]))
+'''),c('''# @title 只看最終報告與引用檢查（這格不呼叫模型）
+display(Markdown(state["report"]))
+print(state["validation"])
+print("原文與每輪紀錄：results/04_research/trace.json；引用有效仍須人工核對內容。")
+''')]
     docs['04_research_loop.ipynb']=cells
     cells=start('L05｜120 台研究案中斷後接續','05_recovery','HP → Lenovo → Dell → 彙整；每個完成節點寫 checkpoint。課堂故意在 Lenovo 結果存入操作帳本後中斷，讓你看到帳本與 checkpoint 的差別。','results 已完成品牌；next 下一節點另存在 checkpoint；operations.sqlite 是已提交結果帳本')
     cells += restore('05_recovery')

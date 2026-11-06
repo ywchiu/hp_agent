@@ -1,0 +1,206 @@
+{
+  "date": "2026-11-06",
+  "lesson": "L04",
+  "model": "gpt-6-luna",
+  "unit_tests": 56,
+  "local_notebook": {
+    "status": "passed",
+    "code_cells": 12,
+    "fresh_live_run": true,
+    "exact_revision_rerun": "passed with completed calls reused",
+    "rounds": 2,
+    "questions": [
+      "Q01",
+      "Q02",
+      "Q03",
+      "Q04",
+      "Q05"
+    ],
+    "new_original_pieces_by_round": [
+      3,
+      0
+    ],
+    "completed_unique_model_responses": 17,
+    "search_requests": 5,
+    "api_reported_web_search_calls": 10,
+    "stop_reason": "max_rounds",
+    "citation_validation": {
+      "status": "ids_valid",
+      "cited_ids": [
+        "DELL-01",
+        "DELL-02",
+        "DELL-03",
+        "DELL-04",
+        "DELL-06",
+        "DELL-07",
+        "DELL-08",
+        "HP-01",
+        "HP-03",
+        "HP-04",
+        "LEN-02",
+        "LEN-03",
+        "LEN-05",
+        "LEN-06",
+        "LEN-08",
+        "LEN-09",
+        "LEN-10",
+        "LEN-11",
+        "LEN-13",
+        "LEN-14"
+      ],
+      "unknown_ids": [],
+      "limitation": "只核對ID存在；原文是否支持結論仍須人工確認。"
+    },
+    "read_ledger": [
+      {
+        "question_id": "Q01",
+        "pages": [
+          {
+            "url": "https://support.hp.com/us-en/document/ish_12300115-12300036-16",
+            "status": "no_readable_text",
+            "kind": "HTML",
+            "checked_on": "2026-11-06T01:33:41.064165+00:00"
+          },
+          {
+            "url": "https://psref.lenovo.com/syspool/Sys/PDF/ThinkPad/ThinkPad_T14_Gen_6_AMD/ThinkPad_T14_Gen_6_AMD_Spec.PDF?v=d12e6e63-19d6-4547-bca5-23cbf18c2f6b",
+            "status": "read_ok",
+            "kind": "PDF",
+            "checked_on": "2026-11-06T01:31:49.187309+00:00"
+          }
+        ]
+      },
+      {
+        "question_id": "Q02",
+        "pages": [
+          {
+            "url": "https://support.hp.com/us-en/document/ish_12300115-12300036-16",
+            "status": "no_readable_text",
+            "kind": "HTML",
+            "checked_on": "2026-11-06T01:33:41.420326+00:00"
+          },
+          {
+            "url": "https://psref.lenovo.com/Product/ThinkPad_T14_Gen_6_AMD",
+            "status": "no_readable_text",
+            "kind": "HTML",
+            "checked_on": "2026-11-06T01:33:41.420692+00:00"
+          }
+        ]
+      },
+      {
+        "question_id": "Q03",
+        "pages": [
+          {
+            "url": "https://support.hp.com/tw-zh/product/product-specs/hp-elitebook-8-g1a-14-in-notebook-next-gen-ai-pc/2102811810",
+            "status": "no_readable_text",
+            "kind": "HTML",
+            "checked_on": "2026-11-06T01:33:41.796590+00:00"
+          },
+          {
+            "url": "https://support.hp.com/tw-zh/document/ish_12300177-12311161-16",
+            "status": "no_readable_text",
+            "kind": "HTML",
+            "checked_on": "2026-11-06T01:33:41.796337+00:00"
+          }
+        ]
+      },
+      {
+        "question_id": "Q04",
+        "pages": [
+          {
+            "url": "https://support.hp.com/us-en/product/setup-user-guides/hp-elitebook-8-g1a-14-inch-notebook-ai-pc/2102811726",
+            "status": "no_readable_text",
+            "kind": "HTML",
+            "checked_on": "2026-11-06T01:33:42.253107+00:00"
+          },
+          {
+            "url": "https://support.hp.com/us-en/product/setup-user-guides/hp-elitebook-8-g1a-14-inch-notebook-next-gen-ai-pc/model/2102811811",
+            "status": "no_readable_text",
+            "kind": "HTML",
+            "checked_on": "2026-11-06T01:33:42.253352+00:00"
+          }
+        ]
+      },
+      {
+        "question_id": "Q05",
+        "pages": [
+          {
+            "url": "https://support.hp.com/us-en/document/ish_12300115-12300036-16",
+            "status": "no_readable_text",
+            "kind": "HTML",
+            "checked_on": "2026-11-06T01:33:43.010748+00:00"
+          },
+          {
+            "url": "https://psref.lenovo.com/Product/ThinkPad_T14_Gen_6_AMD",
+            "status": "no_readable_text",
+            "kind": "HTML",
+            "checked_on": "2026-11-06T01:33:43.011262+00:00"
+          }
+        ]
+      }
+    ]
+  },
+  "earlier_local_live_run": {
+    "status": "passed",
+    "new_original_pieces_by_round": [
+      1,
+      3
+    ],
+    "rounds": 2,
+    "completed_model_responses": 17,
+    "citation_validation": "ids_valid"
+  },
+  "colab_web": {
+    "status": "interrupted_workspace_missing",
+    "initial_run_completed_cells": [
+      2,
+      3,
+      4,
+      5,
+      7,
+      9,
+      10,
+      12,
+      13,
+      15
+    ],
+    "observed_first_round_new_original_pieces": 1,
+    "observed_replan_questions": [
+      "Q04",
+      "Q05"
+    ],
+    "errors_observed": [
+      "API 503",
+      "Reading reply containing prose outside JSON"
+    ],
+    "fixes": [
+      "one SDK retry for transient failures",
+      "accept only unique schema-valid JSON and validate Reader IDs before caching"
+    ],
+    "current_revision_rerun_completed_cells": [
+      2,
+      3,
+      4,
+      5,
+      7,
+      9,
+      10
+    ],
+    "unfinished": [
+      "complete current first round",
+      "replan and second round",
+      "final report display",
+      "completed-session rerun"
+    ],
+    "limitation": "Colab workspace disappeared during retest; no claim that all current cells passed in the browser."
+  },
+  "limitations": [
+    "Official pages may be blocked or have no readable text.",
+    "A later round may add no original evidence; this is retained rather than claimed as improvement.",
+    "ID validation does not establish factual entailment.",
+    "InMemorySaver is limited to the current runtime; no cross-process persistence claim.",
+    "API-reported web_search_call count exceeded max_tool_calls; costs follow actual use.",
+    "No Windows or Antigravity App UI test."
+  ],
+  "module_sha256": "6b54b47ab6360591e41d8bc500ba51ad5774d2d507fea6b72ea5e6f4819e7538",
+  "notebook_sha256": "d03c221da77ee6cf21281f5a862f32c88f47320d8d569212d3936445c81524a3"
+}
